@@ -15,6 +15,14 @@ const ProductPageStyles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
+    content: {
+        height: '70%',
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        height: '20%',
+    },
     subHeader: {
         marginVertical: 12,
     },

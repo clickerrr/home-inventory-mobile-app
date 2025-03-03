@@ -3,8 +3,10 @@ import { LoggedItem } from '@/types/LoggedItem';
 import { Location } from '@/types/Location';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Product } from '@/types/Product';
+import GlobalStyles from '@/styles/GlobalStyles';
+import RoomPageStyles from '@/styles/RoomPageStyles';
 
 const RoomPage = () => {
     const { associatedProduct, quantity } = useLocalSearchParams();
@@ -13,12 +15,15 @@ const RoomPage = () => {
         console.log(associatedProduct);
         console.log('quantity', quantity);
     }, [associatedProduct, quantity]);
+
     const addWeeksToDate = (dateObj: Date, numberOfWeeks: number) => {
         const newDateObj = new Date(dateObj);
         newDateObj.setDate(dateObj.getDate() + numberOfWeeks * 7);
-        return dateObj;
+        return newDateObj;
     };
+
     const today = new Date();
+
     const handleFinishProduct = (location: Location): LoggedItem => {
         const parsedProduct: Product = JSON.parse(associatedProduct);
         console.log('parsedproduct', parsedProduct);
@@ -34,7 +39,7 @@ const RoomPage = () => {
         return newLoggedItem;
     };
     return (
-        <View>
+        <View style={GlobalStyles.container}>
             <RoomSelector
                 handleNext={(location: Location) => {
                     const loggedItem = handleFinishProduct(location);
@@ -48,6 +53,9 @@ const RoomPage = () => {
                             quantity: quantity,
                         },
                     });
+                }}
+                handleCancel={() => {
+                    router.navigate('/');
                 }}
             />
         </View>

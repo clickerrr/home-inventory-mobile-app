@@ -112,21 +112,31 @@ const ConfirmItemPage = () => {
             <View style={ConfirmLoggedItemStyles.contentContainer}>
                 {renderLoggedItem()}
             </View>
-            <TouchableOpacity
-                style={GlobalStyles.buttonMain}
-                onPress={() => {
-                    router.navigate({
-                        pathname: '/',
-                        params: {
-                            flashText: `Successfully added`,
-                            quantity: quantity,
-                            loggedItem: loggedItem,
-                        },
-                    });
-                }}
-            >
-                <Text style={GlobalStyles.buttonText}>Submit</Text>
-            </TouchableOpacity>
+            <View style={ConfirmLoggedItemStyles.buttonContainer}>
+                <TouchableOpacity
+                    style={GlobalStyles.buttonMain}
+                    onPress={() => {
+                        router.navigate({
+                            pathname: '/',
+                            params: {
+                                flashText: `Successfully added`,
+                                quantity: quantity,
+                                loggedItem: loggedItem,
+                            },
+                        });
+                    }}
+                >
+                    <Text style={GlobalStyles.buttonText}>Submit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={GlobalStyles.buttonCancel}
+                    onPress={() => {
+                        router.navigate('/');
+                    }}
+                >
+                    <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };

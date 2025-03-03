@@ -10,6 +10,13 @@ const ConfirmLoggedItemStyles = StyleSheet.create({
     contentContainer: {
         height: '70%',
     },
+    buttonContainer: {
+        width: '100%',
+        height: '20%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    },
     subHeader: {
         fontWeight: 'bold',
     },

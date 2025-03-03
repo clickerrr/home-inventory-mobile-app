@@ -24,7 +24,9 @@ const ProductPage = () => {
     const [currentQuantity, setCurrentQuantity] = useState(1);
     return (
         <View style={ProductPageStyles.main}>
-            <View style={ProductPageStyles.container}>
+            <View
+                style={[ProductPageStyles.container, ProductPageStyles.content]}
+            >
                 <Text
                     style={[
                         GlobalStyles.subHeader,
@@ -69,7 +71,12 @@ const ProductPage = () => {
                     }}
                 />
             </View>
-            <View style={ProductPageStyles.container}>
+            <View
+                style={[
+                    ProductPageStyles.container,
+                    ProductPageStyles.buttonContainer,
+                ]}
+            >
                 <TouchableOpacity
                     style={GlobalStyles.buttonMain}
                     onPress={() => {
@@ -84,6 +91,14 @@ const ProductPage = () => {
                     }}
                 >
                     <Text style={GlobalStyles.buttonText}>Next</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={GlobalStyles.buttonCancel}
+                    onPress={() => {
+                        router.navigate('/');
+                    }}
+                >
+                    <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
         </View>

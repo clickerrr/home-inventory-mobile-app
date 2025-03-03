@@ -1,7 +1,6 @@
 import CameraStyles from '@/styles/CameraStyles';
 import { CameraView } from 'expo-camera';
 import { router } from 'expo-router';
-import { View, StyleSheet } from 'react-native';
 
 const CameraScanner = () => {
     return (
@@ -14,6 +13,7 @@ const CameraScanner = () => {
             autofocus={'off'}
             onBarcodeScanned={(result) => {
                 console.log(result.data);
+
                 router.navigate({
                     pathname: '/logged_item_creation/product_page',
                     params: { barcodeId: result.data },

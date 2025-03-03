@@ -46,23 +46,30 @@ const Index = () => {
 
     return (
         <View style={GlobalStyles.container}>
-            <Image style={IndexStyles.icon} source={barcodeLogo} />
-            <TouchableOpacity
-                onPress={() => {
-                    router.navigate({ pathname: '/camera_screens/camera' });
-                }}
-                style={GlobalStyles.buttonMain}
-            >
-                <Text style={GlobalStyles.buttonText}>Scan New Item</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => {
-                    router.navigate({ pathname: '/camera_screens/search' });
-                }}
-                style={GlobalStyles.buttonMain}
-            >
-                <Text style={GlobalStyles.buttonText}>Search for Item</Text>
-            </TouchableOpacity>
+            <View style={[GlobalStyles.container, IndexStyles.content]}>
+                <Image style={IndexStyles.icon} source={barcodeLogo} />
+                <Text style={[GlobalStyles.headerText, IndexStyles.titleText]}>
+                    Home Inventory Management
+                </Text>
+            </View>
+            <View style={GlobalStyles.buttonContainer}>
+                <TouchableOpacity
+                    onPress={() => {
+                        router.navigate({ pathname: '/camera_screens/camera' });
+                    }}
+                    style={GlobalStyles.buttonMain}
+                >
+                    <Text style={GlobalStyles.buttonText}>Scan New Item</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        router.navigate({ pathname: '/camera_screens/search' });
+                    }}
+                    style={GlobalStyles.buttonMain}
+                >
+                    <Text style={GlobalStyles.buttonText}>Search for Item</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };

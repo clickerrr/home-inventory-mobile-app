@@ -9,8 +9,12 @@ const Camera = () => {
     const isFocused = useIsFocused();
     return (
         <View style={GlobalStyles.container}>
-            {isFocused ? <CameraScanner /> : <></>}
-            <View style={CameraStyles.container}>
+            {isFocused ? (
+                <CameraScanner />
+            ) : (
+                <View style={CameraStyles.camera}></View>
+            )}
+            <View style={GlobalStyles.buttonContainer}>
                 <TouchableOpacity
                     onPress={() => {
                         router.back();

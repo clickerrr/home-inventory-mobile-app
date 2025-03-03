@@ -7,8 +7,20 @@ const RoomSelectorStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginVertical: 12,
+        width: '100%',
     },
     subHeader: { marginVertical: 8 },
+    content: {
+        height: '70%',
+        width: '100%',
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        height: '20%',
+        width: '100%',
+    },
     dropdown: {
         height: 50,
         width: '80%',
