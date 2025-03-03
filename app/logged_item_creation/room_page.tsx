@@ -1,0 +1,57 @@
+import RoomSelector from '@/components/RoomSelector';
+import { LoggedItem } from '@/types/LoggedItem';
+import { Location } from '@/types/Location';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
+import { Product } from '@/types/Product';
+
+const RoomPage = () => {
+    const { associatedProduct, quantity } = useLocalSearchParams();
+    useEffect(() => {
+        console.log('associatedProduct');
+        console.log(associatedProduct);
+        console.log('quantity', quantity);
+    }, [associatedProduct, quantity]);
+    const addWeeksToDate = (dateObj: Date, numberOfWeeks: number) => {
+        const newDateObj = new Date(dateObj);
+        newDateObj.setDate(dateObj.getDate() + numberOfWeeks * 7);
+        return dateObj;
+    };
+    const today = new Date();
+    const handleFinishProduct = (location: Location): LoggedItem => {
+        const parsedProduct: Product = JSON.parse(associatedProduct);
+        console.log('parsedproduct', parsedProduct);
+        const newLoggedItem: LoggedItem = {
+            id: -1,
+            dateLogged: today.toISOString(),
+            expirationDate: addWeeksToDate(today, 1).toISOString(),
+            consumeByDate: addWeeksToDate(today, 1).toISOString(),
+            product: parsedProduct.upca,
+            location: location.id,
+            inventory: -1,
+        };
+        return newLoggedItem;
+    };
+    return (
+        <View>
+            <RoomSelector
+                handleNext={(location: Location) => {
+                    const loggedItem = handleFinishProduct(location);
+                    console.log('associatedProduct', associatedProduct);
+                    router.navigate({
+                        pathname: '/logged_item_creation/confirm_logged_item',
+                        params: {
+                            loggedItem: JSON.stringify(loggedItem),
+                            associatedProduct: associatedProduct,
+                            location: JSON.stringify(location),
+                            quantity: quantity,
+                        },
+                    });
+                }}
+            />
+        </View>
+    );
+};
+
+export default RoomPage;

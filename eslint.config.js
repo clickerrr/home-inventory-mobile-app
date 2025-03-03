@@ -3,15 +3,19 @@ import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
+import globals from 'globals';
 import prettier from 'eslint-plugin-prettier';
 
 export default [
     js.configs.recommended,
     {
-        files: [' **/*.ts , **/*.tsx'],
+        files: ['**/*.ts', '**/*.tsx'],
     },
     {
         languageOptions: {
+            globals: {
+                ...globals.node,
+            },
             parser: tsParser,
             parserOptions: {
                 ecmaVersion: 'latest',

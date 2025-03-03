@@ -15,7 +15,7 @@ const CameraScanner = () => {
             onBarcodeScanned={(result) => {
                 console.log(result.data);
                 router.navigate({
-                    pathname: '/inventory',
+                    pathname: '/logged_item_creation/product_page',
                     params: { barcodeId: result.data },
                 });
             }}
