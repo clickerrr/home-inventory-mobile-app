@@ -3,7 +3,7 @@ import CameraStyles from '@/styles/CameraStyles';
 import GlobalStyles from '@/styles/GlobalStyles';
 import { useIsFocused } from '@react-navigation/native';
 import { router } from 'expo-router';
-import { TouchableHighlight, Text, View } from 'react-native';
+import { TouchableOpacity, Text, View } from 'react-native';
 
 const Camera = () => {
     const isFocused = useIsFocused();
@@ -11,14 +11,14 @@ const Camera = () => {
         <View style={GlobalStyles.container}>
             {isFocused ? <CameraScanner /> : <></>}
             <View style={CameraStyles.container}>
-                <TouchableHighlight
+                <TouchableOpacity
                     onPress={() => {
                         router.back();
                     }}
                     style={GlobalStyles.buttonMain}
                 >
                     <Text style={GlobalStyles.buttonText}>Back to Home</Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         </View>
     );

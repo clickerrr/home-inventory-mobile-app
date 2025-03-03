@@ -4,7 +4,7 @@ import { Location } from '@/types/Location';
 import { Product } from '@/types/Product';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import ConfirmLoggedItemStyles from '@/styles/ConfirmLoggedItemStyles';
 
 const ConfirmItemPage = () => {
@@ -112,7 +112,7 @@ const ConfirmItemPage = () => {
             <View style={ConfirmLoggedItemStyles.contentContainer}>
                 {renderLoggedItem()}
             </View>
-            <TouchableHighlight
+            <TouchableOpacity
                 style={GlobalStyles.buttonMain}
                 onPress={() => {
                     router.navigate({
@@ -126,7 +126,7 @@ const ConfirmItemPage = () => {
                 }}
             >
                 <Text style={GlobalStyles.buttonText}>Submit</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
         </View>
     );
 };

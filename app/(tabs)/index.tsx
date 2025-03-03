@@ -1,4 +1,11 @@
-import { View, Text, TouchableHighlight, Image, Alert } from 'react-native';
+import {
+    View,
+    Text,
+    TouchableHighlight,
+    Image,
+    Alert,
+    TouchableOpacity,
+} from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import barcodeLogo from '@/assets/images/barcode-logo.png';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -27,12 +34,12 @@ const Index = () => {
                 <Text style={GlobalStyles.largeText}>
                     We need your permission to show the camera
                 </Text>
-                <TouchableHighlight
+                <TouchableOpacity
                     style={GlobalStyles.buttonMain}
                     onPress={requestPermission}
                 >
                     <Text style={GlobalStyles.buttonText}></Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -40,22 +47,22 @@ const Index = () => {
     return (
         <View style={GlobalStyles.container}>
             <Image style={IndexStyles.icon} source={barcodeLogo} />
-            <TouchableHighlight
+            <TouchableOpacity
                 onPress={() => {
                     router.navigate({ pathname: '/camera_screens/camera' });
                 }}
                 style={GlobalStyles.buttonMain}
             >
                 <Text style={GlobalStyles.buttonText}>Scan New Item</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
+            </TouchableOpacity>
+            <TouchableOpacity
                 onPress={() => {
                     router.navigate({ pathname: '/camera_screens/search' });
                 }}
                 style={GlobalStyles.buttonMain}
             >
                 <Text style={GlobalStyles.buttonText}>Search for Item</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
         </View>
     );
 };
