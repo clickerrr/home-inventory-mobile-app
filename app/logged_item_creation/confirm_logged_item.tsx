@@ -6,6 +6,8 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import ConfirmLoggedItemStyles from '@/styles/ConfirmLoggedItemStyles';
+import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
+import { locations } from '@/sampleData/RoomSelectorSampleData';
 
 const ConfirmItemPage = () => {
     const { loggedItem, associatedProduct, location, quantity } =
@@ -116,7 +118,33 @@ const ConfirmItemPage = () => {
                 <TouchableOpacity
                     style={GlobalStyles.buttonMain}
                     onPress={() => {
-                        router.navigate({
+                        let idCounter = 0;
+                        for (let i = 0; i < Number(quantity); i++) {
+                            const parsedLoggedItem: LoggedItem =
+                                JSON.parse(loggedItem);
+                            const newLoggedItem: LoggedItem = {
+                                id: parsedLoggedItem.id + idCounter,
+                                dateLogged: parsedLoggedItem.dateLogged,
+                                expirationDate: parsedLoggedItem.expirationDate,
+                                consumeByDate: parsedLoggedItem.consumeByDate,
+                                product: parsedLoggedItem.product,
+                                location: parsedLoggedItem.location,
+                                inventory: parsedLoggedItem.inventory,
+                            };
+                            sampleLoggedItems.push(newLoggedItem);
+                            const locationObj: Location = JSON.parse(location);
+                            const storedLocation = locations.find(
+                                (element: Location) => {
+                                    return element.id === locationObj.id;
+                                }
+                            );
+                            if (storedLocation === undefined) {
+                                return;
+                            }
+                            storedLocation.loggedItems.push(newLoggedItem.id);
+                            idCounter = idCounter + 1;
+                        }
+                        router.replace({
                             pathname: '/',
                             params: {
                                 flashText: `Successfully added`,
@@ -131,7 +159,7 @@ const ConfirmItemPage = () => {
                 <TouchableOpacity
                     style={GlobalStyles.buttonCancel}
                     onPress={() => {
-                        router.navigate('/');
+                        router.replace('/');
                     }}
                 >
                     <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>

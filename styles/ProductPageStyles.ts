@@ -16,6 +16,7 @@ const ProductPageStyles = StyleSheet.create({
         width: '100%',
     },
     content: {
+        width: '80%',
         height: '70%',
     },
     buttonContainer: {
@@ -29,6 +30,11 @@ const ProductPageStyles = StyleSheet.create({
     spinnerButton: {
         borderRadius: 0,
         width: '50%',
+    },
+    productImage: {
+        resizeMode: 'contain',
+        width: '50%',
+        height: '25%',
     },
 });
 

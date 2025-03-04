@@ -12,6 +12,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import GlobalStyles from '@/styles/GlobalStyles';
 import IndexStyles from '@/styles/IndexStyles';
 import { useEffect } from 'react';
+import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
 
 const Index = () => {
     const [permission, requestPermission] = useCameraPermissions();
@@ -23,7 +24,8 @@ const Index = () => {
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
         }
-    }, [flashText, loggedItem]);
+        console.log('--------[ Sample Logged Items]: ', sampleLoggedItems);
+    }, [flashText, loggedItem, sampleLoggedItems]);
     if (!permission) {
         return <View />;
     }

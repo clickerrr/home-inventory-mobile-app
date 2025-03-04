@@ -5,7 +5,7 @@ const IndexStyles = StyleSheet.create({
         width: '50%',
         height: '25%',
     },
-    content: { height: '80%', width: '100%' },
+    content: { height: '70%', width: '100%' },
     titleText: {
         fontWeight: 'bold',
         padding: '2%',

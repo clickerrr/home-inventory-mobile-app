@@ -13,24 +13,22 @@ const rooms: Room[] = [
     {
         id: 1,
         title: 'Living Room',
-        locations: [], // Will populate below
+        locations: [1, 2, 3], // Will populate below
         house: 1,
     },
     {
         id: 2,
         title: 'Kitchen',
-        locations: [],
+        locations: [4, 5, 6],
         house: 1,
     },
     {
         id: 3,
         title: 'Bedroom',
-        locations: [],
+        locations: [7, 8, 9],
         house: 1,
     },
 ];
-
-house.rooms = rooms;
 
 const locations: Location[] = [
     // Living Room Locations

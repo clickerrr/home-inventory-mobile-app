@@ -2,9 +2,21 @@ import { Stack } from 'expo-router';
 
 const InventoryLayout = () => {
     return (
-        <Stack>
+        <Stack screenOptions={{ headerShown: true }}>
             <Stack.Screen
-                name="product"
+                name="productsview/[productupca]"
+                options={{ title: 'Product Details' }}
+            ></Stack.Screen>
+            <Stack.Screen
+                name="locationsview/[locationid]"
+                options={{ title: 'Location Details' }}
+            ></Stack.Screen>
+            <Stack.Screen
+                name="[roomid]"
+                options={{ title: 'Room Details' }}
+            ></Stack.Screen>
+            <Stack.Screen
+                name="productlist"
                 options={{ title: 'Product List' }}
             ></Stack.Screen>
         </Stack>

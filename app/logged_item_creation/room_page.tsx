@@ -7,6 +7,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Product } from '@/types/Product';
 import GlobalStyles from '@/styles/GlobalStyles';
 import RoomPageStyles from '@/styles/RoomPageStyles';
+import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
 
 const RoomPage = () => {
     const { associatedProduct, quantity } = useLocalSearchParams();
@@ -28,7 +29,7 @@ const RoomPage = () => {
         const parsedProduct: Product = JSON.parse(associatedProduct);
         console.log('parsedproduct', parsedProduct);
         const newLoggedItem: LoggedItem = {
-            id: -1,
+            id: sampleLoggedItems.length,
             dateLogged: today.toISOString(),
             expirationDate: addWeeksToDate(today, 1).toISOString(),
             consumeByDate: addWeeksToDate(today, 1).toISOString(),

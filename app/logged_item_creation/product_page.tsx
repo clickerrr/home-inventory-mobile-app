@@ -6,19 +6,30 @@ import { useEffect, useState } from 'react';
 import { Product } from '@/types/Product';
 import InputSpinner from 'react-native-input-spinner';
 import { TouchableOpacity } from 'react-native';
+import productSampleData from '@/sampleData/ProductSampleData';
 
 const ProductPage = () => {
     const [product, setProduct] = useState<Product>();
     const { barcodeId, other } = useLocalSearchParams();
     useEffect(() => {
-        const newProduct: Product = {
+        if (barcodeId === undefined) {
+            return;
+        }
+        let newProduct: Product = {
             upca: barcodeId ? barcodeId : '-1',
             title: 'Testing',
             containerType: 'OTHER',
             nutritionalInformation: null,
             loggedItems: [],
         };
+
+        const existingProduct = productSampleData[barcodeId];
+        console.log('existingProduct', existingProduct);
+        if (existingProduct !== undefined) {
+            newProduct = { ...existingProduct[0] };
+        }
         setProduct(newProduct);
+
         console.log('Setting product', newProduct);
     }, [barcodeId]);
     const [currentQuantity, setCurrentQuantity] = useState(1);
