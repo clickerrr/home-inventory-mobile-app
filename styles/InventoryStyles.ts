@@ -27,7 +27,7 @@ const InventoryStyles = StyleSheet.create({
         marginBottom: 12,
     },
     button: {
-        width: '80%',
+        width: '90%',
         backgroundColor: '#457EAC',
 
         fontSize: 20,
@@ -48,7 +48,8 @@ const InventoryStyles = StyleSheet.create({
         margin: 'auto',
     },
     locationDetailsButton: {
-        height: 150,
+        height: 200,
+        maxHeight: 350,
     },
     locationDetailsButtonInternal: {
         display: 'flex',
@@ -58,6 +59,7 @@ const InventoryStyles = StyleSheet.create({
         width: '100%',
         height: '100%',
         flexDirection: 'row',
+        flexGrow: 2,
     },
     buttonText: {
         fontSize: 18,
@@ -65,9 +67,12 @@ const InventoryStyles = StyleSheet.create({
         width: '100%',
     },
     locationDetailsButtonTitle: {
-        fontSize: 24,
+        display: 'flex',
+        width: '40%',
+        fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 4,
+        flexWrap: 'wrap',
     },
     locationDetailsButtonSubtitle: {
         fontWeight: 'bold',
@@ -88,6 +93,7 @@ const InventoryStyles = StyleSheet.create({
         height: '100%',
     },
     loggedItemDetailsContainer: {
+        flexGrow: 2,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
