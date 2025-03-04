@@ -83,6 +83,37 @@ const GlobalStyles = StyleSheet.create({
         fontSize: 18,
     },
     buttonLarge: {},
+    modalScreen: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(100,100,100,0.5)',
+    },
+    modalView: {
+        width: '80%',
+        minHeight: '30%',
+        maxHeight: '70%',
+        flexGrow: 2,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    modalButtonContainer: {
+        justifyContent: 'space-around',
+        height: '30%',
+    },
 });
 
 export default GlobalStyles;

@@ -3,27 +3,27 @@ import { Room } from '@/types/Room';
 import { Location } from '@/types/Location';
 import { LoggedItem } from '@/types/LoggedItem';
 
-const house: House = {
-    id: 1,
+let house: House = {
+    id: 0,
     title: 'Sunnydale Residence',
-    rooms: [], // Will populate below
+    rooms: [0, 1, 2], // Will populate below
 };
 
 const rooms: Room[] = [
     {
-        id: 1,
+        id: 0,
         title: 'Living Room',
-        locations: [1, 2, 3], // Will populate below
+        locations: [0, 1, 2], // Will populate below
+        house: 1,
+    },
+    {
+        id: 1,
+        title: 'Kitchen',
+        locations: [3, 4, 5],
         house: 1,
     },
     {
         id: 2,
-        title: 'Kitchen',
-        locations: [4, 5, 6],
-        house: 1,
-    },
-    {
-        id: 3,
         title: 'Bedroom',
         locations: [7, 8, 9],
         house: 1,
@@ -33,57 +33,57 @@ const rooms: Room[] = [
 const locations: Location[] = [
     // Living Room Locations
     {
-        id: 1,
+        id: 0,
         title: 'Sofa Area',
         room: rooms[0].id,
         loggedItems: [], // Assuming empty initially
     },
     {
-        id: 2,
+        id: 1,
         title: 'TV Stand',
         room: rooms[0].id,
         loggedItems: [],
     },
     {
-        id: 3,
+        id: 2,
         title: 'Coffee Table',
         room: rooms[0].id,
         loggedItems: [],
     },
     // Kitchen Locations
     {
-        id: 4,
+        id: 3,
         title: 'Pantry',
         room: rooms[1].id,
         loggedItems: [],
     },
     {
-        id: 5,
+        id: 4,
         title: 'Refrigerator',
         room: rooms[1].id,
         loggedItems: [],
     },
     {
-        id: 6,
+        id: 5,
         title: 'Kitchen Island',
         room: rooms[1].id,
         loggedItems: [],
     },
     // Bedroom Locations
     {
-        id: 7,
+        id: 6,
         title: 'Wardrobe',
         room: rooms[2].id,
         loggedItems: [],
     },
     {
-        id: 8,
+        id: 7,
         title: 'Nightstand',
         room: rooms[2].id,
         loggedItems: [],
     },
     {
-        id: 9,
+        id: 8,
         title: 'Dresser',
         room: rooms[2].id,
         loggedItems: [],

@@ -3,7 +3,7 @@ import { router, useLocalSearchParams, usePathname } from 'expo-router';
 import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
 import { useEffect, useState } from 'react';
-import { rooms } from '@/sampleData/RoomSelectorSampleData';
+import { house, rooms } from '@/sampleData/RoomSelectorSampleData';
 import { Room } from '@/types/Room';
 import icon from '@/assets/images/barcode-logo.png';
 const Inventory = () => {
@@ -46,7 +46,11 @@ const Inventory = () => {
                     style={GlobalStyles.buttonMain}
                     onPress={() => {
                         router.navigate({
-                            pathname: '/inventory_screens/productlist',
+                            pathname: '/homelayout_screens/newroom',
+                            params: {
+                                houseId: 0,
+                                houseObj: JSON.stringify(house),
+                            },
                         });
                     }}
                 >
