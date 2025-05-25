@@ -13,6 +13,7 @@ const RoomDetailView = () => {
     const [roomLocations, setRoomLocations] = useState<Location[]>([]);
 
     useEffect(() => {
+        console.log('REFRESHING');
         const parsedRoom: Room = JSON.parse(room);
         setRoomDetails(parsedRoom);
 
@@ -24,7 +25,7 @@ const RoomDetailView = () => {
             }
         });
         setRoomLocations(validLocations);
-    }, [id, room]);
+    }, [id, room, locations]);
     return (
         <View style={GlobalStyles.container}>
             <View style={InventoryStyles.headerContainer}>
@@ -62,7 +63,16 @@ const RoomDetailView = () => {
                 )}
             />
             <View style={GlobalStyles.buttonContainer}>
-                <TouchableOpacity style={GlobalStyles.buttonMain}>
+                <TouchableOpacity
+                    onPress={() => {
+                        console.log(roomDetails);
+                        router.navigate({
+                            pathname: '/homelayout_screens/newlocation',
+                            params: { paramRoom: JSON.stringify(roomDetails) },
+                        });
+                    }}
+                    style={GlobalStyles.buttonMain}
+                >
                     <Text style={GlobalStyles.buttonText}>
                         Add New Location
                     </Text>

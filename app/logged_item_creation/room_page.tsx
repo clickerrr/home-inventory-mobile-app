@@ -56,8 +56,9 @@ const RoomPage = () => {
                     });
                 }}
                 handleCancel={() => {
-                    router.navigate('/');
+                    router.back();
                 }}
+                cancelText={'Back'}
             />
         </View>
     );

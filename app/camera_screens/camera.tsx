@@ -1,4 +1,5 @@
 import CameraScanner from '@/components/CameraScanner';
+import productSampleData from '@/sampleData/ProductSampleData';
 import CameraStyles from '@/styles/CameraStyles';
 import GlobalStyles from '@/styles/GlobalStyles';
 import { useIsFocused } from '@react-navigation/native';
@@ -10,7 +11,22 @@ const Camera = () => {
     return (
         <View style={GlobalStyles.container}>
             {isFocused ? (
-                <CameraScanner />
+                <CameraScanner
+                    handleBarcodeScanned={(result) => {
+                        console.log(result.data);
+
+                        const productExists = productSampleData[result.data];
+                        console.log(productExists);
+                        let productBarcode = result.data;
+                        if (productExists === undefined) {
+                            productBarcode = '999999999999';
+                        }
+                        router.navigate({
+                            pathname: '/logged_item_creation/product_page',
+                            params: { barcodeId: productBarcode },
+                        });
+                    }}
+                />
             ) : (
                 <View style={CameraStyles.camera}></View>
             )}

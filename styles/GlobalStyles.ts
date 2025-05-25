@@ -49,6 +49,9 @@ const GlobalStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
     },
+    buttonMainHorizontal: {
+        width: '35%',
+    },
     buttonMainDisabled: {
         opacity: 0.5,
     },
@@ -112,6 +115,7 @@ const GlobalStyles = StyleSheet.create({
     },
     modalButtonContainer: {
         justifyContent: 'space-around',
+
         height: '30%',
     },
 });

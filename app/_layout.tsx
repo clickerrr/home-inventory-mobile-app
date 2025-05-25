@@ -23,6 +23,10 @@ const RootLayout = () => {
                 name="inventory_screens"
                 options={{ headerShown: false }}
             ></Stack.Screen>
+            <Stack.Screen
+                name="newproduct"
+                options={{ title: 'New Product', headerShown: false }}
+            ></Stack.Screen>
         </Stack>
     );
 };

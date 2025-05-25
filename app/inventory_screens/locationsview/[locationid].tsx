@@ -72,7 +72,7 @@ const IndividualRoomPage = () => {
                 data={itemsInLocation}
                 renderItem={({ item }) => {
                     const productData: Product =
-                        productSampleData[item.product][0];
+                        productSampleData[item.product];
                     return (
                         <TouchableOpacity
                             onPress={() => {

@@ -264,7 +264,7 @@ const NewRoom = () => {
                                         }
                                     );
                                     house.rooms.push(currentRoom.id);
-                                    router.dismiss();
+                                    router.back();
                                 }}
                             >
                                 <Text style={GlobalStyles.buttonText}>

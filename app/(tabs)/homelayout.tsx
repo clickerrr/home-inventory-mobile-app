@@ -16,38 +16,13 @@ const HomeLayout = () => {
 
     useEffect(() => {
         setHouseData(house);
-        console.log('Updating house');
-    }, [house]);
+        setSelectedHouse(house);
+        setAvailableRooms(rooms);
+    }, [house, rooms]);
 
     return (
         <View style={GlobalStyles.container}>
-            <Text style={[HomeLayoutStyles.subHeader, GlobalStyles.subHeader]}>
-                Select a Household
-            </Text>
             <View style={HomeLayoutStyles.content}>
-                <Dropdown
-                    style={HomeLayoutStyles.dropdown}
-                    value={selectedHouseId}
-                    onChange={(item) => {
-                        setSelectedHouseId(item.id);
-                        console.log(house);
-                        setSelectedHouse(item);
-                        const roomsInHouse: number[] = house.rooms;
-
-                        const roomsMatchup: Room[] = [];
-
-                        rooms.forEach((element: Room) => {
-                            if (roomsInHouse.includes(element.id)) {
-                                roomsMatchup.push(element);
-                            }
-                        });
-                        setAvailableRooms(roomsMatchup);
-                    }}
-                    mode={'default'}
-                    data={[houseData]}
-                    labelField={'title'}
-                    valueField={'id'}
-                ></Dropdown>
                 {availableRooms.length !== 0 ? (
                     <>
                         <FlatList
@@ -58,9 +33,9 @@ const HomeLayout = () => {
                                 <TouchableOpacity
                                     onPress={() => {
                                         router.navigate({
-                                            pathname: `/inventory_screens/locationsview/${item.id}`,
+                                            pathname: `/inventory_screens/${item.id}`,
                                             params: {
-                                                location: JSON.stringify(item),
+                                                room: JSON.stringify(item),
                                             },
                                         });
                                     }}

@@ -11,8 +11,13 @@ import { TouchableOpacity } from 'react-native';
 interface RoomSelectorProps {
     handleNext: (location: Location) => void;
     handleCancel: () => void;
+    cancelText: string;
 }
-const RoomSelector = ({ handleNext, handleCancel }: RoomSelectorProps) => {
+const RoomSelector = ({
+    handleNext,
+    handleCancel,
+    cancelText,
+}: RoomSelectorProps) => {
     const [dropdownValue, setDropdownValue] = useState(undefined);
     const [locationDropdownValue, setLocationDropdownValue] =
         useState(undefined);
@@ -45,12 +50,13 @@ const RoomSelector = ({ handleNext, handleCancel }: RoomSelectorProps) => {
                                     return element.room === value.id;
                                 }
                             );
+                            console.log(locationsList);
                             setLocationsData(locationsList);
                             setLocationDropdownValue(undefined);
                         }}
                     />
                 </View>
-                {dropdownValue ? (
+                {locationsData.length !== 0 ? (
                     <View style={RoomSelectorStyles.container}>
                         <Text
                             style={[
@@ -113,7 +119,9 @@ const RoomSelector = ({ handleNext, handleCancel }: RoomSelectorProps) => {
                         handleCancel();
                     }}
                 >
-                    <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
+                    <Text style={GlobalStyles.buttonCancelText}>
+                        {cancelText}
+                    </Text>
                 </TouchableOpacity>
             </View>
         </>

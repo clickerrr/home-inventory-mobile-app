@@ -26,7 +26,7 @@ const ProductPage = () => {
         const existingProduct = productSampleData[barcodeId];
         console.log('existingProduct', existingProduct);
         if (existingProduct !== undefined) {
-            newProduct = { ...existingProduct[0] };
+            newProduct = { ...existingProduct };
         }
         setProduct(newProduct);
 

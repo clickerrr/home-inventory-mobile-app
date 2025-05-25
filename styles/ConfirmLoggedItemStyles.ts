@@ -17,6 +17,14 @@ const ConfirmLoggedItemStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
     },
+    horizontalButtonContainer: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+    },
     subHeader: {
         fontWeight: 'bold',
     },

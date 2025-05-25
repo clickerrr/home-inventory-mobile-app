@@ -115,54 +115,77 @@ const ConfirmItemPage = () => {
                 {renderLoggedItem()}
             </View>
             <View style={ConfirmLoggedItemStyles.buttonContainer}>
-                <TouchableOpacity
-                    style={GlobalStyles.buttonMain}
-                    onPress={() => {
-                        let idCounter = 0;
-                        for (let i = 0; i < Number(quantity); i++) {
-                            const parsedLoggedItem: LoggedItem =
-                                JSON.parse(loggedItem);
-                            const newLoggedItem: LoggedItem = {
-                                id: parsedLoggedItem.id + idCounter,
-                                dateLogged: parsedLoggedItem.dateLogged,
-                                expirationDate: parsedLoggedItem.expirationDate,
-                                consumeByDate: parsedLoggedItem.consumeByDate,
-                                product: parsedLoggedItem.product,
-                                location: parsedLoggedItem.location,
-                                inventory: parsedLoggedItem.inventory,
-                            };
-                            sampleLoggedItems.push(newLoggedItem);
-                            const locationObj: Location = JSON.parse(location);
-                            const storedLocation = locations.find(
-                                (element: Location) => {
-                                    return element.id === locationObj.id;
+                <View style={ConfirmLoggedItemStyles.horizontalButtonContainer}>
+                    <TouchableOpacity
+                        style={[
+                            GlobalStyles.buttonCancel,
+                            GlobalStyles.buttonMainHorizontal,
+                        ]}
+                        onPress={() => {
+                            router.replace('/');
+                        }}
+                    >
+                        <Text style={GlobalStyles.buttonCancelText}>
+                            Cancel
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[
+                            GlobalStyles.buttonMain,
+                            GlobalStyles.buttonMainHorizontal,
+                        ]}
+                        onPress={() => {
+                            let idCounter = 0;
+                            for (let i = 0; i < Number(quantity); i++) {
+                                const parsedLoggedItem: LoggedItem =
+                                    JSON.parse(loggedItem);
+                                const newLoggedItem: LoggedItem = {
+                                    id: parsedLoggedItem.id + idCounter,
+                                    dateLogged: parsedLoggedItem.dateLogged,
+                                    expirationDate:
+                                        parsedLoggedItem.expirationDate,
+                                    consumeByDate:
+                                        parsedLoggedItem.consumeByDate,
+                                    product: parsedLoggedItem.product,
+                                    location: parsedLoggedItem.location,
+                                    inventory: parsedLoggedItem.inventory,
+                                };
+                                sampleLoggedItems.push(newLoggedItem);
+                                const locationObj: Location =
+                                    JSON.parse(location);
+                                const storedLocation = locations.find(
+                                    (element: Location) => {
+                                        return element.id === locationObj.id;
+                                    }
+                                );
+                                if (storedLocation === undefined) {
+                                    return;
                                 }
-                            );
-                            if (storedLocation === undefined) {
-                                return;
+                                storedLocation.loggedItems.push(
+                                    newLoggedItem.id
+                                );
+                                idCounter = idCounter + 1;
                             }
-                            storedLocation.loggedItems.push(newLoggedItem.id);
-                            idCounter = idCounter + 1;
-                        }
-                        router.replace({
-                            pathname: '/',
-                            params: {
-                                flashText: `Successfully added`,
-                                quantity: quantity,
-                                loggedItem: loggedItem,
-                            },
-                        });
-                    }}
-                >
-                    <Text style={GlobalStyles.buttonText}>Submit</Text>
-                </TouchableOpacity>
+                            router.replace({
+                                pathname: '/',
+                                params: {
+                                    flashText: `Successfully added`,
+                                    quantity: quantity,
+                                    loggedItem: loggedItem,
+                                },
+                            });
+                        }}
+                    >
+                        <Text style={GlobalStyles.buttonText}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
                 <TouchableOpacity
                     style={GlobalStyles.buttonCancel}
                     onPress={() => {
-                        router.replace('/');
+                        router.back();
                     }}
                 >
-                    <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
+                    <Text style={GlobalStyles.buttonCancelText}>Back</Text>
                 </TouchableOpacity>
             </View>
         </View>

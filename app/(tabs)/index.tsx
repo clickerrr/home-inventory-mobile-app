@@ -11,7 +11,7 @@ import barcodeLogo from '@/assets/images/barcode-logo.png';
 import { router, useLocalSearchParams } from 'expo-router';
 import GlobalStyles from '@/styles/GlobalStyles';
 import IndexStyles from '@/styles/IndexStyles';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
 
 const Index = () => {
@@ -19,6 +19,17 @@ const Index = () => {
 
     const { flashText, loggedItem } = useLocalSearchParams();
     useEffect(() => {
+        fetch('http://192.168.1.11:8080/rooms')
+            .then((result) => {
+                return result.json();
+            })
+            .then((result) => {
+                console.log('JSON RESPONSE', result);
+                console.log(result[0].locations);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
         if (flashText && loggedItem) {
             Alert.alert('Success', 'Successfully added a new item', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
