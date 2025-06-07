@@ -1,50 +1,91 @@
-# Welcome to your Expo app 👋
+# 📦 Home Inventory Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A cross-platform mobile application built with **React Native** and **Java**, designed to help users efficiently manage and organize their household items. This app allows users to categorize and monitor their home inventory seamlessly.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Features
+
+- ✅**Inventory Management**: Add, edit, and delete items with details like name, category, quantity, and location.
+- ✅**Categorization**: Organize items into customizable categories for better tracking.
+- ✅**Location Mapping**: Specify locations for items so that you are always aware of where they may be, this can also apply to multiple homes.
+- ✅**Responsive UI**: Clean and intuitive interface optimized for both Android and iOS devices.
+- 🚧 Connect to backend database.
+- 🚧 Implement item image uploads.
+- 🚧 Implement removal and editing of existing items.
+- 🚧 Implement notifications for expired items.
+- 🚧 Implement household sharing and user logins.
+- 🚧 Implement more robust barcode support (external APIs).
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer         | Technology                |
+|---------------|----------------------------|
+| Frontend      | React Native (via Expo)    |
+| Backend       | Java Spring Boot           |
+| Database      | MySQL (Communication via JPA)  |
+| API Comm (WIP 🚧)      | Axios                      |
+| Navigation    | React Navigation           |
+
+---
+
+## 📁 Project Structure
+
+```
+home-inventory-mobile-app/
+├── app/
+│   ├── (tabs)/                   # Main screns
+│   ├── camera_screens/           # Camera screens
+│   ├── homelayout_screens/       # Home Layout screens
+│   ├── inventory_screens/        # Inventory screens
+│   ├── logged_item_creation/     # Logged Item Creation screens
+│   ├── newproduct/               # New Product screens
+│   ├── _layout.tsx               # Primary layout for app
+├── components/
+│   ├── CameraScanner.tsx         # Reusable camera scanner components
+│   ├── ProductAdder.tsx          # Reusable product adder
+│   ├── RoomSelector.tsx          # Reusable room selector
+├── sampleData/                   # For sample data without the need for API
+├── styles/                       # Reusable stylesheets
+└── types/                        # Types commonly used
+```
+
+---
+
+## 🔧 Getting Started
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/clickerrr/home-inventory-mobile-app.git
+   cd home-inventory-mobile-app
+   ```
+
+2. **Install dependencies:**
 
    ```bash
    npm install
+   # or
+   bun install
    ```
-
-2. Start the app
+   
+3. **Run the app:**
 
    ```bash
-    npx expo start
+   npm run dev
+   # or
+   bun run dev
    ```
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 👤 Author
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+**Bartek Swiech**
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [LinkedIn](https://www.linkedin.com/in/bartosz-swiech/)
+- [GitHub](https://github.com/clickerrr)
