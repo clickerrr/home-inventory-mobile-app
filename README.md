@@ -1,4 +1,4 @@
-# 📦 Home Inventory Mobile App
+# 📱 Home Inventory Mobile App
 
 A cross-platform mobile application built with **React Native** and **Java**, designed to help users efficiently manage and organize their household items. This app allows users to categorize and monitor their home inventory seamlessly.
 
