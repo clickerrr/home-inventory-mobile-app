@@ -25,16 +25,7 @@ const NewProductScreen = () => {
     }, []);
     return (
         <View style={GlobalStyles.container}>
-            <ProductAdder
-                upca={upca}
-                onNewUpca={() => {
-                    setBarcodeCallback((scannedCode) => {
-                        console.log('Scanned:', scannedCode); // Use the scanned value here
-                        setUpca(scannedCode);
-                    });
-                    router.push('/newproduct/upcascanner');
-                }}
-            />
+            <ProductAdder upca={upca} />
         </View>
     );
 };

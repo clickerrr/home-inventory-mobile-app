@@ -13,23 +13,14 @@ import GlobalStyles from '@/styles/GlobalStyles';
 import IndexStyles from '@/styles/IndexStyles';
 import { useEffect, useState } from 'react';
 import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
+import axios from 'axios';
+import Config from 'react-native-config';
 
 const Index = () => {
     const [permission, requestPermission] = useCameraPermissions();
 
     const { flashText, loggedItem } = useLocalSearchParams();
     useEffect(() => {
-        fetch('http://192.168.1.11:8080/rooms')
-            .then((result) => {
-                return result.json();
-            })
-            .then((result) => {
-                console.log('JSON RESPONSE', result);
-                console.log(result[0].locations);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
         if (flashText && loggedItem) {
             Alert.alert('Success', 'Successfully added a new item', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
@@ -37,6 +28,7 @@ const Index = () => {
         }
         console.log('--------[ Sample Logged Items]: ', sampleLoggedItems);
     }, [flashText, loggedItem, sampleLoggedItems]);
+
     if (!permission) {
         return <View />;
     }
@@ -57,6 +49,19 @@ const Index = () => {
         );
     }
 
+    const testRequestAxios = () => {
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        console.log(baseUrl);
+        axios
+            .get(`${baseUrl}/products`)
+            .then((response) => {
+                console.log('Response: ', response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
     return (
         <View style={GlobalStyles.container}>
             <View style={[GlobalStyles.container, IndexStyles.content]}>
@@ -66,6 +71,13 @@ const Index = () => {
                 </Text>
             </View>
             <View style={GlobalStyles.buttonContainer}>
+                <TouchableOpacity
+                    onPress={() => {
+                        testRequestAxios();
+                    }}
+                >
+                    <Text>Axios</Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={() => {
                         router.navigate({ pathname: '/camera_screens/camera' });

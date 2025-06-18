@@ -18,6 +18,7 @@
     "dependencies": {
         "@expo/vector-icons": "^14.1.0",
         "@react-navigation/bottom-tabs": "^7.3.13",
+        "axios": "^1.10.0",
         "eslint-plugin-react-hooks": "^5.2.0",
         "eslint_d": "^14.3.0",
         "expo": "^53.0.9",
@@ -36,6 +37,7 @@
         "react": "19.0.0",
         "react-dom": "19.0.0",
         "react-native": "0.79.2",
+        "react-native-config": "^1.5.5",
         "react-native-element-dropdown": "^2.12.4",
         "react-native-gesture-handler": "~2.24.0",
         "react-native-input-spinner": "^1.8.1",

@@ -19,6 +19,7 @@ const IndividualProductPage = () => {
         const parsedProduct: Product = JSON.parse(product);
         setProductDetails(parsedProduct);
         setIsLoading(false);
+        console.log('Product: ', product);
     }, [productupca, product]);
     if (isLoading) {
         return <></>;

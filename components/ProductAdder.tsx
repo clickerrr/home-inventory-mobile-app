@@ -12,10 +12,12 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { CameraView } from 'expo-camera';
+import CameraStyles from '@/styles/CameraStyles';
+import axios from 'axios';
 
 interface ProductAdderProps {
     upca: string;
-    onNewUpca: () => void;
 }
 
 const dropdownOptions = [
@@ -25,27 +27,54 @@ const dropdownOptions = [
     { title: 'Can', id: 3 },
     { title: 'Other', id: 4 },
 ];
-const ProductAdder = ({ upca, onNewUpca }: ProductAdderProps) => {
+const ProductAdder = ({ upca }: ProductAdderProps) => {
     const [productText, setProductText] = useState<string>('');
+    const [scanningNewProduct, setScanningNewProduct] =
+        useState<boolean>(false);
     const [productTextFocused, setProductTextFocused] =
         useState<boolean>(false);
     const [containerType, setContainerType] = useState({
         title: 'None',
         id: -1,
     });
-    const [productUpca, setProductUpca] = useState(upca);
+    const [productUpca, setProductUpca] = useState<string>(upca);
 
-    useEffect(() => {
-        if (upca === undefined) {
-        }
-    }, [upca]);
+    if (scanningNewProduct) {
+        return (
+            <CameraView
+                style={CameraStyles.camera}
+                facing={'back'}
+                barcodeScannerSettings={{
+                    barcodeTypes: ['upc_a'],
+                }}
+                autofocus={'off'}
+                onBarcodeScanned={(data) => {
+                    console.log(data.data);
+                    setProductUpca(data.data);
+                    setScanningNewProduct(false);
+                }}
+            ></CameraView>
+        );
+    }
+
+    const remoteSubmitData = (productToSend: Product) => {
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        const newObject = {
+            upca: '773160122420',
+            title: 'Tasty Apple',
+            containerType: 'BOX',
+            nutritionalInformation: {},
+        };
+        axios.post(`${baseUrl}/products`, productToSend);
+    };
+
     return (
         <View style={ProductAdderStyles.content}>
             {productUpca === undefined ? (
                 <View style={GlobalStyles.buttonContainer}>
                     <TouchableOpacity
                         onPress={() => {
-                            onNewUpca();
+                            setScanningNewProduct(true);
                         }}
                         style={GlobalStyles.buttonMain}
                     >
@@ -56,7 +85,7 @@ const ProductAdder = ({ upca, onNewUpca }: ProductAdderProps) => {
                 </View>
             ) : (
                 <View style={ProductAdderStyles.container}>
-                    <Text>Product UPC: {upca}</Text>
+                    <Text>{`Product UPC: ${productUpca}`}</Text>
                 </View>
             )}
 
@@ -92,17 +121,29 @@ const ProductAdder = ({ upca, onNewUpca }: ProductAdderProps) => {
                 <TouchableHighlight
                     onPress={() => {
                         const newProduct: Product = {
-                            upca: upca,
+                            upca: productUpca,
                             title: productText,
-                            containerType: containerType.title,
-                            nutritionalInformation: -1,
+                            containerType: containerType.title.toUpperCase(),
+                            nutritionalInformation: {},
                             loggedItems: [],
                         };
-
+                        remoteSubmitData(newProduct);
                         productSampleData[upca] = newProduct;
                         router.back();
                     }}
-                    style={GlobalStyles.buttonMain}
+                    disabled={
+                        productUpca === undefined ||
+                        productText === null ||
+                        containerType === null
+                    }
+                    style={[
+                        GlobalStyles.buttonMain,
+                        productUpca === undefined ||
+                        productText === null ||
+                        containerType === null
+                            ? GlobalStyles.buttonMainDisabled
+                            : '',
+                    ]}
                 >
                     <Text style={GlobalStyles.buttonText}>Submit</Text>
                 </TouchableHighlight>

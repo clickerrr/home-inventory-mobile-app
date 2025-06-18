@@ -4,25 +4,33 @@ import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import productSampleData from '@/sampleData/ProductSampleData';
 import { Product } from '@/types/Product';
 import InventoryProductStyles from '@/styles/InventoryProductStyles';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { ZodProduct } from '@/types/ZodProduct';
+import axios from 'axios';
+import { useCallback } from 'react';
+
 const ProductList = () => {
     const [productData, setProductData] = useState<Product[]>([]);
-    useEffect(() => {
-        loadData();
-    }, []);
+    const [listRefreshing, setListRefreshing] = useState<boolean>(false);
+    useEffect(() => {}, []);
+    useFocusEffect(
+        useCallback(() => {
+            loadData();
+        }, [])
+    );
     const loadData = () => {
-        fetch('http://192.168.1.11:8080/products')
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+
+        axios
+            .get(`${baseUrl}/products`)
             .then((result) => {
-                return result.json();
-            })
-            .then((result) => {
-                console.log('JSON RESPONSE', result);
-                const productList: any[] = [];
-                result.forEach((element) => {
-                    return productList.push(ZodProduct.parse(element));
+                console.log(result.data);
+                const networkedProducts = [];
+                result.data.forEach((element) => {
+                    networkedProducts.push(element);
                 });
-                console.log(productList);
+                setProductData(networkedProducts);
+                console.log('Set Networked Products');
             })
             .catch((error) => {
                 console.error(error);
@@ -70,6 +78,12 @@ const ProductList = () => {
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item) => item.upca}
+                    refreshing={listRefreshing}
+                    onRefresh={() => {
+                        setListRefreshing(true);
+                        loadData();
+                        setListRefreshing(false);
+                    }}
                 />
                 <View style={GlobalStyles.buttonContainer}>
                     <TouchableOpacity
