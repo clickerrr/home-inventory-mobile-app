@@ -134,13 +134,13 @@ const ProductAdder = ({ upca }: ProductAdderProps) => {
                     disabled={
                         productUpca === undefined ||
                         productText === null ||
-                        containerType === null
+                        containerType.title === 'None'
                     }
                     style={[
                         GlobalStyles.buttonMain,
                         productUpca === undefined ||
-                        productText === null ||
-                        containerType === null
+                        productText.trim().length === 0 ||
+                        containerType.title === 'None'
                             ? GlobalStyles.buttonMainDisabled
                             : '',
                     ]}
