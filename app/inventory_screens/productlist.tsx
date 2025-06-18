@@ -1,13 +1,11 @@
 import GlobalStyles from '@/styles/GlobalStyles';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import productSampleData from '@/sampleData/ProductSampleData';
 import { Product } from '@/types/Product';
 import InventoryProductStyles from '@/styles/InventoryProductStyles';
 import { router, useFocusEffect } from 'expo-router';
-import { ZodProduct } from '@/types/ZodProduct';
 import axios from 'axios';
-import { useCallback } from 'react';
 
 const ProductList = () => {
     const [productData, setProductData] = useState<Product[]>([]);
