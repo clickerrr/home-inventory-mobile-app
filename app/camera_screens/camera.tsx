@@ -5,26 +5,87 @@ import GlobalStyles from '@/styles/GlobalStyles';
 import { useIsFocused } from '@react-navigation/native';
 import { router } from 'expo-router';
 import { TouchableOpacity, Text, View } from 'react-native';
+import ProductAdder from '@/components/ProductAdder';
+import { useState } from 'react';
+import axios from 'axios';
 
 const Camera = () => {
+    const [productBarcode, setProductBarcode] =
+        useState<string>('999999999999');
+    const [addingNewProduct, setAddingNewProduct] = useState<boolean>(false);
+    const [existingProduct, setExistingProduct] = useState<Product>(null);
+    const [checkingProductLoading, setCheckingProductLoading] =
+        useState<boolean>(false);
     const isFocused = useIsFocused();
+
+    const remoteCheckProduct = (upca: string) => {
+        console.log('checking...');
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        setCheckingProductLoading(true);
+        const result = axios
+            .get(`${baseUrl}/products/${upca}`)
+            .then((response) => {
+                console.log('axios result', response.data);
+                setExistingProduct(response.data);
+                setCheckingProductLoading(false);
+                setProductBarcode(response.data.upca);
+                productSampleData[response.data.upca] = response.data;
+                router.navigate({
+                    pathname: '/logged_item_creation/product_page',
+                    params: {
+                        barcodeId: response.data.upca,
+                        title: response.data.title,
+                        description: response.data.containerType,
+                    },
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+                if (error.response) {
+                    console.log(typeof error.response.status);
+                    if (error.response.status === 404) {
+                        setProductBarcode(upca);
+                        setAddingNewProduct(true);
+                        setExistingProduct(null);
+                    }
+                }
+                setCheckingProductLoading(false);
+            });
+    };
+
+    if (addingNewProduct) {
+        return (
+            <ProductAdder
+                upca={productBarcode}
+                onSubmit={(product: Product) => {
+                    setProductBarcode(product.upca);
+                    setAddingNewProduct(false);
+                    router.back();
+                    router.navigate({
+                        pathname: '/logged_item_creation/product_page',
+                        params: { barcodeId: productBarcode },
+                    });
+                }}
+            />
+        );
+    }
+
+    if (checkingProductLoading) {
+        return (
+            <View>
+                <Text>Loading</Text>
+            </View>
+        );
+    }
+
     return (
         <View style={GlobalStyles.container}>
             {isFocused ? (
                 <CameraScanner
                     handleBarcodeScanned={(result) => {
-                        console.log(result.data);
-
-                        const productExists = productSampleData[result.data];
-                        console.log(productExists);
-                        let productBarcode = result.data;
-                        if (productExists === undefined) {
-                            productBarcode = '999999999999';
-                        }
-                        router.navigate({
-                            pathname: '/logged_item_creation/product_page',
-                            params: { barcodeId: productBarcode },
-                        });
+                        console.log('barcode scanned', result.data);
+                        remoteCheckProduct(result.data);
+                        return;
                     }}
                 />
             ) : (

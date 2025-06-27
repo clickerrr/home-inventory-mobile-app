@@ -73,6 +73,8 @@ const IndividualRoomPage = () => {
                 renderItem={({ item }) => {
                     const productData: Product =
                         productSampleData[item.product];
+                    console.log('item', item);
+                    console.log('productData', productData);
                     return (
                         <TouchableOpacity
                             onPress={() => {

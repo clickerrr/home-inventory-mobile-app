@@ -18,6 +18,7 @@ import axios from 'axios';
 
 interface ProductAdderProps {
     upca: string;
+    onSubmit: (newProduct: Product) => void;
 }
 
 const dropdownOptions = [
@@ -27,7 +28,7 @@ const dropdownOptions = [
     { title: 'Can', id: 3 },
     { title: 'Other', id: 4 },
 ];
-const ProductAdder = ({ upca }: ProductAdderProps) => {
+const ProductAdder = ({ upca, onSubmit }: ProductAdderProps) => {
     const [productText, setProductText] = useState<string>('');
     const [scanningNewProduct, setScanningNewProduct] =
         useState<boolean>(false);
@@ -127,9 +128,9 @@ const ProductAdder = ({ upca }: ProductAdderProps) => {
                             nutritionalInformation: {},
                             loggedItems: [],
                         };
-                        remoteSubmitData(newProduct);
                         productSampleData[upca] = newProduct;
-                        router.back();
+                        remoteSubmitData(newProduct);
+                        onSubmit(newProduct);
                     }}
                     disabled={
                         productUpca === undefined ||

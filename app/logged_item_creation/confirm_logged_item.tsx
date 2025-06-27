@@ -23,7 +23,12 @@ const ConfirmItemPage = () => {
     };
 
     const renderLoggedItem = () => {
-        console.log(associatedProduct, location, loggedItem);
+        console.log(
+            'RENDER LOGGED ITEM',
+            associatedProduct,
+            location,
+            loggedItem
+        );
         const associatedProductObj: Product = JSON.parse(associatedProduct);
         const locationObj: Location = JSON.parse(location);
         const loggedItemObj: LoggedItem = JSON.parse(loggedItem);
@@ -139,6 +144,10 @@ const ConfirmItemPage = () => {
                             for (let i = 0; i < Number(quantity); i++) {
                                 const parsedLoggedItem: LoggedItem =
                                     JSON.parse(loggedItem);
+                                console.log(
+                                    'parsedLoggedItem',
+                                    parsedLoggedItem
+                                );
                                 const newLoggedItem: LoggedItem = {
                                     id: parsedLoggedItem.id + idCounter,
                                     dateLogged: parsedLoggedItem.dateLogged,

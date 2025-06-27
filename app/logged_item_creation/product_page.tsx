@@ -10,15 +10,15 @@ import productSampleData from '@/sampleData/ProductSampleData';
 
 const ProductPage = () => {
     const [product, setProduct] = useState<Product>();
-    const { barcodeId, other } = useLocalSearchParams();
+    const { barcodeId, title, description, other } = useLocalSearchParams();
     useEffect(() => {
         if (barcodeId === undefined) {
             return;
         }
         let newProduct: Product = {
             upca: barcodeId ? barcodeId : '-1',
-            title: 'Testing',
-            containerType: 'OTHER',
+            title: title ? title : 'Testing',
+            containerType: description ? description : 'OTHER',
             nutritionalInformation: null,
             loggedItems: [],
         };
