@@ -25,7 +25,7 @@ const rooms: Room[] = [
     {
         id: 2,
         title: 'Bedroom',
-        locations: [7, 8, 9],
+        locations: [6, 7, 8],
         house: 1,
     },
 ];

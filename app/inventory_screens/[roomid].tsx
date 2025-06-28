@@ -13,7 +13,6 @@ const RoomDetailView = () => {
     const [roomLocations, setRoomLocations] = useState<Location[]>([]);
 
     useEffect(() => {
-        console.log('REFRESHING');
         const parsedRoom: Room = JSON.parse(room);
         setRoomDetails(parsedRoom);
 
