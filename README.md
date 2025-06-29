@@ -12,9 +12,15 @@ A cross-platform mobile application built with **React Native** and **Java**, de
 - ✅**Categorization**: Organize items into customizable categories for better tracking.
 - ✅**Location Mapping**: Specify locations for items so that you are always aware of where they may be, this can also apply to multiple homes.
 - ✅**Responsive UI**: Clean and intuitive interface optimized for both Android and iOS devices.
-- 🚧 Connect to backend database.
+- ✅ Connect to backend database.
+     - ✅ Adding logged items is now fully functional and is connected to the backend.
+     - ✅ Folders now organize multiple of the same item.
+     - ✅ Locations and rooms are now synced from the backend.
+     - 🚧 Creation of new rooms and locations are not yet fully supported.
 - 🚧 Implement item image uploads.
 - 🚧 Implement removal and editing of existing items.
+     - ✅ Editing of products is now available.
+     - 🚧 Removal of products or logged items.
 - 🚧 Implement notifications for expired items.
 - 🚧 Implement household sharing and user logins.
 - 🚧 Implement more robust barcode support (external APIs).
@@ -28,7 +34,7 @@ A cross-platform mobile application built with **React Native** and **Java**, de
 | Frontend      | React Native (via Expo)    |
 | Backend       | Java Spring Boot           |
 | Database      | MySQL (Communication via JPA)  |
-| API Comm (WIP 🚧)      | Axios                      |
+| API Communication      | Axios                      |
 | Navigation    | React Navigation           |
 
 ---
@@ -45,10 +51,12 @@ home-inventory-mobile-app/
 │   ├── logged_item_creation/     # Logged Item Creation screens
 │   ├── newproduct/               # New Product screens
 │   ├── _layout.tsx               # Primary layout for app
+│   ├── etc...
 ├── components/
 │   ├── CameraScanner.tsx         # Reusable camera scanner components
 │   ├── ProductAdder.tsx          # Reusable product adder
 │   ├── RoomSelector.tsx          # Reusable room selector
+│   ├── etc...
 ├── sampleData/                   # For sample data without the need for API
 ├── styles/                       # Reusable stylesheets
 └── types/                        # Types commonly used
