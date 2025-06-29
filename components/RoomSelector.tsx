@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { House } from '@/types/House';
 import RoomSelectorStyles from '@/styles/RoomSelectorStyles';
 import { TouchableOpacity } from 'react-native';
+import { ContainerTypeDropdown } from '@/components/ContainerTypeDropdown';
 interface RoomSelectorProps {
     handleNext: (location: Location) => void;
     handleCancel: () => void;

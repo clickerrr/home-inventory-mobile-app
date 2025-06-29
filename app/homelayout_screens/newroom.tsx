@@ -1,6 +1,4 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import GlobalStyles from '@/styles/GlobalStyles';
 import { House } from '@/types/House';
 import { router, useLocalSearchParams } from 'expo-router';

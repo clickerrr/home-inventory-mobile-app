@@ -13,11 +13,20 @@ const ProductPageStyles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'center',
         width: '100%',
     },
     content: {
         width: '80%',
         height: '70%',
+        alignItems: 'center',
+    },
+    topContainer: {
+        height: '10%',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     buttonContainer: {
         display: 'flex',

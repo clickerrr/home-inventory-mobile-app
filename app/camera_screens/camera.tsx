@@ -42,7 +42,6 @@ const Camera = () => {
             .catch((error) => {
                 console.log(error);
                 if (error.response) {
-                    console.log(typeof error.response.status);
                     if (error.response.status === 404) {
                         setProductBarcode(upca);
                         setAddingNewProduct(true);

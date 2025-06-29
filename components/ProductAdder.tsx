@@ -50,7 +50,7 @@ const ProductAdder = ({ upca, onSubmit }: ProductAdderProps) => {
                 }}
                 autofocus={'off'}
                 onBarcodeScanned={(data) => {
-                    console.log(data.data);
+                    console.log('data.data: ', data.data);
                     setProductUpca(data.data);
                     setScanningNewProduct(false);
                 }}

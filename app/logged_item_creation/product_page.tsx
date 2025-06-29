@@ -34,83 +34,53 @@ const ProductPage = () => {
     }, [barcodeId]);
     const [currentQuantity, setCurrentQuantity] = useState(1);
     return (
-        <View style={ProductPageStyles.main}>
-            <View
-                style={[ProductPageStyles.container, ProductPageStyles.content]}
-            >
-                <Text
-                    style={[
-                        GlobalStyles.subHeader,
-                        ProductPageStyles.subHeader,
-                    ]}
-                >
-                    Product Title
-                </Text>
-                <Text style={GlobalStyles.text}>
-                    {product ? product.title : ''}
-                </Text>
-                <Text
-                    style={[
-                        GlobalStyles.subHeader,
-                        ProductPageStyles.subHeader,
-                    ]}
-                >
-                    Product Description
-                </Text>
-                <Text style={GlobalStyles.text}>
-                    {product ? product.containerType : ''}
-                </Text>
-                <Text
-                    style={[
-                        GlobalStyles.subHeader,
-                        ProductPageStyles.subHeader,
-                    ]}
-                >
-                    Product Amount
-                </Text>
-                <InputSpinner
-                    max={10}
-                    min={1}
-                    step={1}
-                    style={ProductPageStyles.spinnerButton}
-                    skin={'square'}
-                    colorMax={'#f04048'}
-                    colorMin={'#40c5f4'}
-                    value={currentQuantity}
-                    onChange={(num: number) => {
-                        setCurrentQuantity(num);
-                    }}
-                />
-            </View>
-            <View
-                style={[
-                    ProductPageStyles.container,
-                    ProductPageStyles.buttonContainer,
-                ]}
-            >
-                <TouchableOpacity
-                    style={GlobalStyles.buttonMain}
-                    onPress={() => {
-                        console.log('current quantity', currentQuantity);
-                        router.navigate({
-                            pathname: '/logged_item_creation/room_page',
-                            params: {
-                                associatedProduct: JSON.stringify(product),
-                                quantity: currentQuantity,
-                            },
-                        });
-                    }}
-                >
-                    <Text style={GlobalStyles.buttonText}>Next</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={GlobalStyles.buttonCancel}
-                    onPress={() => {
-                        router.navigate('/');
-                    }}
-                >
-                    <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
-                </TouchableOpacity>
+        <View style={GlobalStyles.main}>
+            <View style={GlobalStyles.container}>
+                <View style={[ProductPageStyles.content]}>
+                    <Text style={[GlobalStyles.subHeader, ProductPageStyles.subHeader]}>Product Title</Text>
+                    <Text style={GlobalStyles.text}>{product ? product.title : ''}</Text>
+                    <Text style={[GlobalStyles.subHeader, ProductPageStyles.subHeader]}>Product Description</Text>
+                    <Text style={GlobalStyles.text}>{product ? product.containerType : ''}</Text>
+                    <Text style={[GlobalStyles.subHeader, ProductPageStyles.subHeader]}>Product Amount</Text>
+                    <InputSpinner
+                        max={10}
+                        min={1}
+                        step={1}
+                        style={ProductPageStyles.spinnerButton}
+                        skin={'square'}
+                        colorMax={'#f04048'}
+                        colorMin={'#40c5f4'}
+                        value={currentQuantity}
+                        onChange={(num: number) => {
+                            setCurrentQuantity(num);
+                        }}
+                    />
+                </View>
+                <View style={[ProductPageStyles.container, ProductPageStyles.buttonContainer]}>
+                    <TouchableOpacity
+                        style={GlobalStyles.buttonMain}
+                        onPress={() => {
+                            console.log('current quantity', currentQuantity);
+                            router.navigate({
+                                pathname: '/logged_item_creation/room_page',
+                                params: {
+                                    associatedProduct: JSON.stringify(product),
+                                    quantity: currentQuantity,
+                                },
+                            });
+                        }}
+                    >
+                        <Text style={GlobalStyles.buttonText}>Next</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={GlobalStyles.buttonCancel}
+                        onPress={() => {
+                            router.navigate('/');
+                        }}
+                    >
+                        <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
