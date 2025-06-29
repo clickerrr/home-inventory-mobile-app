@@ -33,8 +33,8 @@ const RoomPage = () => {
             dateLogged: today.toISOString(),
             expirationDate: addWeeksToDate(today, 1).toISOString(),
             consumeByDate: addWeeksToDate(today, 1).toISOString(),
-            product: parsedProduct.upca,
-            location: location.id,
+            product: parsedProduct,
+            location: location,
             inventory: -1,
         };
         return newLoggedItem;

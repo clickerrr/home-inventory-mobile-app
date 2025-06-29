@@ -8,12 +8,11 @@ import logo from '@/assets/images/temp_product_image.jpg';
 import ProductPageStyles from '@/styles/ProductPageStyles';
 import axios from 'axios';
 import ProductEditForm from '@/components/ProductEditForm';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const IndividualProductPage = () => {
     const { productupca, product } = useLocalSearchParams();
-    const [productDetails, setProductDetails] = useState<Product | undefined>(
-        undefined
-    );
+    const [productDetails, setProductDetails] = useState<Product | undefined>(undefined);
     const [productContainer, setProductContainer] = useState<string>('');
     const [productTitle, setProductTitle] = useState<string>('');
     const [isLoading, setIsLoading] = useState(true);
@@ -51,11 +50,7 @@ const IndividualProductPage = () => {
     };
 
     if (isLoading) {
-        return (
-            <View>
-                <Text>Loading...</Text>
-            </View>
-        );
+        return <LoadingSpinner textToDisplay="Loading Products..." color={null} />;
     }
 
     const remoteUpdateProduct = (updatedProduct) => {
@@ -93,16 +88,10 @@ const IndividualProductPage = () => {
                     </>
                 ) : (
                     <>
-                        <Text style={GlobalStyles.headerText}>
-                            {productTitle}
-                        </Text>
+                        <Text style={GlobalStyles.headerText}>{productTitle}</Text>
                         <Text style={GlobalStyles.subHeader}>UPCA</Text>
-                        <Text style={GlobalStyles.text}>
-                            {productDetails?.upca}
-                        </Text>
-                        <Text style={GlobalStyles.subHeader}>
-                            Container Type
-                        </Text>
+                        <Text style={GlobalStyles.text}>{productDetails?.upca}</Text>
+                        <Text style={GlobalStyles.subHeader}>Container Type</Text>
                         <Text>{productContainer}</Text>
                     </>
                 )}

@@ -9,12 +9,11 @@ import InventoryStyles from '@/styles/InventoryStyles';
 import productSampleData from '@/sampleData/ProductSampleData';
 import { Product } from '@/types/Product';
 import tempProductImage from '@/assets/images/temp_product_image.jpg';
+import axios from 'axios';
 
 const IndividualRoomPage = () => {
     const { locationId, location } = useLocalSearchParams();
-    const [locationDetails, setLocationDetails] = useState<
-        Location | undefined
-    >(undefined);
+    const [locationDetails, setLocationDetails] = useState<Location | undefined>(undefined);
     const [itemsInLocation, setItemsInLocation] = useState<LoggedItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,22 +27,15 @@ const IndividualRoomPage = () => {
     useEffect(() => {
         if (location === undefined) return;
         const parsedLocation: Location = JSON.parse(location);
-        const loggedItems: number[] = parsedLocation.loggedItems;
 
-        console.log('!-------[loggeditems]:', loggedItems);
-        const locationItemsList: LoggedItem[] = [];
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        axios.get(`${baseUrl}/locations/${parsedLocation.id}/loggedItems`).then((response) => {
+            console.log('response.data', response.data);
 
-        console.log('In inventory sample logged items', sampleLoggedItems);
-        sampleLoggedItems.forEach((item: LoggedItem) => {
-            if (loggedItems.includes(item.id)) {
-                locationItemsList.push(item);
-            }
+            setItemsInLocation(response.data);
+            setLocationDetails(parsedLocation);
+            setIsLoading(false);
         });
-        console.log('locationItemsList', locationItemsList);
-
-        setLocationDetails(parsedLocation);
-        setItemsInLocation(locationItemsList);
-        setIsLoading(false);
     }, [locationId, location]);
     if (isLoading) {
         return <></>;
@@ -51,28 +43,18 @@ const IndividualRoomPage = () => {
     return (
         <View style={GlobalStyles.container}>
             <View style={InventoryStyles.headerContainer}>
-                <Text
-                    style={[
-                        GlobalStyles.headerText,
-                        InventoryStyles.headerText,
-                    ]}
-                >
-                    {locationDetails?.title}
-                </Text>
+                <Text style={[GlobalStyles.headerText, InventoryStyles.headerText]}>{locationDetails?.title}</Text>
             </View>
             <FlatList
                 ListEmptyComponent={
                     <View style={GlobalStyles.container}>
-                        <Text style={GlobalStyles.subHeader}>
-                            No items in this location
-                        </Text>
+                        <Text style={GlobalStyles.subHeader}>No items in this location</Text>
                     </View>
                 }
                 style={InventoryStyles.list}
                 data={itemsInLocation}
                 renderItem={({ item }) => {
-                    const productData: Product =
-                        productSampleData[item.product];
+                    const productData: Product = item.product;
                     console.log('item', item);
                     console.log('productData', productData);
                     return (
@@ -85,35 +67,15 @@ const IndividualRoomPage = () => {
                                     },
                                 });
                             }}
-                            style={[
-                                InventoryStyles.button,
-                                InventoryStyles.locationDetailsButton,
-                            ]}
+                            style={[InventoryStyles.button, InventoryStyles.locationDetailsButton]}
                         >
-                            <View
-                                style={
-                                    InventoryStyles.locationDetailsButtonInternal
-                                }
-                            >
+                            <View style={InventoryStyles.locationDetailsButtonInternal}>
                                 {productData !== undefined ? (
                                     <>
-                                        <View
-                                            style={
-                                                InventoryStyles.productIconContainer
-                                            }
-                                        >
-                                            <Image
-                                                style={
-                                                    InventoryStyles.productIcon
-                                                }
-                                                source={tempProductImage}
-                                            />
+                                        <View style={InventoryStyles.productIconContainer}>
+                                            <Image style={InventoryStyles.productIcon} source={tempProductImage} />
                                         </View>
-                                        <View
-                                            style={
-                                                InventoryStyles.loggedItemDetailsContainer
-                                            }
-                                        >
+                                        <View style={InventoryStyles.loggedItemDetailsContainer}>
                                             <Text
                                                 style={[
                                                     InventoryStyles.buttonText,
@@ -123,11 +85,7 @@ const IndividualRoomPage = () => {
                                             >
                                                 {productData.title}
                                             </Text>
-                                            <View
-                                                style={
-                                                    InventoryStyles.loggedItemDetailsSection
-                                                }
-                                            >
+                                            <View style={InventoryStyles.loggedItemDetailsSection}>
                                                 <Text
                                                     style={[
                                                         InventoryStyles.locationDetailsButtonSubtitle,
@@ -136,23 +94,11 @@ const IndividualRoomPage = () => {
                                                 >
                                                     Date Logged
                                                 </Text>
-                                                <Text
-                                                    style={
-                                                        InventoryStyles.buttonText
-                                                    }
-                                                >
-                                                    {formatDate(
-                                                        new Date(
-                                                            item.dateLogged
-                                                        )
-                                                    )}
+                                                <Text style={InventoryStyles.buttonText}>
+                                                    {formatDate(new Date(item.dateLogged))}
                                                 </Text>
                                             </View>
-                                            <View
-                                                style={
-                                                    InventoryStyles.loggedItemDetailsSection
-                                                }
-                                            >
+                                            <View style={InventoryStyles.loggedItemDetailsSection}>
                                                 <Text
                                                     style={[
                                                         InventoryStyles.locationDetailsButtonSubtitle,
@@ -161,24 +107,14 @@ const IndividualRoomPage = () => {
                                                 >
                                                     Expiration Date
                                                 </Text>
-                                                <Text
-                                                    style={
-                                                        InventoryStyles.buttonText
-                                                    }
-                                                >
-                                                    {formatDate(
-                                                        new Date(
-                                                            item.expirationDate
-                                                        )
-                                                    )}
+                                                <Text style={InventoryStyles.buttonText}>
+                                                    {formatDate(new Date(item.expirationDate))}
                                                 </Text>
                                             </View>
                                         </View>
                                     </>
                                 ) : (
-                                    <Text style={InventoryStyles.buttonText}>
-                                        {item.product}
-                                    </Text>
+                                    <Text style={InventoryStyles.buttonText}>{item.product}</Text>
                                 )}
                             </View>
                         </TouchableOpacity>
