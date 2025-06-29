@@ -11,21 +11,14 @@ interface ProductEditFormProps {
     onSubmit: (newTitle: string, newContainerType: string) => void;
     onCancel: () => void;
 }
-const ProductEditForm = ({
-    productTitle,
-    containerType,
-    onSubmit,
-    onCancel,
-}: ProductEditFormProps) => {
+const ProductEditForm = ({ productTitle, containerType, onSubmit, onCancel }: ProductEditFormProps) => {
     useEffect(() => {
         setProductTitleText(productTitle);
         setProductContainerType(containerType);
     }, []);
     const [productTitleText, setProductTitleText] = useState<string>('');
-    const [productTitleTextFocused, setProductTitleTextFocused] =
-        useState<boolean>(false);
-    const [productContainerType, setProductContainerType] =
-        useState<string>('');
+    const [productTitleTextFocused, setProductTitleTextFocused] = useState<boolean>(false);
+    const [productContainerType, setProductContainerType] = useState<string>('');
     return (
         <View style={ProductEditFormStyles.container}>
             <TextInput
@@ -48,10 +41,7 @@ const ProductEditForm = ({
             >
                 <Text style={GlobalStyles.buttonText}>Submit</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                style={[GlobalStyles.buttonMain, ProductEditFormStyles.item]}
-                onPress={onCancel}
-            >
+            <TouchableOpacity style={[GlobalStyles.buttonMain, ProductEditFormStyles.item]} onPress={onCancel}>
                 <Text style={GlobalStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
         </View>

@@ -4,13 +4,7 @@ import ProductAdderStyles from '@/styles/ProductAdderStyles';
 import { Product } from '@/types/Product';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import {
-    View,
-    Text,
-    TouchableHighlight,
-    TextInput,
-    TouchableOpacity,
-} from 'react-native';
+import { View, Text, TouchableHighlight, TextInput, TouchableOpacity } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { CameraView } from 'expo-camera';
 import CameraStyles from '@/styles/CameraStyles';
@@ -30,10 +24,8 @@ const dropdownOptions = [
 ];
 const ProductAdder = ({ upca, onSubmit }: ProductAdderProps) => {
     const [productText, setProductText] = useState<string>('');
-    const [scanningNewProduct, setScanningNewProduct] =
-        useState<boolean>(false);
-    const [productTextFocused, setProductTextFocused] =
-        useState<boolean>(false);
+    const [scanningNewProduct, setScanningNewProduct] = useState<boolean>(false);
+    const [productTextFocused, setProductTextFocused] = useState<boolean>(false);
     const [containerType, setContainerType] = useState({
         title: 'None',
         id: -1,
@@ -79,9 +71,7 @@ const ProductAdder = ({ upca, onSubmit }: ProductAdderProps) => {
                         }}
                         style={GlobalStyles.buttonMain}
                     >
-                        <Text style={GlobalStyles.buttonText}>
-                            Scan Item to Add UPC
-                        </Text>
+                        <Text style={GlobalStyles.buttonText}>Scan Item to Add UPC</Text>
                     </TouchableOpacity>
                 </View>
             ) : (
@@ -103,9 +93,7 @@ const ProductAdder = ({ upca, onSubmit }: ProductAdderProps) => {
                 />
             </View>
             <View style={ProductAdderStyles.container}>
-                <Text style={[ProductAdderStyles.label]}>
-                    Product Container Type
-                </Text>
+                <Text style={[ProductAdderStyles.label]}>Product Container Type</Text>
                 <Dropdown
                     style={ProductAdderStyles.dropdown}
                     data={dropdownOptions}
@@ -132,16 +120,10 @@ const ProductAdder = ({ upca, onSubmit }: ProductAdderProps) => {
                         remoteSubmitData(newProduct);
                         onSubmit(newProduct);
                     }}
-                    disabled={
-                        productUpca === undefined ||
-                        productText === null ||
-                        containerType.title === 'None'
-                    }
+                    disabled={productUpca === undefined || productText === null || containerType.title === 'None'}
                     style={[
                         GlobalStyles.buttonMain,
-                        productUpca === undefined ||
-                        productText.trim().length === 0 ||
-                        containerType.title === 'None'
+                        productUpca === undefined || productText.trim().length === 0 || containerType.title === 'None'
                             ? GlobalStyles.buttonMainDisabled
                             : '',
                     ]}
