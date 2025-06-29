@@ -9,7 +9,6 @@ A cross-platform mobile application built with **React Native** and **Java**, de
 ## 🚀 Features
 
 - ✅**Inventory Management**: Add, edit, and delete items with details like name, category, quantity, and location.
-- ✅**Categorization**: Organize items into customizable categories for better tracking.
 - ✅**Location Mapping**: Specify locations for items so that you are always aware of where they may be, this can also apply to multiple homes.
 - ✅**Responsive UI**: Clean and intuitive interface optimized for both Android and iOS devices.
 - ✅ Connect to backend database.
