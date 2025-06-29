@@ -5,41 +5,46 @@ import InventoryStyles from '@/styles/InventoryStyles';
 import { useEffect, useState } from 'react';
 import { house, rooms } from '@/sampleData/RoomSelectorSampleData';
 import { Room } from '@/types/Room';
-import icon from '@/assets/images/barcode-logo.png';
+import axios from 'axios';
+import LoadingSpinner from '@/components/LoadingSpinner';
 const Inventory = () => {
     const [roomsData, setRoomsData] = useState<Room[]>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        setRoomsData(rooms);
-    }, [rooms]);
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        axios.get(`${baseUrl}/rooms`).then((response) => {
+            console.log(response.data);
+            setRoomsData(response.data);
+            setIsLoading(false);
+        });
+    }, []);
     return (
         <View style={InventoryStyles.container}>
             <View style={InventoryStyles.content}>
-                <Text
-                    style={[GlobalStyles.subHeader, InventoryStyles.subHeader]}
-                >
-                    Tap on a room to see details
-                </Text>
-                <FlatList
-                    style={InventoryStyles.list}
-                    data={roomsData}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            onPress={() => {
-                                router.navigate({
-                                    pathname: `/inventory_screens/${item.id}`,
-                                    params: { room: JSON.stringify(item) },
-                                });
-                            }}
-                            style={InventoryStyles.button}
-                        >
-                            <Text style={GlobalStyles.buttonText}>
-                                {item.title}
-                            </Text>
-                        </TouchableOpacity>
-                    )}
-                    keyExtractor={(item) => item.id.toString()}
-                />
+                <Text style={[GlobalStyles.subHeader, InventoryStyles.subHeader]}>Tap on a room to see details</Text>
+                {isLoading ? (
+                    <LoadingSpinner textToDisplay="Loading Rooms... " />
+                ) : (
+                    <FlatList
+                        style={InventoryStyles.list}
+                        data={roomsData}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    router.navigate({
+                                        pathname: `/inventory_screens/${item.id}`,
+                                        params: { room: JSON.stringify(item) },
+                                    });
+                                }}
+                                style={InventoryStyles.button}
+                            >
+                                <Text style={GlobalStyles.buttonText}>{item.title}</Text>
+                            </TouchableOpacity>
+                        )}
+                        keyExtractor={(item) => item.id.toString()}
+                    />
+                )}
             </View>
             <View style={GlobalStyles.buttonContainer}>
                 <TouchableOpacity
