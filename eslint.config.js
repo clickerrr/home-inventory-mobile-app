@@ -37,10 +37,7 @@ export default [
             'react/react-in-jsx-scope': 'off', // Not needed in React 17+
             'react-hooks/rules-of-hooks': 'error', // Enforce Hooks rules
             'react-hooks/exhaustive-deps': 'warn', // Warn about missing deps in useEffect
-            '@typescript-eslint/no-unused-vars': [
-                'warn',
-                { argsIgnorePattern: '^_' },
-            ],
+            '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
             '@typescript-eslint/explicit-module-boundary-types': 'off',
         },
         settings: {

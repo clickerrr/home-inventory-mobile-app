@@ -1,11 +1,4 @@
-import {
-    View,
-    Text,
-    TouchableHighlight,
-    Image,
-    Alert,
-    TouchableOpacity,
-} from 'react-native';
+import { View, Text, TouchableHighlight, Image, Alert, TouchableOpacity } from 'react-native';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import barcodeLogo from '@/assets/images/barcode-logo.png';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -20,6 +13,7 @@ const Index = () => {
     const [permission, requestPermission] = useCameraPermissions();
 
     const { flashText, loggedItem } = useLocalSearchParams();
+
     useEffect(() => {
         if (flashText && loggedItem) {
             Alert.alert('Success', 'Successfully added a new item', [
@@ -36,13 +30,8 @@ const Index = () => {
     if (!permission.granted) {
         return (
             <View style={GlobalStyles.container}>
-                <Text style={GlobalStyles.largeText}>
-                    We need your permission to show the camera
-                </Text>
-                <TouchableOpacity
-                    style={GlobalStyles.buttonMain}
-                    onPress={requestPermission}
-                >
+                <Text style={GlobalStyles.largeText}>We need your permission to show the camera</Text>
+                <TouchableOpacity style={GlobalStyles.buttonMain} onPress={requestPermission}>
                     <Text style={GlobalStyles.buttonText}></Text>
                 </TouchableOpacity>
             </View>
@@ -66,9 +55,7 @@ const Index = () => {
         <View style={GlobalStyles.container}>
             <View style={[GlobalStyles.container, IndexStyles.content]}>
                 <Image style={IndexStyles.icon} source={barcodeLogo} />
-                <Text style={[GlobalStyles.headerText, IndexStyles.titleText]}>
-                    Home Inventory Management
-                </Text>
+                <Text style={[GlobalStyles.headerText, IndexStyles.titleText]}>Home Inventory Management</Text>
             </View>
             <View style={GlobalStyles.buttonContainer}>
                 <TouchableOpacity

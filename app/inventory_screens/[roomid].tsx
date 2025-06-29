@@ -6,6 +6,7 @@ import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { Location } from '@/types/Location';
 import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
+import axios from 'axios';
 
 const RoomDetailView = () => {
     const { id, room } = useLocalSearchParams();
@@ -15,30 +16,20 @@ const RoomDetailView = () => {
     useEffect(() => {
         const parsedRoom: Room = JSON.parse(room);
         setRoomDetails(parsedRoom);
+        console.log('parsedRoom:', parsedRoom);
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        axios.get(`${baseUrl}/rooms/${parsedRoom.id}/locations`).then((response) => {
+            console.log('locations response', response.data);
+            const locationsResponse = response.data;
 
-        const roomLocations: number[] = parsedRoom.locations;
-        const validLocations: Location[] = [];
-        locations.forEach((location: Location) => {
-            if (roomLocations.includes(location.id)) {
-                validLocations.push(location);
-            }
+            setRoomLocations(locationsResponse);
         });
-        setRoomLocations(validLocations);
     }, [id, room, locations]);
     return (
         <View style={GlobalStyles.container}>
             <View style={InventoryStyles.headerContainer}>
-                <Text
-                    style={[
-                        GlobalStyles.headerText,
-                        InventoryStyles.headerText,
-                    ]}
-                >
-                    {roomDetails?.title}
-                </Text>
-                <Text style={GlobalStyles.subHeader}>
-                    Tap on a room to see whats inside
-                </Text>
+                <Text style={[GlobalStyles.headerText, InventoryStyles.headerText]}>{roomDetails?.title}</Text>
+                <Text style={GlobalStyles.subHeader}>Tap on a room to see whats inside</Text>
             </View>
             <FlatList
                 style={InventoryStyles.list}
@@ -55,9 +46,7 @@ const RoomDetailView = () => {
                         key={item.id}
                         style={InventoryStyles.button}
                     >
-                        <Text style={InventoryStyles.buttonText}>
-                            {item.title}
-                        </Text>
+                        <Text style={InventoryStyles.buttonText}>{item.title}</Text>
                     </TouchableOpacity>
                 )}
             />
@@ -72,9 +61,7 @@ const RoomDetailView = () => {
                     }}
                     style={GlobalStyles.buttonMain}
                 >
-                    <Text style={GlobalStyles.buttonText}>
-                        Add New Location
-                    </Text>
+                    <Text style={GlobalStyles.buttonText}>Add New Location</Text>
                 </TouchableOpacity>
             </View>
         </View>
