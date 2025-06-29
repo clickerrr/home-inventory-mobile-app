@@ -18,7 +18,7 @@ A cross-platform mobile application built with **React Native** and **Java**, de
      - ✅ Locations and rooms are now synced from the backend.
      - 🚧 Creation of new rooms and locations are not yet fully supported.
 - 🚧 Implement item image uploads.
-- 🚧 Implement removal and editing of existing items.
+- 🚧 Implement removal and editing of existing products/logged items.
      - ✅ Editing of products is now available.
      - 🚧 Removal of products or logged items.
 - 🚧 Implement notifications for expired items.
