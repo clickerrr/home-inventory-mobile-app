@@ -3,10 +3,17 @@
 	"compilerOptions": {
 		"strict": true,
         "jsx": "react-native",
-		"moduleResolution": "node16",
+        "types": ["react", "react-native"],
+		"moduleResolution": "node",
 		"paths": {
 			"@/*": ["./*"]
 		}
 	},
-	"include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
+    "include": [
+        "app",
+        "components",
+        ".expo/types/**/*.ts",
+        "expo-env.d.ts",
+        "eslint.config.js"
+    ]
 }

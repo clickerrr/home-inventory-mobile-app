@@ -6,16 +6,20 @@ import { Product } from '@/types/Product';
 import InventoryProductStyles from '@/styles/InventoryProductStyles';
 import { router, useFocusEffect } from 'expo-router';
 import axios from 'axios';
+import ProductListFolder from '@/components/ProductListFolder';
+import ProductListElement from '@/components/ProductListElement';
 
 const ProductList = () => {
     const [productData, setProductData] = useState<Product[]>([]);
     const [listRefreshing, setListRefreshing] = useState<boolean>(false);
-    useEffect(() => {}, []);
+    const [productCountMap, setProductCountMap] = useState(new Map());
+
     useFocusEffect(
         useCallback(() => {
             loadData();
         }, [])
     );
+
     const loadData = () => {
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
 
@@ -23,9 +27,15 @@ const ProductList = () => {
             .get(`${baseUrl}/products`)
             .then((result) => {
                 console.log(result.data);
+
                 const networkedProducts = [];
                 result.data.forEach((element) => {
                     networkedProducts.push(element);
+                    if (productCountMap.get(element.upca)) {
+                        productCountMap.set(element.upca, element.get(element.upca) + 1);
+                    } else {
+                        productCountMap.set(element.upca, 0);
+                    }
                 });
                 setProductData(networkedProducts);
                 console.log('Set Networked Products');
@@ -33,28 +43,12 @@ const ProductList = () => {
             .catch((error) => {
                 console.error(error);
             });
-        //loadSampleData();
-    };
-
-    const loadSampleData = () => {
-        const allEntries = Object.entries(productSampleData);
-        const allProducts = allEntries.map(([_, products]) => {
-            return products;
-        });
-
-        console.log(allProducts);
-        setProductData(allProducts);
     };
 
     return (
         <View style={InventoryProductStyles.container}>
             <View style={InventoryProductStyles.content}>
-                <Text
-                    style={[
-                        GlobalStyles.subHeader,
-                        InventoryProductStyles.subHeader,
-                    ]}
-                >
+                <Text style={[GlobalStyles.subHeader, InventoryProductStyles.subHeader]}>
                     Tap on a product to view its details
                 </Text>
                 <FlatList
@@ -70,9 +64,7 @@ const ProductList = () => {
                                 });
                             }}
                         >
-                            <Text style={GlobalStyles.buttonText}>
-                                {item.title}
-                            </Text>
+                            <Text style={GlobalStyles.buttonText}>{item.title}</Text>
                         </TouchableOpacity>
                     )}
                     keyExtractor={(item) => item.upca}

@@ -47,6 +47,12 @@ const InventoryStyles = StyleSheet.create({
         elevation: 5,
         margin: 'auto',
     },
+    folderButton: {
+        height: 100,
+        maxHeight: 350,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
     locationDetailsButton: {
         height: 200,
         maxHeight: 350,
@@ -54,6 +60,7 @@ const InventoryStyles = StyleSheet.create({
     locationDetailsButtonInternal: {
         display: 'flex',
         justifyContent: 'flex-start',
+        alignItems: 'center',
         //backgroundColor: 'red',
         alignSelf: 'center',
         width: '100%',
