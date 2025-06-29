@@ -97,5 +97,5 @@ home-inventory-mobile-app/
 
 **Bartek Swiech**
 
-- [LinkedIn]((https://www.linkedin.com/in/bartoszswiech/))
+- [LinkedIn](https://www.linkedin.com/in/bartoszswiech/)
 - [GitHub](https://github.com/clickerrr)
