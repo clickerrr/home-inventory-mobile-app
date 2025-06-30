@@ -6,7 +6,7 @@ import NewLocationStyles from '@/styles/NewLocationStyles';
 import { useEffect, useState } from 'react';
 import { Room } from '@/types/Room';
 import { Location } from '@/types/Location';
-import { locations, rooms } from '@/sampleData/RoomSelectorSampleData';
+import axios from 'axios';
 
 const NewLocationScreen = () => {
     const { paramRoom } = useLocalSearchParams();
@@ -24,20 +24,11 @@ const NewLocationScreen = () => {
             return;
         }
         const newLocationToAdd: Location = {
-            id: locations.length,
             title: locationTitleText,
-            room: room.id,
             loggedItems: [],
         };
-
-        const foundRoom = rooms.find((element) => {
-            return element.id === room.id;
-        });
-        if (foundRoom === undefined) {
-            return;
-        }
-        locations.push(newLocationToAdd);
-        foundRoom.locations.push(newLocationToAdd.id);
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        axios.post(`${baseUrl}/locations?roomId=${room.id}`, newLocationToAdd);
     };
 
     return (
