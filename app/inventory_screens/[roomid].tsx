@@ -1,19 +1,25 @@
 import { Room } from '@/types/Room';
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
 import { locations } from '@/sampleData/RoomSelectorSampleData';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { Location } from '@/types/Location';
 import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
 import axios from 'axios';
+import { sortObjectsById } from '@/utils/SortObjects';
 
 const RoomDetailView = () => {
     const { id, room } = useLocalSearchParams();
     const [roomDetails, setRoomDetails] = useState<Room | undefined>(undefined);
     const [roomLocations, setRoomLocations] = useState<Location[]>([]);
 
-    useEffect(() => {
+    useFocusEffect(
+        useCallback(() => {
+            loadData();
+        }, [])
+    );
+    const loadData = () => {
         const parsedRoom: Room = JSON.parse(room);
         setRoomDetails(parsedRoom);
         console.log('parsedRoom:', parsedRoom);
@@ -21,10 +27,11 @@ const RoomDetailView = () => {
         axios.get(`${baseUrl}/rooms/${parsedRoom.id}/locations`).then((response) => {
             console.log('locations response', response.data);
             const locationsResponse = response.data;
-
-            setRoomLocations(locationsResponse);
+            const sortedLocations = sortObjectsById(locationsResponse);
+            setRoomLocations(sortedLocations);
         });
-    }, [id, room, locations]);
+    };
+
     return (
         <View style={GlobalStyles.container}>
             <View style={InventoryStyles.headerContainer}>

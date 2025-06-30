@@ -12,6 +12,7 @@
     "include": [
         "app",
         "components",
+        "utils",
         ".expo/types/**/*.ts",
         "expo-env.d.ts",
         "eslint.config.js"

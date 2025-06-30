@@ -37,6 +37,7 @@ const ProductList = () => {
                         productCountMap.set(element.upca, 0);
                     }
                 });
+                const sortedProducts = sortObjectsById(networkedProducts);
                 setProductData(networkedProducts);
                 console.log('Set Networked Products');
             })
