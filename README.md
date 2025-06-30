@@ -13,14 +13,15 @@ A cross-platform mobile application built with **React Native** and **Java**, de
 - ✅**Responsive UI**: Clean and intuitive interface optimized for both Android and iOS devices.
 - ✅ Connect to backend database.
      - ✅ Adding logged items is now fully functional and is connected to the backend.
-     - ✅ Folders now organize multiple of the same item.
+     - ✅ Folders now organize multiple logged items of the same produt.
      - ✅ Locations and rooms are now synced from the backend.
-     - 🚧 Creation of new rooms and locations are not yet fully supported.
+     - ✅ Creation of new rooms and locations.
 - 🚧 Implement item image uploads.
 - 🚧 Implement removal and editing of existing products/logged items.
      - ✅ Editing of products is now available.
      - 🚧 Removal of products or logged items.
-- 🚧 Implement notifications for expired items.
+- 🚧 Implement removal and/or editing of rooms and locations.
+- 🚧 Implement notifications and  for expired items.
 - 🚧 Implement household sharing and user logins.
 - 🚧 Implement more robust barcode support (external APIs).
 
