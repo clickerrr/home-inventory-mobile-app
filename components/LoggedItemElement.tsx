@@ -6,6 +6,9 @@ import { router } from 'expo-router';
 import { TouchableOpacity, Text, View, Image } from 'react-native';
 import tempProductImage from '@/assets/images/temp_product_image.jpg';
 import { LoggedItem } from '@/types/LoggedItem';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useEffect, useState } from 'react';
 
 interface ProductListElementProps {
     item: LoggedItem;
@@ -17,7 +20,20 @@ const LoggedItemElement = ({ item }: ProductListElementProps) => {
         const day = String(date.getDate()).padStart(2, '0');
         return `${month}/${day}/${year}`;
     };
+    const [warning, setWarning] = useState(false);
+    const [warningColor, setWarningColor] = useState('red');
     const productData: Product = item.product;
+    useEffect(() => {
+        const today = new Date();
+        const expire = new Date(item.expirationDate);
+        if (today.getTime() > expire.getTime()) {
+            setWarningColor('red');
+            setWarning(true);
+        } else if (today.getTime() === expire.getTime()) {
+            setWarningColor('orange');
+            setWarning(true);
+        }
+    }, []);
     return (
         <TouchableOpacity
             onPress={() => {
@@ -58,6 +74,7 @@ const LoggedItemElement = ({ item }: ProductListElementProps) => {
                                     {formatDate(new Date(item.expirationDate))}
                                 </Text>
                             </View>
+                            {warning ? <MaterialIcons name={'warning'} color={warningColor} size={30} /> : <></>}
                         </View>
                     </>
                 ) : (

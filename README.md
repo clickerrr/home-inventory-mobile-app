@@ -12,30 +12,30 @@ A cross-platform mobile application built with **React Native** and **Java**, de
 - ✅**Location Mapping**: Specify locations for items so that you are always aware of where they may be, this can also apply to multiple homes.
 - ✅**Responsive UI**: Clean and intuitive interface optimized for both Android and iOS devices.
 - ✅ Connect to backend database.
-     - ✅ Adding logged items is now fully functional and is connected to the backend.
-     - ✅ Folders now organize multiple logged items of the same produt.
-     - ✅ Locations and rooms are now synced from the backend.
-     - ✅ Creation of new rooms and locations.
-- 🚧 Implement item image uploads.
+    - ✅ Adding logged items is now fully functional and is connected to the backend.
+    - ✅ Folders now organize multiple logged items of the same produt.
+    - ✅ Locations and rooms are now synced from the backend.
+    - ✅ Creation of new rooms and locations.
 - 🚧 Implement removal and editing of existing products/logged items.
-     - ✅ Editing of products is now available.
-     - 🚧 Removal of products or logged items.
+    - ✅ Editing of products is now available.
+    - 🚧 Removal of products or logged items.
+- ✅ Implement notifications and expired items.
 - 🚧 Implement removal and/or editing of rooms and locations.
-- 🚧 Implement notifications and  for expired items.
 - 🚧 Implement household sharing and user logins.
 - 🚧 Implement more robust barcode support (external APIs).
+- 🚧 Implement item image uploads.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer         | Technology                |
-|---------------|----------------------------|
-| Frontend      | React Native (via Expo)    |
-| Backend       | Java Spring Boot           |
-| Database      | MySQL (Communication via JPA)  |
-| API Communication      | Axios                      |
-| Navigation    | React Navigation           |
+| Layer             | Technology                    |
+| ----------------- | ----------------------------- |
+| Frontend          | React Native (via Expo)       |
+| Backend           | Java Spring Boot              |
+| Database          | MySQL (Communication via JPA) |
+| API Communication | Axios                         |
+| Navigation        | React Navigation              |
 
 ---
 
@@ -70,26 +70,26 @@ home-inventory-mobile-app/
 
 1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/clickerrr/home-inventory-mobile-app.git
-   cd home-inventory-mobile-app
-   ```
+    ```bash
+    git clone https://github.com/clickerrr/home-inventory-mobile-app.git
+    cd home-inventory-mobile-app
+    ```
 
 2. **Install dependencies:**
 
-   ```bash
-   npm install
-   # or
-   bun install
-   ```
-   
+    ```bash
+    npm install
+    # or
+    bun install
+    ```
+
 3. **Run the app:**
 
-   ```bash
-   npm run dev
-   # or
-   bun run dev
-   ```
+    ```bash
+    npm run dev
+    # or
+    bun run dev
+    ```
 
 ---
 
