@@ -15,11 +15,7 @@ const TabsLayout = () => {
                 options={{
                     title: 'Inventory',
                     tabBarIcon: ({ color }: { color: string }) => (
-                        <MaterialIcons
-                            size={28}
-                            name="inventory"
-                            color={color}
-                        />
+                        <MaterialIcons size={28} name="inventory" color={color} />
                     ),
                 }}
             />
@@ -27,9 +23,7 @@ const TabsLayout = () => {
                 name="homelayout"
                 options={{
                     title: 'Home Layout',
-                    tabBarIcon: ({ color }: { color: string }) => (
-                        <AntDesign size={28} name="home" color={color} />
-                    ),
+                    tabBarIcon: ({ color }: { color: string }) => <AntDesign size={28} name="home" color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -46,11 +40,7 @@ const TabsLayout = () => {
                 options={{
                     title: 'Settings',
                     tabBarIcon: ({ color }: { color: string }) => (
-                        <MaterialIcons
-                            size={28}
-                            name="settings"
-                            color={color}
-                        />
+                        <MaterialIcons size={28} name="settings" color={color} />
                     ),
                 }}
             />
