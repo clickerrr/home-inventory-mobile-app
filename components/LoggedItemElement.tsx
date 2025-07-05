@@ -29,11 +29,11 @@ const LoggedItemElement = ({ item }: ProductListElementProps) => {
         if (today.getTime() > expire.getTime()) {
             setWarningColor('red');
             setWarning(true);
-        } else if (today.getTime() === expire.getTime()) {
+        } else if (today > expire.getTime() - 86400000) {
             setWarningColor('orange');
             setWarning(true);
         }
-    }, []);
+    }, [item.expirationDate]);
     return (
         <TouchableOpacity
             onPress={() => {
