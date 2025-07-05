@@ -1,13 +1,11 @@
 import GlobalStyles from '@/styles/GlobalStyles';
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import productSampleData from '@/sampleData/ProductSampleData';
 import { Product } from '@/types/Product';
 import InventoryProductStyles from '@/styles/InventoryProductStyles';
 import { router, useFocusEffect } from 'expo-router';
 import axios from 'axios';
-import ProductListFolder from '@/components/ProductListFolder';
-import ProductListElement from '@/components/ProductListElement';
+import { sortObjectsById } from '@/utils/SortObjects';
 
 const ProductList = () => {
     const [productData, setProductData] = useState<Product[]>([]);
@@ -38,7 +36,7 @@ const ProductList = () => {
                     }
                 });
                 const sortedProducts = sortObjectsById(networkedProducts);
-                setProductData(networkedProducts);
+                setProductData(sortedProducts);
                 console.log('Set Networked Products');
             })
             .catch((error) => {

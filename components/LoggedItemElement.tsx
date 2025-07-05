@@ -3,14 +3,15 @@ import InventoryProductStyles from '@/styles/InventoryProductStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
 import { Product } from '@/types/Product';
 import { router } from 'expo-router';
-import { TouchableOpacity, Text, View, Image } from 'react-native';
+import { TouchableOpacity, Text, View, Image, ActionSheetIOS } from 'react-native';
 import tempProductImage from '@/assets/images/temp_product_image.jpg';
 import { LoggedItem } from '@/types/LoggedItem';
 
 interface ProductListElementProps {
     item: LoggedItem;
+    onDelete: (item: LoggedItem) => void;
 }
-const LoggedItemElement = ({ item }: ProductListElementProps) => {
+const LoggedItemElement = ({ item, onDelete }: ProductListElementProps) => {
     const formatDate = (date: Date): string => {
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
@@ -20,6 +21,23 @@ const LoggedItemElement = ({ item }: ProductListElementProps) => {
     const productData: Product = item.product;
     return (
         <TouchableOpacity
+            onLongPress={() => {
+                ActionSheetIOS.showActionSheetWithOptions(
+                    {
+                        options: ['Delete', 'Cancel'],
+                        destructiveButtonIndex: 0,
+                        cancelButtonIndex: 1,
+                        userInterfaceStyle: 'dark',
+                    },
+                    (buttonIndex) => {
+                        if (buttonIndex === 1) {
+                            // cancel action
+                        } else if (buttonIndex === 0) {
+                            onDelete(item);
+                        }
+                    }
+                );
+            }}
             onPress={() => {
                 router.navigate({
                     pathname: `/inventory_screens/productsview/${productData.upca}`,

@@ -8,6 +8,7 @@ import InventoryStyles from '@/styles/InventoryStyles';
 import axios from 'axios';
 import LoggedItemElement from '@/components/LoggedItemElement';
 import LoggedItemFolder from '@/components/LoggedItemFolder';
+import { sortObjectsById } from '@/utils/SortObjects';
 
 const IndividualRoomPage = () => {
     const { locationId, location } = useLocalSearchParams();
@@ -16,15 +17,15 @@ const IndividualRoomPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [productCountMap, setProductCountMap] = useState(null);
 
-    useEffect(() => {
+    const loadData = () => {
         const parsedLocation: Location = JSON.parse(location);
-
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         axios.get(`${baseUrl}/locations/${parsedLocation.id}/loggedItems`).then((response) => {
             console.log('response.data', response.data);
 
             const countMap = new Map();
-            response.data.forEach((element) => {
+            const sortedData = sortObjectsById(response.data);
+            sortedData.forEach((element) => {
                 const product = element.product;
                 console.log('product', product);
 
@@ -42,24 +43,20 @@ const IndividualRoomPage = () => {
             setLocationDetails(parsedLocation);
             setIsLoading(false);
         });
+    };
+    useEffect(() => {
+        loadData();
     }, [locationId, location]);
 
     if (isLoading) {
         return <></>;
     }
 
-    const renderLoggedItems = (item: LoggedItem) => {
-        const productUpca = item.product.upca;
-        if (productCountMap.get(productUpca).length > 1) {
-            return (
-                <LoggedItemFolder
-                    items={productCountMap.get(productUpca)}
-                    itemsCount={productCountMap.get(productUpca).length}
-                />
-            );
-        } else {
-            return <LoggedItemElement item={item} />;
-        }
+    const remoteDeleteItem = (item) => {
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        axios.delete(`${baseUrl}/loggedItem/${item.id}`).then(() => {
+            loadData();
+        });
     };
 
     return (
@@ -79,9 +76,26 @@ const IndividualRoomPage = () => {
                 renderItem={({ item }) => {
                     console.log(item);
                     if (item.length > 1) {
-                        return <LoggedItemFolder items={item} itemsCount={item.length} />;
+                        return (
+                            <LoggedItemFolder
+                                onDelete={(item) => {
+                                    console.log('Deleting item', item);
+                                    remoteDeleteItem(item);
+                                }}
+                                items={item}
+                                itemsCount={item.length}
+                            />
+                        );
                     }
-                    return <LoggedItemElement item={item[0]} />;
+                    return (
+                        <LoggedItemElement
+                            onDelete={(item) => {
+                                console.log('Deleting item', item);
+                                remoteDeleteItem(item);
+                            }}
+                            item={item[0]}
+                        />
+                    );
                 }}
             />
         </View>

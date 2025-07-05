@@ -10,6 +10,7 @@ import RoomSelectorStyles from '@/styles/RoomSelectorStyles';
 import { TouchableOpacity } from 'react-native';
 import { ContainerTypeDropdown } from '@/components/ContainerTypeDropdown';
 import axios from 'axios';
+import { sortObjectsById } from '@/utils/SortObjects';
 interface RoomSelectorProps {
     handleNext: (location: Location) => void;
     handleCancel: () => void;
@@ -27,12 +28,13 @@ const RoomSelector = ({ handleNext, handleCancel, cancelText }: RoomSelectorProp
         axios.get(`${baseUrl}/rooms`).then((response) => {
             console.log('rooms response', response.data);
             const rooms: Room[] = response.data;
-            console.log('rooms', rooms);
-            setRoomList(rooms);
-            rooms.forEach((room: Room) => {
+            const sortedRooms = sortObjectsById(rooms);
+            console.log('rooms', sortedRooms);
+            setRoomList(sortedRooms);
+            sortedRooms.forEach((room: Room) => {
                 console.log(room.id, room.title);
-
-                room.locations.forEach((location: Location) => {
+                const sortedLocations = sortObjectsById(room.locations);
+                sortedLocations.forEach((location: Location) => {
                     console.log(location.id, location.title);
                 });
             });
