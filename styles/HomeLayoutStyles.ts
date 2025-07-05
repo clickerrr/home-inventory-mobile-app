@@ -7,7 +7,7 @@ const HomeLayoutStyles = StyleSheet.create({
     content: {
         alignItems: 'center',
         width: '100%',
-        height: '70%',
+        height: '80%',
     },
     dropdown: {
         width: '80%',

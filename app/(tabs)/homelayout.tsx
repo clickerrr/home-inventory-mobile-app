@@ -41,6 +41,7 @@ const HomeLayout = () => {
     return (
         <View style={GlobalStyles.container}>
             <View style={HomeLayoutStyles.content}>
+                <Text style={[GlobalStyles.headerText, { fontWeight: 'bold' }]}>{houseData.title}</Text>
                 {availableRooms.length !== 0 ? (
                     <>
                         <FlatList
