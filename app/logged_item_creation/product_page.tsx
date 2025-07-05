@@ -61,7 +61,7 @@ const ProductPage = () => {
                         style={GlobalStyles.buttonMain}
                         onPress={() => {
                             console.log('current quantity', currentQuantity);
-                            router.navigate({
+                            router.push({
                                 pathname: '/logged_item_creation/room_page',
                                 params: {
                                     associatedProduct: JSON.stringify(product),
@@ -75,7 +75,7 @@ const ProductPage = () => {
                     <TouchableOpacity
                         style={GlobalStyles.buttonCancel}
                         onPress={() => {
-                            router.navigate('/');
+                            router.dismissAll();
                         }}
                     >
                         <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
