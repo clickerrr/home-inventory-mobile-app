@@ -10,12 +10,13 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 interface ProductListFolderProps {
     items: LoggedItem[];
     itemsCount: number;
+    onDelete: (item: LoggedItem) => void;
 }
-const LoggedItemFolder = ({ items, itemsCount }: ProductListFolderProps) => {
+const LoggedItemFolder = ({ items, itemsCount, onDelete }: ProductListFolderProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const renderItems = () => {
         return items.map((item: LoggedItem) => {
-            return <LoggedItemElement key={item.id} item={item} />;
+            return <LoggedItemElement onDelete={onDelete} key={item.id} item={item} />;
         });
     };
     const renderClosedItem = () => {
