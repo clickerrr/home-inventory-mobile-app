@@ -8,14 +8,13 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import ProductAdder from '@/components/ProductAdder';
 import { useState } from 'react';
 import axios from 'axios';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const Camera = () => {
-    const [productBarcode, setProductBarcode] =
-        useState<string>('999999999999');
+    const [productBarcode, setProductBarcode] = useState<string>('999999999999');
     const [addingNewProduct, setAddingNewProduct] = useState<boolean>(false);
     const [existingProduct, setExistingProduct] = useState<Product>(null);
-    const [checkingProductLoading, setCheckingProductLoading] =
-        useState<boolean>(false);
+    const [checkingProductLoading, setCheckingProductLoading] = useState<boolean>(false);
     const isFocused = useIsFocused();
 
     const remoteCheckProduct = (upca: string) => {
@@ -70,11 +69,7 @@ const Camera = () => {
     }
 
     if (checkingProductLoading) {
-        return (
-            <View>
-                <Text>Loading</Text>
-            </View>
-        );
+        return <LoadingSpinner textToDisplay={'Loading...'} color={null} />;
     }
 
     return (

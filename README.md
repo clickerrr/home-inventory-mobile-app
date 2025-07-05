@@ -16,9 +16,9 @@ A cross-platform mobile application built with **React Native** and **Java**, de
     - ✅ Folders now organize multiple logged items of the same produt.
     - ✅ Locations and rooms are now synced from the backend.
     - ✅ Creation of new rooms and locations.
-- 🚧 Implement removal and editing of existing products/logged items.
+- ✅ Implement removal and editing of existing products/logged items.
     - ✅ Editing of products is now available.
-    - 🚧 Removal of products or logged items.
+    - ✅ Removal logged items.
 - ✅ Implement notifications and expired items.
 - 🚧 Implement removal and/or editing of rooms and locations.
 - 🚧 Implement household sharing and user logins.
