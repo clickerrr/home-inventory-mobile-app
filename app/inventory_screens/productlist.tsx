@@ -8,6 +8,7 @@ import { router, useFocusEffect } from 'expo-router';
 import axios from 'axios';
 import ProductListFolder from '@/components/ProductListFolder';
 import ProductListElement from '@/components/ProductListElement';
+import { sortObjectsById } from '@/utils/SortObjects';
 
 const ProductList = () => {
     const [productData, setProductData] = useState<Product[]>([]);
@@ -38,7 +39,7 @@ const ProductList = () => {
                     }
                 });
                 const sortedProducts = sortObjectsById(networkedProducts);
-                setProductData(networkedProducts);
+                setProductData(sortedProducts);
                 console.log('Set Networked Products');
             })
             .catch((error) => {
