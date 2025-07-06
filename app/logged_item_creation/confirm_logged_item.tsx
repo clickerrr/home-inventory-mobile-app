@@ -51,7 +51,7 @@ const ConfirmItemPage = () => {
     return (
         <View style={GlobalStyles.container}>
             <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.subHeader]}>
-                Make sure everything is correct
+                Make Sure Everything is Correct
             </Text>
             <View style={ConfirmLoggedItemStyles.contentContainer}>{renderLoggedItem()}</View>
             <View style={ConfirmLoggedItemStyles.buttonContainer}>
@@ -59,7 +59,7 @@ const ConfirmItemPage = () => {
                     <TouchableOpacity
                         style={[GlobalStyles.buttonCancel, GlobalStyles.buttonMainHorizontal]}
                         onPress={() => {
-                            router.replace('/');
+                            router.dismissTo('/');
                         }}
                     >
                         <Text style={GlobalStyles.buttonCancelText}>Cancel</Text>
@@ -89,7 +89,7 @@ const ConfirmItemPage = () => {
                                         console.log('logged item response', response);
                                     });
                             }
-                            router.replace({
+                            router.dismissTo({
                                 pathname: '/',
                                 params: {
                                     flashText: `Successfully added`,

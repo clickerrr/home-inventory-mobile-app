@@ -29,7 +29,7 @@ const Camera = () => {
                 setCheckingProductLoading(false);
                 setProductBarcode(response.data.upca);
                 productSampleData[response.data.upca] = response.data;
-                router.navigate({
+                router.replace({
                     pathname: '/logged_item_creation/product_page',
                     params: {
                         barcodeId: response.data.upca,
@@ -69,7 +69,11 @@ const Camera = () => {
     }
 
     if (checkingProductLoading) {
-        return <LoadingSpinner textToDisplay={'Loading...'} color={null} />;
+        return (
+            <View style={GlobalStyles.container}>
+                <LoadingSpinner textToDisplay={'Loading...'} color={null} />
+            </View>
+        );
     }
 
     return (

@@ -45,7 +45,7 @@ const RoomPage = () => {
                 handleNext={(location: Location) => {
                     const loggedItem = handleFinishProduct(location);
                     console.log('associatedProduct', associatedProduct);
-                    router.navigate({
+                    router.push({
                         pathname: '/logged_item_creation/confirm_logged_item',
                         params: {
                             loggedItem: JSON.stringify(loggedItem),
