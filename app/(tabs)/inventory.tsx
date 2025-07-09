@@ -1,24 +1,32 @@
 import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
-import { router, useLocalSearchParams, usePathname } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams, usePathname } from 'expo-router';
 import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { house, rooms } from '@/sampleData/RoomSelectorSampleData';
 import { Room } from '@/types/Room';
 import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
 const Inventory = () => {
-    const [roomsData, setRoomsData] = useState<Room[]>();
+    const [roomsData, setRoomsData] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
+    useFocusEffect(
+        useCallback(() => {
+            loadData();
+        }, [])
+    );
+
+    const loadData = () => {
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         axios.get(`${baseUrl}/rooms`).then((response) => {
             console.log(response.data);
             setRoomsData(response.data);
             setIsLoading(false);
         });
-    }, []);
+    };
+
+    useEffect(() => {}, []);
     return (
         <View style={InventoryStyles.container}>
             <View style={InventoryStyles.content}>
@@ -29,6 +37,15 @@ const Inventory = () => {
                     <FlatList
                         style={InventoryStyles.list}
                         data={roomsData}
+                        ListEmptyComponent={() => {
+                            return (
+                                <View style={InventoryStyles.emptyContainer}>
+                                    <Text style={GlobalStyles.text}>
+                                        No Rooms Yet. Tap Add New Room to Make a New Room
+                                    </Text>
+                                </View>
+                            );
+                        }}
                         renderItem={({ item }) => (
                             <TouchableOpacity
                                 onPress={() => {
@@ -42,7 +59,7 @@ const Inventory = () => {
                                 <Text style={GlobalStyles.buttonText}>{item.title}</Text>
                             </TouchableOpacity>
                         )}
-                        keyExtractor={(item) => item.id.toString()}
+                        keyExtractor={(item) => item.id}
                     />
                 )}
             </View>
@@ -52,8 +69,9 @@ const Inventory = () => {
                     onPress={() => {
                         router.navigate({
                             pathname: '/homelayout_screens/newroom',
+
                             params: {
-                                houseId: 0,
+                                houseId: 1,
                                 houseObj: JSON.stringify(house),
                             },
                         });

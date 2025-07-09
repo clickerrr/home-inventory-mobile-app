@@ -22,7 +22,6 @@ const RoomDetailView = () => {
     const loadData = () => {
         const parsedRoom: Room = JSON.parse(room);
         setRoomDetails(parsedRoom);
-        console.log('parsedRoom:', parsedRoom);
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         axios.get(`${baseUrl}/rooms/${parsedRoom.id}/locations`).then((response) => {
             console.log('locations response', response.data);

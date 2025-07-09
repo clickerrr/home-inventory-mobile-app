@@ -22,6 +22,12 @@ const InventoryStyles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
+    emptyContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        paddingHorizontal: '5%',
+    },
     subHeader: {
         fontWeight: 'bold',
         marginBottom: 12,

@@ -6,7 +6,7 @@ import { House } from '@/types/House';
 import { Room } from '@/types/Room';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View } from 'react-native';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
 
@@ -38,6 +38,12 @@ const HomeLayout = () => {
         return <LoadingSpinner textToDisplay={'Loading...'} color={'black'} />;
     }
 
+    const remoteDeleteRoom = (room) => {
+        console.log('Deleting room', room);
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        axios.delete(`${baseUrl}/rooms/${room.id}`);
+    };
+
     return (
         <View style={GlobalStyles.container}>
             <View style={HomeLayoutStyles.content}>
@@ -50,6 +56,23 @@ const HomeLayout = () => {
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
+                                    onLongPress={() => {
+                                        ActionSheetIOS.showActionSheetWithOptions(
+                                            {
+                                                options: ['Delete', 'Cancel'],
+                                                destructiveButtonIndex: 0,
+                                                cancelButtonIndex: 1,
+                                                userInterfaceStyle: 'dark',
+                                            },
+                                            (buttonIndex) => {
+                                                if (buttonIndex === 1) {
+                                                    // cancel action
+                                                } else if (buttonIndex === 0) {
+                                                    onDelete(item);
+                                                }
+                                            }
+                                        );
+                                    }}
                                     onPress={() => {
                                         router.navigate({
                                             pathname: `/inventory_screens/${item.id}`,

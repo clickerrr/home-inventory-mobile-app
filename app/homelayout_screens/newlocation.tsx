@@ -28,7 +28,9 @@ const NewLocationScreen = () => {
             loggedItems: [],
         };
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.post(`${baseUrl}/locations?roomId=${room.id}`, newLocationToAdd);
+        axios.post(`${baseUrl}/locations?roomId=${room.id}`, newLocationToAdd).then(() => {
+            router.back();
+        });
     };
 
     return (
@@ -50,7 +52,6 @@ const NewLocationScreen = () => {
                     style={GlobalStyles.buttonMain}
                     onPress={() => {
                         handleAddNewLocation();
-                        router.back();
                     }}
                 >
                     <Text style={GlobalStyles.buttonText}>Confirm</Text>
