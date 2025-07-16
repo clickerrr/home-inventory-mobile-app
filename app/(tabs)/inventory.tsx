@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, FlatList, Image } from 'react-native';
+import { Alert, View, Text, TouchableOpacity, FlatList, Image, ActionSheetIOS } from 'react-native';
 import { router, useFocusEffect, useLocalSearchParams, usePathname } from 'expo-router';
 import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
@@ -27,6 +27,32 @@ const Inventory = () => {
     };
 
     useEffect(() => {}, []);
+    const remoteDeleteItem = (item) => {
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        console.log(item);
+        axios
+            .delete(`${baseUrl}/rooms/${item.id}`)
+            .then((response) => {
+                loadData();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const remoteUpdateItem = (item, newTitle) => {
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        item.title = newTitle;
+        console.log(item);
+        axios
+            .put(`${baseUrl}/rooms/${item.id}`, item)
+            .then((response) => {
+                loadData();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
     return (
         <View style={InventoryStyles.container}>
             <View style={InventoryStyles.content}>
@@ -48,6 +74,28 @@ const Inventory = () => {
                         }}
                         renderItem={({ item }) => (
                             <TouchableOpacity
+                                onLongPress={({ target }) => {
+                                    ActionSheetIOS.showActionSheetWithOptions(
+                                        {
+                                            options: ['Delete', 'Rename', 'Cancel'],
+                                            destructiveButtonIndex: 0,
+                                            cancelButtonIndex: 2,
+                                            userInterfaceStyle: 'dark',
+                                        },
+                                        (buttonIndex) => {
+                                            if (buttonIndex === 2) {
+                                                // cancel action
+                                            } else if (buttonIndex === 1) {
+                                                Alert.prompt('Rename Room', 'Enter new room name', (text) => {
+                                                    remoteUpdateItem(item, text);
+                                                });
+                                                // on edit
+                                            } else if (buttonIndex === 0) {
+                                                remoteDeleteItem(item);
+                                            }
+                                        }
+                                    );
+                                }}
                                 onPress={() => {
                                     router.navigate({
                                         pathname: `/inventory_screens/${item.id}`,

@@ -6,7 +6,7 @@ import { House } from '@/types/House';
 import { Room } from '@/types/Room';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View, Alert } from 'react-native';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
 
@@ -38,10 +38,31 @@ const HomeLayout = () => {
         return <LoadingSpinner textToDisplay={'Loading...'} color={'black'} />;
     }
 
-    const remoteDeleteRoom = (room) => {
-        console.log('Deleting room', room);
+    const remoteDeleteItem = (item) => {
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.delete(`${baseUrl}/rooms/${room.id}`);
+        console.log(item);
+        axios
+            .delete(`${baseUrl}/rooms/${item.id}`)
+            .then((response) => {
+                loadData();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const remoteUpdateItem = (item, newTitle) => {
+        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
+        item.title = newTitle;
+        console.log(item);
+        axios
+            .put(`${baseUrl}/rooms/${item.id}`, item)
+            .then((response) => {
+                loadData();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
@@ -56,19 +77,42 @@ const HomeLayout = () => {
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
-                                    onLongPress={() => {
+                                    onLongPress={({ target }) => {
                                         ActionSheetIOS.showActionSheetWithOptions(
                                             {
-                                                options: ['Delete', 'Cancel'],
+                                                options: ['Delete', 'Rename', 'Cancel'],
                                                 destructiveButtonIndex: 0,
-                                                cancelButtonIndex: 1,
+                                                cancelButtonIndex: 2,
                                                 userInterfaceStyle: 'dark',
                                             },
                                             (buttonIndex) => {
-                                                if (buttonIndex === 1) {
+                                                if (buttonIndex === 2) {
                                                     // cancel action
+                                                } else if (buttonIndex === 1) {
+                                                    Alert.prompt('Rename Room', 'Enter new room name', (text) => {
+                                                        remoteUpdateItem(item, text);
+                                                    });
+                                                    // on edit
                                                 } else if (buttonIndex === 0) {
-                                                    onDelete(item);
+                                                    Alert.alert(
+                                                        'Confirm Deletion',
+                                                        'Are you sure you want to delete this item?',
+
+                                                        [
+                                                            {
+                                                                text: 'Cancel',
+                                                                onPress: () => {},
+                                                                style: 'cancel',
+                                                            },
+                                                            {
+                                                                text: 'Confirm',
+                                                                onPress: () => {
+                                                                    remoteDeleteItem(item);
+                                                                },
+                                                                style: 'destructive',
+                                                            },
+                                                        ]
+                                                    );
                                                 }
                                             }
                                         );

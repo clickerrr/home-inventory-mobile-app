@@ -3,7 +3,7 @@ import InventoryProductStyles from '@/styles/InventoryProductStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
 import { Product } from '@/types/Product';
 import { router } from 'expo-router';
-import { TouchableOpacity, Text, View, Image, ActionSheetIOS } from 'react-native';
+import { TouchableOpacity, Text, View, Image, ActionSheetIOS, Alert } from 'react-native';
 import tempProductImage from '@/assets/images/temp_product_image.jpg';
 import { LoggedItem } from '@/types/LoggedItem';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -49,7 +49,25 @@ const LoggedItemElement = ({ item, onDelete }: ProductListElementProps) => {
                         if (buttonIndex === 1) {
                             // cancel action
                         } else if (buttonIndex === 0) {
-                            onDelete(item);
+                            Alert.alert(
+                                'Confirm Deletion',
+                                'Are you sure you want to delete this item?',
+
+                                [
+                                    {
+                                        text: 'Cancel',
+                                        onPress: () => {},
+                                        style: 'cancel',
+                                    },
+                                    {
+                                        text: 'Confirm',
+                                        onPress: () => {
+                                            onDelete(item);
+                                        },
+                                        style: 'destructive',
+                                    },
+                                ]
+                            );
                         }
                     }
                 );
@@ -67,9 +85,6 @@ const LoggedItemElement = ({ item, onDelete }: ProductListElementProps) => {
             <View style={InventoryStyles.locationDetailsButtonInternal}>
                 {productData !== undefined ? (
                     <>
-                        <View style={InventoryStyles.productIconContainer}>
-                            <Image style={InventoryStyles.productIcon} source={tempProductImage} />
-                        </View>
                         <View style={InventoryStyles.loggedItemDetailsContainer}>
                             <Text style={[InventoryStyles.buttonText, InventoryStyles.locationDetailsButtonTitle]}>
                                 {productData.title}

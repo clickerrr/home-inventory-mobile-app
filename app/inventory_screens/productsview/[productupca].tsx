@@ -67,7 +67,6 @@ const IndividualProductPage = () => {
                         <AntDesign size={32} name="edit" color={'black'} />
                     </TouchableOpacity>
                 </View>
-                <Image style={ProductPageStyles.productImage} source={logo} />
                 {isEditing ? (
                     <>
                         <ProductEditForm
