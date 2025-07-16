@@ -20,7 +20,7 @@ A cross-platform mobile application built with **React Native** and **Java**, de
     - ✅ Editing of products is now available.
     - ✅ Removal logged items.
 - ✅ Implement notifications and expired items.
-- 🚧 Implement removal and/or editing of rooms and locations.
+- ✅ Implement removal and/or editing of rooms and locations.
 
 ---
 

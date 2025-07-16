@@ -11,7 +11,7 @@ const CameraScanner = ({ handleBarcodeScanned }: CameraScannerProps) => {
             style={CameraStyles.camera}
             facing={'back'}
             barcodeScannerSettings={{
-                barcodeTypes: ['upc_a'],
+                barcodeTypes: ['upc_a', 'upc_e'],
             }}
             autofocus={'off'}
             onBarcodeScanned={handleBarcodeScanned}
