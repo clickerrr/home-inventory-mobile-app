@@ -21,9 +21,6 @@ A cross-platform mobile application built with **React Native** and **Java**, de
     - ✅ Removal logged items.
 - ✅ Implement notifications and expired items.
 - 🚧 Implement removal and/or editing of rooms and locations.
-- 🚧 Implement household sharing and user logins.
-- 🚧 Implement more robust barcode support (external APIs).
-- 🚧 Implement item image uploads.
 
 ---
 

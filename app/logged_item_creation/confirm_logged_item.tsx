@@ -79,7 +79,12 @@ const ConfirmItemPage = () => {
                                 inventory: { id: 1 },
                             };
                             for (let i = 0; i < Number(quantity); i++) {
-                                console.log(newLoggedItem.product.upca, newLoggedItem.location.id);
+                                console.log(
+                                    'posting',
+                                    newLoggedItem,
+                                    newLoggedItem.product.upca,
+                                    newLoggedItem.location.id
+                                );
                                 axios
                                     .post(
                                         `${baseUrl}/loggedItem?upca=${newLoggedItem.product.upca}&locationId=${newLoggedItem.location.id}&inventoryId=1`,

@@ -25,6 +25,7 @@ const NewRoom = () => {
     const [isAddingNewRoom, setIsAddingNewRoom] = useState<boolean>(false);
     useEffect(() => {
         const parsedHouse: House = JSON.parse(houseObj);
+        parsedHouse.id = 1;
         setSelectedHouse(parsedHouse);
         setCurrentRoom({
             id: rooms.length,

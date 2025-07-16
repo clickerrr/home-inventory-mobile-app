@@ -1,5 +1,5 @@
-import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import { Location } from '@/types/Location';
 import { LoggedItem } from '@/types/LoggedItem';
@@ -21,19 +21,15 @@ const IndividualRoomPage = () => {
         const parsedLocation: Location = JSON.parse(location);
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         axios.get(`${baseUrl}/locations/${parsedLocation.id}/loggedItems`).then((response) => {
-            console.log('response.data', response.data);
-
+            console.log('locations');
             const countMap = new Map();
             const sortedData = sortObjectsById(response.data);
             sortedData.forEach((element) => {
                 const product = element.product;
-                console.log('product', product);
 
                 if (countMap.get(product.upca) !== undefined) {
-                    console.log('Incrementing');
                     countMap.set(product.upca, [...countMap.get(product.upca), element]);
                 } else {
-                    console.log('Setting');
                     countMap.set(product.upca, [element]);
                 }
             });
@@ -44,9 +40,11 @@ const IndividualRoomPage = () => {
             setIsLoading(false);
         });
     };
-    useEffect(() => {
-        loadData();
-    }, [locationId, location]);
+    useFocusEffect(
+        useCallback(() => {
+            loadData();
+        }, [])
+    );
 
     if (isLoading) {
         return <></>;
