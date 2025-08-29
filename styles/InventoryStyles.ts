@@ -81,7 +81,7 @@ const InventoryStyles = StyleSheet.create({
     },
     locationDetailsButtonTitle: {
         display: 'flex',
-        width: '40%',
+        width: '100%',
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 4,
