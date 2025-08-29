@@ -9,6 +9,7 @@ import ProductPageStyles from '@/styles/ProductPageStyles';
 import axios from 'axios';
 import ProductEditForm from '@/components/ProductEditForm';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { getRequest } from '@/utils/RequestHandler';
 
 const IndividualProductPage = () => {
     const { productupca, product } = useLocalSearchParams();
@@ -31,10 +32,9 @@ const IndividualProductPage = () => {
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
 
         console.log('passed upca: ', upca);
-        axios
-            .get(`${baseUrl}/products/${upca}`)
-            .then((response) => {
-                const productData: Product = response.data;
+        getRequest(`products/${upca}`)
+            .then((result) => {
+                const productData: Product = result;
                 console.log(productData);
                 setProductDetails(productData);
                 setProductTitle(productData.title);
@@ -50,7 +50,7 @@ const IndividualProductPage = () => {
     };
 
     if (isLoading) {
-        return <LoadingSpinner textToDisplay="Loading Products..." color={null} />;
+        return <LoadingSpinner textToDisplay="Loading Products..." color={null} textSize={null} />;
     }
 
     const remoteUpdateProduct = (updatedProduct) => {

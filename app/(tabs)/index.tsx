@@ -8,6 +8,9 @@ import { useEffect, useState } from 'react';
 import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
 import axios from 'axios';
 import Config from 'react-native-config';
+import { readFromKeyStore } from '@/utils/KeyStore';
+import { getRequest } from '@/utils/RequestHandler';
+import { toLog } from '@/utils/ConsoleLog';
 
 const Index = () => {
     const [permission, requestPermission] = useCameraPermissions();
@@ -30,27 +33,18 @@ const Index = () => {
     if (!permission.granted) {
         return (
             <View style={GlobalStyles.container}>
-                <Text style={GlobalStyles.largeText}>We need your permission to show the camera</Text>
                 <TouchableOpacity style={GlobalStyles.buttonMain} onPress={requestPermission}>
-                    <Text style={GlobalStyles.buttonText}></Text>
+                    <Text style={GlobalStyles.largeText}>We need your permission to show the camera</Text>
                 </TouchableOpacity>
             </View>
         );
     }
 
     const testRequestAxios = () => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        console.log(baseUrl);
-        axios
-            .get(`${baseUrl}/products`)
-            .then((response) => {
-                console.log('Response: ', response.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        getRequest('products').then((result) => {
+            toLog(result, 'testRequestAxios', `(tabs)/index`);
+        });
     };
-
     return (
         <View style={GlobalStyles.container}>
             <View style={[GlobalStyles.container, IndexStyles.content]}>

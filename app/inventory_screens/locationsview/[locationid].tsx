@@ -9,6 +9,8 @@ import axios from 'axios';
 import LoggedItemElement from '@/components/LoggedItemElement';
 import LoggedItemFolder from '@/components/LoggedItemFolder';
 import { sortObjectsById } from '@/utils/SortObjects';
+import { readFromKeyStore } from '@/utils/KeyStore';
+import { getRequest } from '@/utils/RequestHandler';
 
 const IndividualRoomPage = () => {
     const { locationId, location } = useLocalSearchParams();
@@ -19,11 +21,10 @@ const IndividualRoomPage = () => {
 
     const loadData = () => {
         const parsedLocation: Location = JSON.parse(location);
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.get(`${baseUrl}/locations/${parsedLocation.id}/loggedItems`).then((response) => {
+        getRequest(`locations/${parsedLocation.id}/loggedItems`).then((result) => {
             console.log('locations');
             const countMap = new Map();
-            const sortedData = sortObjectsById(response.data);
+            const sortedData = sortObjectsById(result);
             sortedData.forEach((element) => {
                 const product = element.product;
 
@@ -52,9 +53,12 @@ const IndividualRoomPage = () => {
 
     const remoteDeleteItem = (item) => {
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.delete(`${baseUrl}/loggedItem/${item.id}`).then(() => {
-            loadData();
-        });
+        const jwtToken = readFromKeyStore('himas_jwtToken');
+        axios
+            .delete(`${baseUrl}/loggedItem/${item.id}`, { headers: { Authorization: `Bearer: ${jwtToken}` } })
+            .then(() => {
+                loadData();
+            });
     };
 
     return (

@@ -11,6 +11,8 @@ import { TouchableOpacity } from 'react-native';
 import { ContainerTypeDropdown } from '@/components/ContainerTypeDropdown';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
+import { readFromKeyStore } from '@/utils/KeyStore';
+import { getRequest } from '@/utils/RequestHandler';
 interface RoomSelectorProps {
     handleNext: (location: Location) => void;
     handleCancel: () => void;
@@ -24,10 +26,8 @@ const RoomSelector = ({ handleNext, handleCancel, cancelText }: RoomSelectorProp
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.get(`${baseUrl}/rooms`).then((response) => {
-            console.log('rooms response', response.data);
-            const rooms: Room[] = response.data;
+        getRequest('rooms').then((result) => {
+            const rooms: Room[] = result;
             const sortedRooms = sortObjectsById(rooms);
             console.log('rooms', sortedRooms);
             setRoomList(sortedRooms);

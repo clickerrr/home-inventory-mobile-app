@@ -9,6 +9,9 @@ import ProductAdder from '@/components/ProductAdder';
 import { useState } from 'react';
 import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { readFromKeyStore } from '@/utils/KeyStore';
+import { getRequest } from '@/utils/RequestHandler';
+import { Product } from '@/types/Product';
 
 const Camera = () => {
     const [productBarcode, setProductBarcode] = useState<string>('999999999999');
@@ -18,35 +21,26 @@ const Camera = () => {
     const isFocused = useIsFocused();
 
     const remoteCheckProduct = (upca: string) => {
-        console.log('checking...');
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         setCheckingProductLoading(true);
-        const result = axios
-            .get(`${baseUrl}/products/${upca}`)
-            .then((response) => {
-                console.log('axios result', response.data);
-                setExistingProduct(response.data);
+        getRequest(`products/${upca}`)
+            .then((result) => {
+                setExistingProduct(result);
+                setProductBarcode(result.upca);
+                productSampleData[result.upca] = result;
                 setCheckingProductLoading(false);
-                setProductBarcode(response.data.upca);
-                productSampleData[response.data.upca] = response.data;
                 router.replace({
                     pathname: '/logged_item_creation/product_page',
                     params: {
-                        barcodeId: response.data.upca,
-                        title: response.data.title,
-                        description: response.data.containerType,
+                        barcodeId: result.upca,
+                        title: result.title,
+                        description: result.containerType,
                     },
                 });
             })
             .catch((error) => {
-                console.log(error);
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        setProductBarcode(upca);
-                        setAddingNewProduct(true);
-                        setExistingProduct(null);
-                    }
-                }
+                setProductBarcode(upca);
+                setExistingProduct(null);
+                setAddingNewProduct(true);
                 setCheckingProductLoading(false);
             });
     };
@@ -71,7 +65,7 @@ const Camera = () => {
     if (checkingProductLoading) {
         return (
             <View style={GlobalStyles.container}>
-                <LoadingSpinner textToDisplay={'Loading...'} color={null} />
+                <LoadingSpinner textToDisplay={'Loading...'} color={null} textSize={null} />
             </View>
         );
     }

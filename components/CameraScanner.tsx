@@ -15,6 +15,9 @@ const CameraScanner = ({ handleBarcodeScanned }: CameraScannerProps) => {
             }}
             autofocus={'off'}
             onBarcodeScanned={handleBarcodeScanned}
+            onMountError={(error) => {
+                console.error(error);
+            }}
         ></CameraView>
     );
 };

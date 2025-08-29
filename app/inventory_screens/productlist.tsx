@@ -6,6 +6,7 @@ import InventoryProductStyles from '@/styles/InventoryProductStyles';
 import { router, useFocusEffect } from 'expo-router';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
+import { getRequest } from '@/utils/RequestHandler';
 
 const ProductList = () => {
     const [productData, setProductData] = useState<Product[]>([]);
@@ -19,15 +20,12 @@ const ProductList = () => {
     );
 
     const loadData = () => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-
-        axios
-            .get(`${baseUrl}/products`)
+        getRequest('products')
             .then((result) => {
                 console.log(result.data);
 
                 const networkedProducts = [];
-                result.data.forEach((element) => {
+                result.forEach((element) => {
                     networkedProducts.push(element);
                     if (productCountMap.get(element.upca)) {
                         productCountMap.set(element.upca, element.get(element.upca) + 1);

@@ -7,6 +7,7 @@ import { house, rooms } from '@/sampleData/RoomSelectorSampleData';
 import { Room } from '@/types/Room';
 import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { getRequest } from '@/utils/RequestHandler';
 const Inventory = () => {
     const [roomsData, setRoomsData] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -18,10 +19,8 @@ const Inventory = () => {
     );
 
     const loadData = () => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.get(`${baseUrl}/rooms`).then((response) => {
-            console.log(response.data);
-            setRoomsData(response.data);
+        getRequest('rooms').then((result) => {
+            setRoomsData(result);
             setIsLoading(false);
         });
     };
@@ -44,6 +43,7 @@ const Inventory = () => {
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         item.title = newTitle;
         console.log(item);
+
         axios
             .put(`${baseUrl}/rooms/${item.id}`, item)
             .then((response) => {

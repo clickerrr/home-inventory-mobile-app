@@ -13,6 +13,8 @@
         "app",
         "components",
         "utils",
+        "assets",
+        "styles",
         ".expo/types/**/*.ts",
         "expo-env.d.ts",
         "eslint.config.js"

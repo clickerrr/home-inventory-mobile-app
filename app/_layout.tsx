@@ -12,6 +12,10 @@ const RootLayout = () => {
             <Stack.Screen name="camera_screens" options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name="inventory_screens" options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name="newproduct" options={{ title: 'New Product', headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="index" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="login" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="register" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="forgotpassword" options={{ headerShown: false }}></Stack.Screen>
         </Stack>
     );
 };

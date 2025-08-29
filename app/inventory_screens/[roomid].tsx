@@ -8,6 +8,7 @@ import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
+import { getRequest } from '@/utils/RequestHandler';
 
 const RoomDetailView = () => {
     const { id, room } = useLocalSearchParams();
@@ -23,10 +24,9 @@ const RoomDetailView = () => {
         const parsedRoom: Room = JSON.parse(room);
         setRoomDetails(parsedRoom);
 
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.get(`${baseUrl}/rooms/${parsedRoom.id}/locations`).then((response) => {
-            console.log('locations response', response.data);
-            const locationsResponse = response.data;
+        getRequest(`rooms/${parsedRoom.id}/locations`).then((result) => {
+            console.log('locations response', result);
+            const locationsResponse = result;
             const sortedLocations = sortObjectsById(locationsResponse);
             setRoomLocations(sortedLocations);
         });

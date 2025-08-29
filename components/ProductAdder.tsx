@@ -9,6 +9,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { CameraView } from 'expo-camera';
 import CameraStyles from '@/styles/CameraStyles';
 import axios from 'axios';
+import { readFromKeyStore } from '@/utils/KeyStore';
+import { postRequest } from '@/utils/RequestHandler';
 
 interface ProductAdderProps {
     upca: string;
@@ -51,14 +53,7 @@ const ProductAdder = ({ upca, onSubmit }: ProductAdderProps) => {
     }
 
     const remoteSubmitData = (productToSend: Product) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        const newObject = {
-            upca: '773160122420',
-            title: 'Tasty Apple',
-            containerType: 'BOX',
-            nutritionalInformation: {},
-        };
-        axios.post(`${baseUrl}/products`, productToSend);
+        postRequest('products', productToSend);
     };
 
     return (

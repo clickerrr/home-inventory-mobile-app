@@ -9,6 +9,7 @@ import ConfirmLoggedItemStyles from '@/styles/ConfirmLoggedItemStyles';
 import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
 import { locations } from '@/sampleData/RoomSelectorSampleData';
 import axios from 'axios';
+import { postRequest } from '@/utils/RequestHandler';
 
 const ConfirmItemPage = () => {
     const { loggedItem, associatedProduct, location, quantity } = useLocalSearchParams();
@@ -69,7 +70,6 @@ const ConfirmItemPage = () => {
                         onPress={() => {
                             const parsedLoggedItem: LoggedItem = JSON.parse(loggedItem);
                             console.log('parsedLoggedItem', parsedLoggedItem);
-                            const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
                             const newLoggedItem: LoggedItem = {
                                 dateLogged: parsedLoggedItem.dateLogged.split('T')[0],
                                 expirationDate: parsedLoggedItem.expirationDate.split('T')[0],
@@ -85,17 +85,13 @@ const ConfirmItemPage = () => {
                                     newLoggedItem.product.upca,
                                     newLoggedItem.location.id
                                 );
-                                axios
-                                    .post(
-                                        `${baseUrl}/loggedItem?upca=${newLoggedItem.product.upca}&locationId=${newLoggedItem.location.id}&inventoryId=1`,
-                                        newLoggedItem
-                                    )
-                                    .then((response) => {
-                                        console.log('logged item response', response);
-                                    });
+                                postRequest(
+                                    `loggedItem?upca=${newLoggedItem.product.upca}&locationId=${newLoggedItem.location.id}&inventoryId=1`,
+                                    newLoggedItem
+                                );
                             }
                             router.dismissTo({
-                                pathname: '/',
+                                pathname: '/(tabs)',
                                 params: {
                                     flashText: `Successfully added`,
                                     quantity: quantity,

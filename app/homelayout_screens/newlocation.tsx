@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Room } from '@/types/Room';
 import { Location } from '@/types/Location';
 import axios from 'axios';
+import { postRequest } from '@/utils/RequestHandler';
 
 const NewLocationScreen = () => {
     const { paramRoom } = useLocalSearchParams();
@@ -27,8 +28,7 @@ const NewLocationScreen = () => {
             title: locationTitleText,
             loggedItems: [],
         };
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.post(`${baseUrl}/locations?roomId=${room.id}`, newLocationToAdd).then(() => {
+        postRequest(`locations?roomId=${room.id}`, newLocationToAdd).then(() => {
             router.back();
         });
     };

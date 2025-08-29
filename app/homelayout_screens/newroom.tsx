@@ -10,6 +10,7 @@ import { Location } from '@/types/Location';
 import { Room } from '@/types/Room';
 import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { postRequest } from '@/utils/RequestHandler';
 
 const NewRoom = () => {
     const { houseId, houseObj } = useLocalSearchParams();
@@ -37,7 +38,6 @@ const NewRoom = () => {
 
     const remoteAddNewRoom = (newRoomTitle, newLocations) => {
         setIsAddingNewRoom(true);
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         const newRoom = {
             title: newRoomTitle,
             locations: newLocations,
@@ -45,7 +45,7 @@ const NewRoom = () => {
 
         console.log(newRoom);
         console.log(selectedHouse);
-        axios.post(`${baseUrl}/rooms?houseId=${selectedHouse.id}`, newRoom).then(() => {
+        postRequest(`rooms?houseId=${selectedHouse.id}`, newRoom).then(() => {
             setModalVisible(!modalVisible);
             setIsAddingNewRoom(false);
             router.back();

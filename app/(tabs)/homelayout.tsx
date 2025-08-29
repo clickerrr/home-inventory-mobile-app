@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View, Alert } from 'react-native';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
+import { getRequest } from '@/utils/RequestHandler';
 
 const HomeLayout = () => {
     const [houseData, setHouseData] = useState<House>(null);
@@ -24,9 +25,8 @@ const HomeLayout = () => {
     );
 
     const loadData = () => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        axios.get(`${baseUrl}/houses`).then((response) => {
-            const houseResponse = response.data[0];
+        getRequest('houses').then((result) => {
+            const houseResponse = result[0];
             setHouseData(houseResponse);
             setSelectedHouse(houseResponse);
             setAvailableRooms(sortObjectsById(houseResponse.rooms));
