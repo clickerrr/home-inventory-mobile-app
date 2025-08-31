@@ -9,12 +9,15 @@ import { User } from '@/types/User';
 import axios from 'axios';
 import { readFromKeyStore, saveToKeyStore } from '@/utils/KeyStore';
 import { logError } from '@/utils/ConsoleLog';
+import { useAuthentication } from '@/components/AuthContext';
 
 const Login = () => {
     const [usernameInput, setUsernameInput] = useState<string>('');
     const [passwordInput, setPasswordInput] = useState<string>('');
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
+
+    const { signIn, isAuthenticated } = useAuthentication();
 
     const errorCheck = (fieldToCheck: string, fieldTitle: string): boolean => {
         if (fieldToCheck.trim().length == 0) {
@@ -32,11 +35,17 @@ const Login = () => {
             username: passedUsername,
             password: passedPassword,
         };
-        handleRemoteLogin(user).then((success) => {
-            if (success) {
+        signIn(user, () => setErrorMessage('Invalid username or password')).then(() => {
+            if (isAuthenticated) {
                 router.replace('/(tabs)');
             }
         });
+
+        //handleRemoteLogin(user).then((success) => {
+        //    if (success) {
+        //        router.replace('/(tabs)');
+        //    }
+        //});
     };
 
     const handleRemoteLogin = async (user: User) => {

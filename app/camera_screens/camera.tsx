@@ -7,9 +7,7 @@ import { router } from 'expo-router';
 import { TouchableOpacity, Text, View } from 'react-native';
 import ProductAdder from '@/components/ProductAdder';
 import { useState } from 'react';
-import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { readFromKeyStore } from '@/utils/KeyStore';
 import { getRequest } from '@/utils/RequestHandler';
 import { Product } from '@/types/Product';
 

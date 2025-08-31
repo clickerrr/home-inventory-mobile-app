@@ -1,6 +1,7 @@
+import { useAuthentication } from '@/components/AuthContext';
 import LoadingScreen from '@/components/LoadingScreen';
 import GlobalStyles from '@/styles/GlobalStyles';
-import { readFromKeyStore } from '@/utils/KeyStore';
+import { toLog } from '@/utils/ConsoleLog';
 import { validateUser } from '@/utils/RequestHandler';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
@@ -10,24 +11,29 @@ const LandingPage = () => {
     // perform logic checks to see if a user is logged in already.
     // checking for presence of jwt token in the keystore
     const [isLoading, setIsLoading] = useState(true);
+    const { checkIfAuthenticated, isAuthenticated } = useAuthentication();
 
     useEffect(() => {
-        validateUser().then((userValid) => {
-            console.log(userValid);
-            if (userValid) {
-                const intervalId = setInterval(() => {
-                    clearInterval(intervalId);
-                    setIsLoading(false);
-                    router.replace('/(tabs)');
-                }, 1000);
-            } else {
-                const intervalId = setInterval(() => {
-                    clearInterval(intervalId);
-                    setIsLoading(false);
-                    router.replace('/login');
-                }, 1000);
-            }
-        });
+        checkIfAuthenticated()
+            .then((userValid) => {
+                console.log('isAuthenticated', userValid);
+                if (userValid) {
+                    const intervalId = setInterval(() => {
+                        clearInterval(intervalId);
+                        setIsLoading(false);
+                        router.replace('/(tabs)');
+                    }, 1000);
+                } else {
+                    const intervalId = setInterval(() => {
+                        clearInterval(intervalId);
+                        setIsLoading(false);
+                        router.replace('/login');
+                    }, 1000);
+                }
+            })
+            .catch((error: any) => {
+                toLog(`Error: ${error} thrown while attempting validateUser()`, 'useEffect', 'LandingPage');
+            });
     }, []);
 
     if (isLoading) {

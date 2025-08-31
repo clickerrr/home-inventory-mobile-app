@@ -1,3 +1,4 @@
+import { useAuthentication } from '@/components/AuthContext';
 import GlobalStyles from '@/styles/GlobalStyles';
 import { toLog } from '@/utils/ConsoleLog';
 import { deleteFromKeystore, readFromKeyStore } from '@/utils/KeyStore';
@@ -6,9 +7,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
 const Settings = () => {
     const devEnvironment = process.env.EXPO_PUBLIC_IS_DEV;
+    const { signOut, isAuthenticated } = useAuthentication();
     if (devEnvironment) {
         return (
-            <View style={GlobalStyles.container}>
+            <View style={[GlobalStyles.container, { justifyContent: 'space-evenly' }]}>
                 <TouchableOpacity
                     style={GlobalStyles.buttonMain}
                     onPress={() => {
@@ -29,8 +31,17 @@ const Settings = () => {
                     style={GlobalStyles.buttonMain}
                     onPress={() => {
                         deleteFromKeystore('himas_refreshToken');
-                        deleteFromKeystore('himas_authToken');
-                        router.replace('/login');
+                    }}
+                >
+                    <Text style={GlobalStyles.buttonText}>Revoke Token</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={GlobalStyles.buttonMain}
+                    onPress={() => {
+                        //     deleteFromKeystore('himas_refreshToken');
+                        //     deleteFromKeystore('himas_authToken');
+                        //     router.replace('/login');
+                        signOut().then(() => router.replace('/login'));
                     }}
                 >
                     <Text style={GlobalStyles.buttonText}>Logout</Text>

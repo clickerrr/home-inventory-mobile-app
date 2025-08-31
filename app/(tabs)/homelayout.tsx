@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View, Alert } from 'react-native';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
-import { getRequest } from '@/utils/RequestHandler';
+import { deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
 
 const HomeLayout = () => {
     const [houseData, setHouseData] = useState<House>(null);
@@ -39,11 +39,9 @@ const HomeLayout = () => {
     }
 
     const remoteDeleteItem = (item) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         console.log(item);
-        axios
-            .delete(`${baseUrl}/rooms/${item.id}`)
-            .then((response) => {
+        deleteRequest(`rooms/${item.id}`)
+            .then((result) => {
                 loadData();
             })
             .catch((error) => {
@@ -52,12 +50,10 @@ const HomeLayout = () => {
     };
 
     const remoteUpdateItem = (item, newTitle) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         item.title = newTitle;
         console.log(item);
-        axios
-            .put(`${baseUrl}/rooms/${item.id}`, item)
-            .then((response) => {
+        putRequest(`rooms/${item.id}`, item)
+            .then((result) => {
                 loadData();
             })
             .catch((error) => {

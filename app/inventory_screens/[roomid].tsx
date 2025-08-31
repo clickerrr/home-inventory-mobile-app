@@ -8,7 +8,7 @@ import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
 import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
-import { getRequest } from '@/utils/RequestHandler';
+import { deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
 
 const RoomDetailView = () => {
     const { id, room } = useLocalSearchParams();
@@ -33,10 +33,8 @@ const RoomDetailView = () => {
     };
 
     const remoteDeleteItem = (item) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         console.log(item);
-        axios
-            .delete(`${baseUrl}/locations/${item.id}`)
+        deleteRequest(`locations/${item.id}`)
             .then((response) => {
                 loadData();
             })
@@ -46,11 +44,9 @@ const RoomDetailView = () => {
     };
 
     const remoteUpdateItem = (item, newTitle) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         item.title = newTitle;
         console.log(item);
-        axios
-            .put(`${baseUrl}/locations/${item.id}`, item)
+        putRequest(`locations/${item.id}`, item)
             .then((response) => {
                 loadData();
             })

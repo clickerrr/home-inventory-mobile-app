@@ -10,7 +10,7 @@ import LoggedItemElement from '@/components/LoggedItemElement';
 import LoggedItemFolder from '@/components/LoggedItemFolder';
 import { sortObjectsById } from '@/utils/SortObjects';
 import { readFromKeyStore } from '@/utils/KeyStore';
-import { getRequest } from '@/utils/RequestHandler';
+import { deleteRequest, getRequest } from '@/utils/RequestHandler';
 
 const IndividualRoomPage = () => {
     const { locationId, location } = useLocalSearchParams();
@@ -52,13 +52,9 @@ const IndividualRoomPage = () => {
     }
 
     const remoteDeleteItem = (item) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
-        const jwtToken = readFromKeyStore('himas_jwtToken');
-        axios
-            .delete(`${baseUrl}/loggedItem/${item.id}`, { headers: { Authorization: `Bearer: ${jwtToken}` } })
-            .then(() => {
-                loadData();
-            });
+        deleteRequest(`loggedItem/${item.id}`).then(() => {
+            loadData();
+        });
     };
 
     return (

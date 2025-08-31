@@ -7,7 +7,7 @@ import { house, rooms } from '@/sampleData/RoomSelectorSampleData';
 import { Room } from '@/types/Room';
 import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { getRequest } from '@/utils/RequestHandler';
+import { deleteReqeuest, deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
 const Inventory = () => {
     const [roomsData, setRoomsData] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,10 +27,8 @@ const Inventory = () => {
 
     useEffect(() => {}, []);
     const remoteDeleteItem = (item) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         console.log(item);
-        axios
-            .delete(`${baseUrl}/rooms/${item.id}`)
+        deleteRequest(`rooms/${item.id}`)
             .then((response) => {
                 loadData();
             })
@@ -40,13 +38,11 @@ const Inventory = () => {
     };
 
     const remoteUpdateItem = (item, newTitle) => {
-        const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         item.title = newTitle;
         console.log(item);
 
-        axios
-            .put(`${baseUrl}/rooms/${item.id}`, item)
-            .then((response) => {
+        putRequest(`rooms/${item.id}`, item)
+            .then((result) => {
                 loadData();
             })
             .catch((error) => {

@@ -22,6 +22,7 @@ const loadAuthToken = () => {
 
 // function for automatically refreshing the auth token, should be called on 401 from one of the functions below
 const handleRefresh = async () => {
+    toLog('Refreshing auth token', 'handleRefresh', fileName);
     const refreshToken = readFromKeyStore('himas_refreshToken');
 
     // this situation should never happen, since checks are performed to see if the refresh token exists
@@ -57,6 +58,7 @@ const handleRefresh = async () => {
         });
         if (response) {
             if (response.data) {
+                toLog('Refreshed user token', 'handleRefresh', fileName);
                 toLog(response.data, 'handleRefresh', fileName);
                 saveToKeyStore('himas_authToken', response.data);
             }
@@ -115,7 +117,7 @@ export const postRequest = async (endpoint: string, postContents: Object) => {
                 try {
                     const newAuthToken = readFromKeyStore('himas_authToken');
                     const response = await axios.post(`${baseUrl}/${endpoint}`, postContents, {
-                        headers: { Authorization: `Bearer ${authToken}`, 'Content-Type': 'application/json' },
+                        headers: { Authorization: `Bearer ${newAuthToken}`, 'Content-Type': 'application/json' },
                     });
 
                     // successfully got a response, return the data
@@ -143,7 +145,7 @@ export const postRequest = async (endpoint: string, postContents: Object) => {
             // Something happened in setting up the request that triggered an Error
             logError(error.message);
         }
-        logError(error, 'getRequest', fileName);
+        logError(error, 'postRequest', fileName);
     }
 };
 
@@ -210,9 +212,128 @@ export const getRequest = async (endpoint: string) => {
         logError(error, 'getRequest', fileName);
     }
 };
-export const deleteReqeuest = async () => {};
-export const putRequest = async () => {};
+export const deleteRequest = async (endpoint: string) => {
+    const authToken = readFromKeyStore('himas_authToken');
+
+    // at first we attempt the endpoint with the current auth token we have issued
+    try {
+        const response = await axios.delete(`${baseUrl}/${endpoint}`, {
+            headers: { Authorization: `Bearer ${authToken}` },
+        });
+
+        // successfully got a response, return the data
+        if (response) {
+            toLog(response.data, 'deleteRequest', fileName);
+        }
+    } catch (error: any) {
+        const errorResponse = error.response;
+
+        if (errorResponse) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+
+            const status = errorResponse.status;
+
+            // if that status ends up being 401, we have a jwt auth error
+            if (status === 401) {
+                // attempt a refresh
+                await handleRefresh();
+                try {
+                    const newAuthToken = readFromKeyStore('himas_authToken');
+                    const response = await axios.delete(`${baseUrl}/${endpoint}`, {
+                        headers: { Authorization: `Bearer ${newAuthToken}` },
+                    });
+
+                    // successfully got a response, return the data
+                    if (response) {
+                        toLog(response.data, 'deleteRequest', fileName);
+                    }
+                } catch (secondAttemptError: any) {
+                    if (secondAttemptError.response) {
+                        const secondAttemptStatus = secondAttemptError.response.status;
+                        if (secondAttemptStatus === 401) {
+                            throw new Error(
+                                'User does not have a valid auth token after refresh, something has gone wrong.'
+                            );
+                        }
+                    }
+                }
+            }
+        } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            logError(error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            logError(error.message);
+        }
+        logError(error, 'deleteRequest', fileName);
+    }
+};
+export const putRequest = async (endpoint: string, putContents: Object) => {
+    const authToken = readFromKeyStore('himas_authToken');
+
+    // at first we attempt the endpoint with the current auth token we have issued
+    try {
+        const response = await axios.put(`${baseUrl}/${endpoint}`, putContents, {
+            headers: { Authorization: `Bearer ${authToken}`, 'Content-Type': 'application/json' },
+        });
+
+        // successfully got a response, return the data
+        if (response) {
+            toLog(response.data, 'putRequest', fileName);
+            return response.data;
+        }
+    } catch (error: any) {
+        const errorResponse = error.response;
+
+        if (errorResponse) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+
+            const status = errorResponse.status;
+
+            // if that status ends up being 401, we have a jwt auth error
+            if (status === 401) {
+                // attempt a refresh
+                await handleRefresh();
+                try {
+                    const newAuthToken = readFromKeyStore('himas_authToken');
+                    const response = await axios.put(`${baseUrl}/${endpoint}`, putContents, {
+                        headers: { Authorization: `Bearer ${newAuthToken}`, 'Content-Type': 'application/json' },
+                    });
+
+                    // successfully got a response, return the data
+                    if (response) {
+                        toLog(response.data, 'putRequest', fileName);
+                        return response.data;
+                    }
+                } catch (secondAttemptError: any) {
+                    if (secondAttemptError.response) {
+                        const secondAttemptStatus = secondAttemptError.response.status;
+                        if (secondAttemptStatus === 401) {
+                            throw new Error(
+                                'User does not have a valid auth token after refresh, something has gone wrong.'
+                            );
+                        }
+                    }
+                }
+            }
+        } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            logError(error.request);
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            logError(error.message);
+        }
+        logError(error, 'putRequest', fileName);
+    }
+};
 export const validateUser = async () => {
+    toLog('Validating user...', 'validateUser', fileName);
     const refreshToken = readFromKeyStore('himas_refreshToken');
 
     if (refreshToken === null) {
@@ -225,9 +346,11 @@ export const validateUser = async () => {
         });
 
         if (response.data) {
-            toLog(response.data, 'validateUser', fileName);
+            saveToKeyStore('himas_authToken', response.data);
+            toLog('Successfully validated user, assigned new authToken', 'validateUser', fileName);
+            return true;
         }
-        return true;
+        return false;
     } catch (error: any) {
         toLog(error);
         if (error.response) {
