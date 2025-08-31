@@ -1,25 +1,25 @@
 import { SessionProvider } from '@/components/AuthContext';
+import { toLog } from '@/utils/ConsoleLog';
 import { Stack } from 'expo-router';
+import { useEffect } from 'react';
 
 const RootLayout = () => {
     return (
-        <SessionProvider>
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{ title: 'Home', headerShown: false }} />
-                <Stack.Screen name="logged_item_creation" options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen
-                    name="homelayout_screens"
-                    options={{ title: 'Home Layout', headerShown: true }}
-                ></Stack.Screen>
-                <Stack.Screen name="camera_screens" options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="inventory_screens" options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="newproduct" options={{ title: 'New Product', headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="index" options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="login" options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="register" options={{ headerShown: false }}></Stack.Screen>
-                <Stack.Screen name="forgotpassword" options={{ headerShown: false }}></Stack.Screen>
-            </Stack>
-        </SessionProvider>
+        <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="login" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="register" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="forgotpassword" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="(tabs)" options={{ title: 'Home', headerShown: false }} />
+            <Stack.Screen name="camera_screens" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="inventory_screens" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="logged_item_creation" options={{ headerShown: false }}></Stack.Screen>
+            <Stack.Screen
+                name="homelayout_screens"
+                options={{ title: 'Home Layout', headerShown: true }}
+            ></Stack.Screen>
+            <Stack.Screen name="newproduct" options={{ title: 'New Product', headerShown: false }}></Stack.Screen>
+        </Stack>
     );
 };
 

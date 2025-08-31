@@ -11,10 +11,11 @@ const LandingPage = () => {
     // perform logic checks to see if a user is logged in already.
     // checking for presence of jwt token in the keystore
     const [isLoading, setIsLoading] = useState(true);
-    const { checkIfAuthenticated, isAuthenticated } = useAuthentication();
 
+    console.log('Landing page loaded');
     useEffect(() => {
-        checkIfAuthenticated()
+        console.log('validating user');
+        validateUser()
             .then((userValid) => {
                 console.log('isAuthenticated', userValid);
                 if (userValid) {

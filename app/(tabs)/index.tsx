@@ -67,6 +67,7 @@ const Index = () => {
                 >
                     <Text style={GlobalStyles.buttonText}>Scan New Item</Text>
                 </TouchableOpacity>
+                {/*
                 <TouchableOpacity
                     onPress={() => {
                         router.navigate({ pathname: '/camera_screens/search' });
@@ -74,7 +75,9 @@ const Index = () => {
                     style={GlobalStyles.buttonMain}
                 >
                     <Text style={GlobalStyles.buttonText}>Search for Item</Text>
+
                 </TouchableOpacity>
+                */}
             </View>
         </View>
     );

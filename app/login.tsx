@@ -35,17 +35,17 @@ const Login = () => {
             username: passedUsername,
             password: passedPassword,
         };
-        signIn(user, () => setErrorMessage('Invalid username or password')).then(() => {
-            if (isAuthenticated) {
-                router.replace('/(tabs)');
-            }
-        });
-
-        //handleRemoteLogin(user).then((success) => {
-        //    if (success) {
+        //signIn(user, () => setErrorMessage('Invalid username or password')).then(() => {
+        //    if (isAuthenticated) {
         //        router.replace('/(tabs)');
         //    }
         //});
+
+        handleRemoteLogin(user).then((success) => {
+            if (success) {
+                router.replace('/(tabs)');
+            }
+        });
     };
 
     const handleRemoteLogin = async (user: User) => {

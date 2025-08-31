@@ -1,5 +1,5 @@
 import { User } from '@/types/User';
-import { logError } from '@/utils/ConsoleLog';
+import { logError, toLog } from '@/utils/ConsoleLog';
 import { deleteFromKeystore, readFromKeyStore, saveToKeyStore } from '@/utils/KeyStore';
 import { validateUser } from '@/utils/RequestHandler';
 import axios from 'axios';
@@ -30,9 +30,11 @@ export function useAuthentication() {
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
+    toLog('loading auth context');
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     //    const [[isLoading, isAuthenticated], setIsAuthenticated] = useStorageState('session');
 
+    toLog('next');
     return (
         <AuthContext
             value={{
