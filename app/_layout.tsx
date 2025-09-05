@@ -17,6 +17,7 @@ const RootLayout = () => {
                 options={{ title: 'Home Layout', headerShown: true }}
             ></Stack.Screen>
             <Stack.Screen name="newproduct" options={{ title: 'New Product', headerShown: false }}></Stack.Screen>
+            <Stack.Screen name="settings" options={{ title: 'Settings', headerShown: true }}></Stack.Screen>
         </Stack>
     );
 };
