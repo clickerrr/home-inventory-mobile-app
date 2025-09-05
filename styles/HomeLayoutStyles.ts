@@ -5,9 +5,13 @@ const HomeLayoutStyles = StyleSheet.create({
         height: '15%',
         width: '80%',
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',
+    },
+    headerVerticalSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     subHeader: {
         marginVertical: 12,
@@ -34,7 +38,7 @@ const HomeLayoutStyles = StyleSheet.create({
     },
     list: {
         width: '100%',
-        maxHeight: '85%',
+        height: '85%',
     },
     button: {
         width: '80%',
