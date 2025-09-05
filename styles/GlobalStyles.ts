@@ -133,6 +133,7 @@ const GlobalStyles = StyleSheet.create({
 
         elevation: 2,
     },
+    errorMessage: { color: 'red' },
 });
 
 export default GlobalStyles;

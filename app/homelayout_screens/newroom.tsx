@@ -11,6 +11,7 @@ import { Room } from '@/types/Room';
 import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { postRequest } from '@/utils/RequestHandler';
+import { toLog } from '@/utils/ConsoleLog';
 
 const NewRoom = () => {
     const { houseId, houseObj } = useLocalSearchParams();
@@ -26,7 +27,6 @@ const NewRoom = () => {
     const [isAddingNewRoom, setIsAddingNewRoom] = useState<boolean>(false);
     useEffect(() => {
         const parsedHouse: House = JSON.parse(houseObj);
-        parsedHouse.id = 1;
         setSelectedHouse(parsedHouse);
         setCurrentRoom({
             id: rooms.length,
@@ -44,7 +44,7 @@ const NewRoom = () => {
         };
 
         console.log(newRoom);
-        console.log(selectedHouse);
+        toLog(`selectedHouse: ${JSON.stringify(selectedHouse)}`, 'remoteAddNewRoom', 'homelayout_screens/newroom');
         postRequest(`rooms?houseId=${selectedHouse.id}`, newRoom).then(() => {
             setModalVisible(!modalVisible);
             setIsAddingNewRoom(false);

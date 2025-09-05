@@ -15,7 +15,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const HomeLayout = () => {
     const [houseData, setHouseData] = useState<House[]>(null);
-    const [selectedHouseId, setSelectedHouseId] = useState<number>(-1);
     const [selectedHouse, setSelectedHouse] = useState<House>(null);
     const [availableRooms, setAvailableRooms] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -31,14 +30,12 @@ const HomeLayout = () => {
             toLog(result, 'loadData', '(tabs)/homeLayout');
 
             setHouseData(result);
-            //setSelectedHouse(houseResponse);
-            //setAvailableRooms(sortObjectsById(houseResponse.rooms));
             setIsLoading(false);
         });
     };
 
     if (isLoading) {
-        return <LoadingSpinner textToDisplay={'Loading...'} color={'black'} />;
+        return <LoadingSpinner textToDisplay={'Loading...'} color={'black'} textSize={null} />;
     }
 
     const remoteDeleteItem = (item) => {
@@ -65,9 +62,9 @@ const HomeLayout = () => {
     };
 
     const selectHouse = (houseToSelect: House) => {
-        toLog(`Selecting house ${houseToSelect} `, 'selectHouse', '(tabs)/homelayout');
-        setAvailableRooms(sortObjectsById(houseToSelect.rooms));
+        toLog(`Selecting house ${houseToSelect.id} `, 'selectHouse', '(tabs)/homelayout');
         setSelectedHouse(houseToSelect);
+        setAvailableRooms(sortObjectsById(houseToSelect.rooms));
     };
 
     const handleAddNewHouse = () => {
@@ -78,10 +75,13 @@ const HomeLayout = () => {
     return (
         <View style={GlobalStyles.container}>
             <View style={HomeLayoutStyles.header}>
-                <HouseListDropdown houseList={houseData} setSelectedHouse={selectHouse} />
-                <TouchableOpacity onPress={handleAddNewHouse}>
-                    <MaterialIcons name={'add-circle'} color={'green'} size={30} />
-                </TouchableOpacity>
+                <View style={HomeLayoutStyles.headerVerticalSection}>
+                    <HouseListDropdown houseList={houseData} setSelectedHouse={selectHouse} />
+                    <TouchableOpacity onPress={handleAddNewHouse}>
+                        <MaterialIcons name={'add-circle'} color={'green'} size={30} />
+                    </TouchableOpacity>
+                </View>
+                <Text style={GlobalStyles.headerText}>{selectedHouse !== null ? selectedHouse.title : ''}</Text>
             </View>
             <View style={HomeLayoutStyles.content}>
                 {availableRooms.length !== 0 ? (
@@ -147,23 +147,27 @@ const HomeLayout = () => {
                                 </TouchableOpacity>
                             )}
                         />
-                        <View style={GlobalStyles.buttonContainer}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    router.navigate({
-                                        pathname: '/homelayout_screens/newroom',
-                                        params: {
-                                            houseId: selectedHouseId,
-                                            houseObj: JSON.stringify(selectedHouse),
-                                        },
-                                    });
-                                }}
-                                style={GlobalStyles.buttonMain}
-                            >
-                                <Text style={GlobalStyles.buttonText}>Add New Room</Text>
-                            </TouchableOpacity>
-                        </View>
                     </>
+                ) : (
+                    <View style={HomeLayoutStyles.list}></View>
+                )}
+                {selectedHouse ? (
+                    <View style={GlobalStyles.buttonContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                router.navigate({
+                                    pathname: '/homelayout_screens/newroom',
+                                    params: {
+                                        houseId: selectedHouse.id,
+                                        houseObj: JSON.stringify(selectedHouse),
+                                    },
+                                });
+                            }}
+                            style={GlobalStyles.buttonMain}
+                        >
+                            <Text style={GlobalStyles.buttonText}>Add New Room</Text>
+                        </TouchableOpacity>
+                    </View>
                 ) : (
                     <></>
                 )}

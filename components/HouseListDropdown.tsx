@@ -2,6 +2,7 @@ import HouseListDropdownStyles from '@/styles/components/HouseListDropdownStyles
 import GlobalStyles from '@/styles/GlobalStyles';
 import { House } from '@/types/House';
 import { toLog } from '@/utils/ConsoleLog';
+import { sortObjectsById } from '@/utils/SortObjects';
 import { useEffect, useState } from 'react';
 import { Dropdown } from 'react-native-element-dropdown';
 
@@ -23,7 +24,7 @@ const HouseListDropdown = ({ houseList, setSelectedHouse }: HouseListDropdownPro
     const [selectedHouseId, setSelectedHouseId] = useState<number>();
 
     useEffect(() => {
-        setHouseData(houseList);
+        setHouseData(sortObjectsById(houseList));
     }, [houseList]);
 
     const findHouseById = (id: number) => {

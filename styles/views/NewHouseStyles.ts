@@ -1,33 +1,35 @@
 import { StyleSheet } from 'react-native';
 const NewHouseStyles = StyleSheet.create({
     headerContent: {
-        backgroundColor: 'red',
-        height: '30%',
+        //backgroundColor: 'red',
+        height: '10%',
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
     },
-    icon: {
-        resizeMode: 'contain',
-        width: '100%',
-        height: '50%',
-    },
     content: {
         width: '100%',
-        height: '30%',
-        backgroundColor: 'blue',
+        height: '70%',
+        //backgroundColor: 'blue',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         alignItems: 'center',
+    },
+    userAdderContainer: {
+        //backgroundColor: 'green',
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        height: '80%',
     },
     input: {
         width: '80%',
         backgroundColor: '#fff',
         paddingHorizontal: 15,
-        paddingVertical: '5%',
+        paddingVertical: 12,
         borderRadius: 10,
         fontSize: 16,
         borderWidth: 1,
@@ -43,28 +45,16 @@ const NewHouseStyles = StyleSheet.create({
         shadowOpacity: 0.2,
     },
 
-    showPasswordIcon: {
-        backgroundColor: 'red',
-        position: 'static',
-    },
     errorMessage: { color: 'red' },
-    forgotPassword: {
-        fontSize: 10,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
     footerContent: {
         width: '100%',
-        height: '30%',
-        backgroundColor: 'purple',
+        minHeight: '10%',
+        maxHeight: '20%',
+        //backgroundColor: 'purple',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    copyrightText: {
-        marginVertical: '1%',
     },
 });
 export default NewHouseStyles;
