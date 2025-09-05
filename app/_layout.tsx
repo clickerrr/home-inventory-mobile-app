@@ -1,11 +1,9 @@
-import { SessionProvider } from '@/components/AuthContext';
-import { toLog } from '@/utils/ConsoleLog';
 import { Stack } from 'expo-router';
-import { useEffect } from 'react';
 
 const RootLayout = () => {
     return (
         <Stack>
+            {/* Expo router on android will render the first index as the entry point */}
             <Stack.Screen name="index" options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name="login" options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name="register" options={{ headerShown: false }}></Stack.Screen>

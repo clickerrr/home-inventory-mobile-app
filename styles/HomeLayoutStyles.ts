@@ -1,6 +1,14 @@
 import { StyleSheet } from 'react-native';
 
 const HomeLayoutStyles = StyleSheet.create({
+    header: {
+        height: '15%',
+        width: '80%',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+    },
     subHeader: {
         marginVertical: 12,
     },

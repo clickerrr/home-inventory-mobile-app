@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
-
-const RegisterStyles = StyleSheet.create({
+const NewHouseStyles = StyleSheet.create({
     headerContent: {
-        //backgroundColor: 'red',
+        backgroundColor: 'red',
         height: '30%',
         width: '100%',
         display: 'flex',
@@ -17,8 +16,8 @@ const RegisterStyles = StyleSheet.create({
     },
     content: {
         width: '100%',
-        height: '45%',
-        //backgroundColor: 'blue',
+        height: '30%',
+        backgroundColor: 'blue',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-evenly',
@@ -28,7 +27,7 @@ const RegisterStyles = StyleSheet.create({
         width: '80%',
         backgroundColor: '#fff',
         paddingHorizontal: 15,
-        paddingVertical: '4%',
+        paddingVertical: '5%',
         borderRadius: 10,
         fontSize: 16,
         borderWidth: 1,
@@ -48,12 +47,8 @@ const RegisterStyles = StyleSheet.create({
         backgroundColor: 'red',
         position: 'static',
     },
-    errorMessage: {
-        width: '80%',
-        textAlign: 'center',
-        color: 'red',
-    },
-    returnToLogin: {
+    errorMessage: { color: 'red' },
+    forgotPassword: {
         fontSize: 10,
         display: 'flex',
         flexDirection: 'row',
@@ -61,8 +56,8 @@ const RegisterStyles = StyleSheet.create({
     },
     footerContent: {
         width: '100%',
-        height: '15%',
-        //        backgroundColor: 'purple',
+        height: '30%',
+        backgroundColor: 'purple',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
@@ -72,4 +67,4 @@ const RegisterStyles = StyleSheet.create({
         marginVertical: '1%',
     },
 });
-export default RegisterStyles;
+export default NewHouseStyles;

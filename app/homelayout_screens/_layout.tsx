@@ -1,10 +1,9 @@
-import { useAuthentication } from '@/components/AuthContext';
 import { Stack } from 'expo-router';
 
 const HomeLayout = () => {
-    const { isAuthenticated } = useAuthentication();
     return (
         <Stack screenOptions={{ headerShown: true }}>
+            <Stack.Screen name="newhouse" options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name="newlocation" options={{ headerShown: false }}></Stack.Screen>
             <Stack.Screen name="newroom" options={{ headerShown: false }}></Stack.Screen>
         </Stack>

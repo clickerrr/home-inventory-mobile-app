@@ -25,10 +25,7 @@ const ContainerTypeDropdown = ({
 }: ContainerTypeDropdownProps) => {
     useEffect(() => {
         containerOptions.forEach((containerObject) => {
-            if (
-                containerType.toLowerCase() ==
-                containerObject.title.toLowerCase()
-            ) {
+            if (containerType.toLowerCase() == containerObject.title.toLowerCase()) {
                 setDataContainer(containerObject.id);
             }
         });

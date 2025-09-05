@@ -7,6 +7,7 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { NewUser } from '@/types/NewUser';
 import axios from 'axios';
+import { toLog } from '@/utils/ConsoleLog';
 
 const Register = () => {
     const [usernameInput, setUsernameInput] = useState<string>('');
@@ -42,26 +43,39 @@ const Register = () => {
             errorCheck(passedConfirmPassword, 'Passwords') &&
             checkPasswords(passedPassword, passedConfirmPassword);
         if (error) return;
+
         const user: NewUser = {
             username: passedUsername,
             email: passedEmail,
             password: passedPassword,
         };
+
         handleRemoteRegister(user);
-        Alert.alert('Success', `Successfully registered user: ${JSON.stringify(user)}`, [
-            {
-                text: 'OK',
-                onPress: () => {
-                    router.replace('/login');
-                },
-            },
-        ]);
     };
 
     const handleRemoteRegister = async (user: NewUser) => {
         const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
         console.log('Sending registration request');
-        const response = await axios.post(`${baseUrl}/register`, user);
+        const response = await axios.post(`${baseUrl}/register`, user).catch((error) => {
+            toLog(error);
+            if (error) {
+                if (error.status === 409) {
+                    setErrorMessage(
+                        'Username or email already taken. If you forgot your password, please request a new password.'
+                    );
+                }
+            }
+        });
+        if (response) {
+            Alert.alert('Success', `Successfully registered user: ${JSON.stringify(user)}`, [
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        router.replace('/login');
+                    },
+                },
+            ]);
+        }
         console.log('Received response: ', response);
     };
     return (

@@ -1,18 +1,20 @@
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { house, rooms } from '@/sampleData/RoomSelectorSampleData';
 import GlobalStyles from '@/styles/GlobalStyles';
 import HomeLayoutStyles from '@/styles/HomeLayoutStyles';
 import { House } from '@/types/House';
 import { Room } from '@/types/Room';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View, Alert } from 'react-native';
-import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
 import { deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
+import { Dropdown } from 'react-native-element-dropdown';
+import { toLog } from '@/utils/ConsoleLog';
+import HouseListDropdown from '@/components/HouseListDropdown';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const HomeLayout = () => {
-    const [houseData, setHouseData] = useState<House>(null);
+    const [houseData, setHouseData] = useState<House[]>(null);
     const [selectedHouseId, setSelectedHouseId] = useState<number>(-1);
     const [selectedHouse, setSelectedHouse] = useState<House>(null);
     const [availableRooms, setAvailableRooms] = useState<Room[]>([]);
@@ -26,10 +28,11 @@ const HomeLayout = () => {
 
     const loadData = () => {
         getRequest('houses').then((result) => {
-            const houseResponse = result[0];
-            setHouseData(houseResponse);
-            setSelectedHouse(houseResponse);
-            setAvailableRooms(sortObjectsById(houseResponse.rooms));
+            toLog(result, 'loadData', '(tabs)/homeLayout');
+
+            setHouseData(result);
+            //setSelectedHouse(houseResponse);
+            //setAvailableRooms(sortObjectsById(houseResponse.rooms));
             setIsLoading(false);
         });
     };
@@ -61,10 +64,26 @@ const HomeLayout = () => {
             });
     };
 
+    const selectHouse = (houseToSelect: House) => {
+        toLog(`Selecting house ${houseToSelect} `, 'selectHouse', '(tabs)/homelayout');
+        setAvailableRooms(sortObjectsById(houseToSelect.rooms));
+        setSelectedHouse(houseToSelect);
+    };
+
+    const handleAddNewHouse = () => {
+        toLog('Adding new house', 'handleAddNewHouse', '(tabs)/homelayout');
+        router.push('/homelayout_screens/newhouse');
+    };
+
     return (
         <View style={GlobalStyles.container}>
+            <View style={HomeLayoutStyles.header}>
+                <HouseListDropdown houseList={houseData} setSelectedHouse={selectHouse} />
+                <TouchableOpacity onPress={handleAddNewHouse}>
+                    <MaterialIcons name={'add-circle'} color={'green'} size={30} />
+                </TouchableOpacity>
+            </View>
             <View style={HomeLayoutStyles.content}>
-                <Text style={[GlobalStyles.headerText, { fontWeight: 'bold' }]}>{houseData.title}</Text>
                 {availableRooms.length !== 0 ? (
                     <>
                         <FlatList
