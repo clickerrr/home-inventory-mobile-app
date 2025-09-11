@@ -16,7 +16,7 @@ const TabsLayout = () => {
                 options={{
                     title: 'Scan',
                     tabBarIcon: ({ color }: { color: string }) => (
-                        <AntDesign size={28} name="pluscircle" color={color} />
+                        <AntDesign size={28} name="plus-circle" color={color} />
                     ),
                 }}
             />

@@ -4,7 +4,7 @@ import HomeLayoutStyles from '@/styles/HomeLayoutStyles';
 import { House } from '@/types/House';
 import { Room } from '@/types/Room';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { sortObjectsById } from '@/utils/SortObjects';
 import { deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
@@ -14,25 +14,40 @@ import HouseListDropdown from '@/components/HouseListDropdown';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const HomeLayout = () => {
-    const [houseData, setHouseData] = useState<House[]>(null);
-    const [selectedHouse, setSelectedHouse] = useState<House>(null);
+    const [houseData, setHouseData] = useState<House[]>([]);
+    const [selectedHouse, setSelectedHouse] = useState<House | null>(null);
     const [availableRooms, setAvailableRooms] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useFocusEffect(
-        useCallback(() => {
-            loadData();
-        }, [])
-    );
+    const refreshHouseRooms = () => {
+        if (selectedHouse === null) return;
+        getRequest(`rooms?houseId=${selectedHouse.id}`).then((result) => {
+            toLog(`result ${result}`, 'refreshHouseRooms', 'HomeLayout');
+            setAvailableRooms(sortObjectsById(result));
+        });
+    };
 
     const loadData = () => {
         getRequest('houses').then((result) => {
-            toLog(result, 'loadData', '(tabs)/homeLayout');
+            toLog(`${result}`, 'loadData', '(tabs)/homeLayout');
 
             setHouseData(result);
             setIsLoading(false);
         });
     };
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            if (selectedHouse !== null) {
+                console.log('!!!!getting rooms');
+                refreshHouseRooms();
+            }
+        }, [])
+    );
 
     if (isLoading) {
         return <LoadingSpinner textToDisplay={'Loading...'} color={'black'} textSize={null} />;
