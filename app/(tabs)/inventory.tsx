@@ -1,13 +1,14 @@
 import { Alert, View, Text, TouchableOpacity, FlatList, Image, ActionSheetIOS } from 'react-native';
-import { router, useFocusEffect, useLocalSearchParams, usePathname } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import GlobalStyles from '@/styles/GlobalStyles';
 import InventoryStyles from '@/styles/InventoryStyles';
 import { useCallback, useEffect, useState } from 'react';
-import { house, rooms } from '@/sampleData/RoomSelectorSampleData';
+import { house } from '@/sampleData/RoomSelectorSampleData';
 import { Room } from '@/types/Room';
-import axios from 'axios';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { deleteReqeuest, deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
+import { deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
+import { sortObjectsById } from '@/utils/SortObjects';
+import { House } from '@/types/House';
 const Inventory = () => {
     const [roomsData, setRoomsData] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -19,13 +20,19 @@ const Inventory = () => {
     );
 
     const loadData = () => {
-        getRequest('rooms').then((result) => {
-            setRoomsData(result);
+        getRequest('houses').then((result) => {
+            const foundHouse = result.find((house: House) => {
+                return house.title === 'Swiech House';
+            });
+            if (foundHouse === undefined) {
+                setRoomsData([]);
+            } else {
+                setRoomsData(sortObjectsById(foundHouse.rooms));
+            }
             setIsLoading(false);
         });
     };
 
-    useEffect(() => {}, []);
     const remoteDeleteItem = (item) => {
         console.log(item);
         deleteRequest(`rooms/${item.id}`)

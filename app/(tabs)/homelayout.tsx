@@ -8,7 +8,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { ActionSheetIOS, FlatList, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { sortObjectsById } from '@/utils/SortObjects';
 import { deleteRequest, getRequest, putRequest } from '@/utils/RequestHandler';
-import { Dropdown } from 'react-native-element-dropdown';
 import { toLog } from '@/utils/ConsoleLog';
 import HouseListDropdown from '@/components/HouseListDropdown';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -20,6 +19,7 @@ const HomeLayout = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const refreshHouseRooms = () => {
+        toLog('refreshHouseRooms call');
         if (selectedHouse === null) return;
         getRequest(`rooms?houseId=${selectedHouse.id}`).then((result) => {
             toLog(`result ${result}`, 'refreshHouseRooms', 'HomeLayout');
@@ -29,7 +29,7 @@ const HomeLayout = () => {
 
     const loadData = () => {
         getRequest('houses').then((result) => {
-            toLog(`${result}`, 'loadData', '(tabs)/homeLayout');
+            toLog(`${JSON.stringify(result)}`, 'loadData', '(tabs)/homeLayout');
 
             setHouseData(result);
             setIsLoading(false);
@@ -46,7 +46,7 @@ const HomeLayout = () => {
                 console.log('!!!!getting rooms');
                 refreshHouseRooms();
             }
-        }, [])
+        }, [selectedHouse])
     );
 
     if (isLoading) {
@@ -54,10 +54,10 @@ const HomeLayout = () => {
     }
 
     const remoteDeleteItem = (item) => {
-        console.log(item);
+        toLog(`Deleting ${JSON.stringify(item)}`, 'remoteDeleteItem', 'homelayout');
         deleteRequest(`rooms/${item.id}`)
             .then((result) => {
-                loadData();
+                refreshHouseRooms();
             })
             .catch((error) => {
                 console.log(error);
@@ -69,7 +69,7 @@ const HomeLayout = () => {
         console.log(item);
         putRequest(`rooms/${item.id}`, item)
             .then((result) => {
-                loadData();
+                refreshHouseRooms();
             })
             .catch((error) => {
                 console.log(error);
