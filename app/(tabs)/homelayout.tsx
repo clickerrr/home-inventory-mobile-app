@@ -46,7 +46,7 @@ const HomeLayout = () => {
                 console.log('!!!!getting rooms');
                 refreshHouseRooms();
             }
-        }, [])
+        }, [selectedHouse])
     );
 
     if (isLoading) {
@@ -54,10 +54,10 @@ const HomeLayout = () => {
     }
 
     const remoteDeleteItem = (item) => {
-        console.log(item);
+        toLog(`Deleting ${JSON.stringify(item)}`, 'remoteDeleteItem', 'homelayout');
         deleteRequest(`rooms/${item.id}`)
             .then((result) => {
-                loadData();
+                refreshHouseRooms();
             })
             .catch((error) => {
                 console.log(error);
