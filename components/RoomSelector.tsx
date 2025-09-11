@@ -13,12 +13,16 @@ import axios from 'axios';
 import { sortObjectsById } from '@/utils/SortObjects';
 import { readFromKeyStore } from '@/utils/KeyStore';
 import { getRequest } from '@/utils/RequestHandler';
+import HouseListDropdown from '@/components/HouseListDropdown';
+import { toLog } from '@/utils/ConsoleLog';
 interface RoomSelectorProps {
     handleNext: (location: Location) => void;
     handleCancel: () => void;
     cancelText: string;
 }
 const RoomSelector = ({ handleNext, handleCancel, cancelText }: RoomSelectorProps) => {
+    const [houseData, setHouseData] = useState<House[]>([]);
+    const [selectedHouse, setSelectedHouse] = useState<House | null>(null);
     const [dropdownValue, setDropdownValue] = useState(undefined);
     const [locationDropdownValue, setLocationDropdownValue] = useState(undefined);
     const [locationsData, setLocationsData] = useState<Location[]>([]);
@@ -26,44 +30,68 @@ const RoomSelector = ({ handleNext, handleCancel, cancelText }: RoomSelectorProp
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        getRequest('rooms').then((result) => {
-            const rooms: Room[] = result;
-            const sortedRooms = sortObjectsById(rooms);
-            console.log('rooms', sortedRooms);
-            setRoomList(sortedRooms);
-            sortedRooms.forEach((room: Room) => {
-                console.log(room.id, room.title);
-                const sortedLocations = sortObjectsById(room.locations);
-                sortedLocations.forEach((location: Location) => {
-                    console.log(location.id, location.title);
-                });
-            });
+        getRequest('houses').then((result) => {
+            const houses: House[] = result;
+            toLog(`${JSON.stringify(result)}`);
+            const sortedHouses = sortObjectsById(houses);
+            console.log('sortedHouses', sortedHouses);
+
+            setHouseData(sortedHouses);
         });
     }, []);
+
+    const clearSelections = () => {
+        setDropdownValue(undefined);
+        setLocationDropdownValue(undefined);
+    };
+
+    const selectHouse = (houseToSelect: House) => {
+        toLog(`${JSON.stringify(houseToSelect)}`);
+
+        const rooms = houseToSelect.rooms;
+        const sortedRooms = sortObjectsById(rooms);
+        setRoomList(sortedRooms);
+        setLocationsData([]);
+        clearSelections();
+
+        toLog(`sortedRooms ${JSON.stringify(sortedRooms)}`);
+
+        setSelectedHouse(houseToSelect);
+    };
 
     return (
         <>
             <View style={RoomSelectorStyles.content}>
                 <View style={RoomSelectorStyles.container}>
-                    <Text style={[GlobalStyles.subHeader, RoomSelectorStyles.subHeader]}>Select Room</Text>
-                    <Dropdown
-                        style={RoomSelectorStyles.dropdown}
-                        data={roomList}
-                        labelField="title"
-                        valueField="id"
-                        value={dropdownValue}
-                        onChange={(value) => {
-                            console.log(value.id);
-                            setDropdownValue(value.id);
+                    <Text style={[GlobalStyles.subHeader, RoomSelectorStyles.subHeader]}>Select House</Text>
+                    <HouseListDropdown houseList={houseData} setSelectedHouse={selectHouse} />
+                </View>
+                <View style={RoomSelectorStyles.container}>
+                    {roomList.length !== 0 ? (
+                        <>
+                            <Text style={[GlobalStyles.subHeader, RoomSelectorStyles.subHeader]}>Select Room</Text>
+                            <Dropdown
+                                style={RoomSelectorStyles.dropdown}
+                                data={roomList}
+                                labelField="title"
+                                valueField="id"
+                                value={dropdownValue}
+                                onChange={(value) => {
+                                    console.log(value.id);
+                                    setDropdownValue(value.id);
 
-                            const foundRoom = roomList.find((room) => {
-                                return room.id === value.id;
-                            });
-                            console.log('foundRoom locations', foundRoom.locations);
-                            setLocationsData(foundRoom.locations);
-                            setLocationDropdownValue(undefined);
-                        }}
-                    />
+                                    const foundRoom = roomList.find((room) => {
+                                        return room.id === value.id;
+                                    });
+                                    console.log('foundRoom locations', foundRoom.locations);
+                                    setLocationsData(sortObjectsById(foundRoom.locations));
+                                    setLocationDropdownValue(undefined);
+                                }}
+                            />
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </View>
                 {locationsData.length !== 0 ? (
                     <View style={RoomSelectorStyles.container}>
