@@ -53,7 +53,7 @@ const InventoryStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         textAlign: 'center',
-        marginVertical: 8,
+        marginVertical: '1%',
         // Shadow for iOS
         shadowColor: 'black',
         shadowOffset: { width: 5, height: 2 },
@@ -91,7 +91,6 @@ const InventoryStyles = StyleSheet.create({
     },
     locationDetailsButtonTitle: {
         display: 'flex',
-        width: '100%',
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 4,
