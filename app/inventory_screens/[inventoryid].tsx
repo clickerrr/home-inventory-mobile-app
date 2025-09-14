@@ -8,7 +8,7 @@ import { Inventory } from '@/types/Inventory';
 import { LoggedItem } from '@/types/LoggedItem';
 import { Product } from '@/types/Product';
 import { toLog } from '@/utils/ConsoleLog';
-import { getRequest } from '@/utils/RequestHandler';
+import { deleteRequest, getRequest } from '@/utils/RequestHandler';
 import { sortObjectsById } from '@/utils/SortObjects';
 import { useFocusEffect, useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
@@ -70,7 +70,7 @@ const InventoryView = () => {
 
     const remoteDeleteItem = (item) => {
         deleteRequest(`loggedItem/${item.id}`).then(() => {
-            loadData();
+            loadLoggedItems(currentInventory);
         });
     };
 
@@ -101,7 +101,7 @@ const InventoryView = () => {
 
     const renderEmptyComponent = () => {
         return (
-            <View style={GlobalStyles.container}>
+            <View style={InventoryViewStyles.listEmptyComponentView}>
                 <Text style={GlobalStyles.subHeader}>No Logged Items Yet</Text>
             </View>
         );
@@ -110,7 +110,7 @@ const InventoryView = () => {
     return (
         <View style={GlobalStyles.main}>
             <View style={InventoryStyles.headerContent}>
-                <Text style={GlobalStyles.subHeader}>
+                <Text style={GlobalStyles.headerText}>
                     {currentInventory !== null && currentInventory !== undefined
                         ? currentInventory.title
                         : 'No Inventory Title'}
@@ -120,7 +120,12 @@ const InventoryView = () => {
                 {isLoading ? (
                     <LoadingSpinner textToDisplay={`Loading...`} textSize={null} color={null} />
                 ) : (
-                    <FlatList style={InventoryStyles.list} data={loggedItemsList} renderItem={renderItems} />
+                    <FlatList
+                        style={InventoryStyles.list}
+                        data={loggedItemsList}
+                        renderItem={renderItems}
+                        ListEmptyComponent={renderEmptyComponent}
+                    />
                 )}
             </View>
             <View style={InventoryStyles.footerContent}></View>

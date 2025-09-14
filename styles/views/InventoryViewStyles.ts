@@ -8,5 +8,11 @@ const InventoryViewStyles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
     },
+    listEmptyComponentView: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
 });
 export default InventoryViewStyles;
