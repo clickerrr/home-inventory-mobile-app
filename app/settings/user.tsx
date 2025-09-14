@@ -13,7 +13,10 @@ const UserSettings = () => {
                     //     deleteFromKeystore('himas_refreshToken');
                     //     deleteFromKeystore('himas_authToken');
                     //     router.replace('/login');
-                    signOut().then(() => router.replace('/login'));
+                    signOut().then(() => {
+                        router.dismissAll();
+                        router.replace('/login');
+                    });
                 }}
             >
                 <Text style={GlobalStyles.buttonText}>Logout</Text>
