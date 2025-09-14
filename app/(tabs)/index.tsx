@@ -47,29 +47,30 @@ const Index = () => {
     };
     return (
         <View style={GlobalStyles.main}>
-            <View style={IndexStyles.header}></View>
+            <View style={GlobalStyles.container}>
+                <View style={GlobalStyles.headerContent}></View>
 
-            <View style={IndexStyles.content}>
-                <Image style={IndexStyles.icon} source={barcodeLogo} />
-                <Text style={[GlobalStyles.headerText, IndexStyles.titleText]}>Home Inventory Management</Text>
-            </View>
-            <View style={IndexStyles.footerContent}>
-                <TouchableOpacity
-                    onPress={() => {
-                        testRequestAxios();
-                    }}
-                >
-                    <Text>Axios</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {
-                        router.navigate({ pathname: '/camera_screens/camera' });
-                    }}
-                    style={GlobalStyles.buttonMain}
-                >
-                    <Text style={GlobalStyles.buttonText}>Scan New Item</Text>
-                </TouchableOpacity>
-                {/*
+                <View style={GlobalStyles.content}>
+                    <Image style={IndexStyles.icon} source={barcodeLogo} />
+                    <Text style={[GlobalStyles.headerText, IndexStyles.titleText]}>Home Inventory Management</Text>
+                </View>
+                <View style={GlobalStyles.footerContent}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            testRequestAxios();
+                        }}
+                    >
+                        <Text>Axios</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            router.navigate({ pathname: '/camera_screens/camera' });
+                        }}
+                        style={GlobalStyles.buttonMain}
+                    >
+                        <Text style={GlobalStyles.buttonText}>Scan New Item</Text>
+                    </TouchableOpacity>
+                    {/*
                 <TouchableOpacity
                     onPress={() => {
                         router.navigate({ pathname: '/camera_screens/search' });
@@ -80,6 +81,7 @@ const Index = () => {
 
                 </TouchableOpacity>
                 */}
+                </View>
             </View>
         </View>
     );

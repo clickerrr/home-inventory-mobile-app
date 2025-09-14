@@ -163,11 +163,11 @@ const InventoryScreen = () => {
 
     return (
         <View style={GlobalStyles.main}>
-            <View style={InventoryStyles.container}>
-                <View style={InventoryStyles.headerContent}>
+            <View style={GlobalStyles.container}>
+                <View style={GlobalStyles.headerContent}>
                     <HouseListDropdown houseList={houseList} setSelectedHouse={updateSelectedHouse} />
                 </View>
-                <View style={InventoryStyles.content}>
+                <View style={GlobalStyles.content}>
                     <Text style={[GlobalStyles.subHeader, InventoryStyles.subHeader]}>
                         Tap on an inventory to see its details
                     </Text>
@@ -183,7 +183,7 @@ const InventoryScreen = () => {
                         />
                     )}
                 </View>
-                <View style={InventoryStyles.footerContent}>
+                <View style={GlobalStyles.footerContent}>
                     {selectedHouse !== null ? (
                         <>
                             <TouchableOpacity
