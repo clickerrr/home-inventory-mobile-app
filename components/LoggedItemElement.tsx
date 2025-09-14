@@ -9,6 +9,7 @@ import { LoggedItem } from '@/types/LoggedItem';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useEffect, useState } from 'react';
+import LoggedItemElementStyles from '@/styles/components/LoggedItemElementStyles';
 
 interface ProductListElementProps {
     item: LoggedItem;
@@ -82,7 +83,7 @@ const LoggedItemElement = ({ item, onDelete }: ProductListElementProps) => {
             }}
             style={[InventoryStyles.button, InventoryStyles.locationDetailsButton]}
         >
-            <View style={InventoryStyles.locationDetailsButtonInternal}>
+            <View style={LoggedItemElementStyles.locationDetailsButtonInternal}>
                 {productData !== undefined ? (
                     <>
                         <View style={InventoryStyles.loggedItemDetailsContainer}>

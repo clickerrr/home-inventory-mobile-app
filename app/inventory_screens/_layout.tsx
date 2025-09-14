@@ -8,7 +8,9 @@ const InventoryLayout = () => {
             <Stack.Screen name="productsview/[productupca]" options={{ title: 'Product Details' }}></Stack.Screen>
             <Stack.Screen name="locationsview/[locationid]" options={{ title: 'Location Details' }}></Stack.Screen>
             <Stack.Screen name="[roomid]" options={{ title: 'Room Details' }}></Stack.Screen>
+            <Stack.Screen name="[inventoryid]" options={{ title: 'Inventory Details' }}></Stack.Screen>
             <Stack.Screen name="productlist" options={{ title: 'Product List' }}></Stack.Screen>
+            <Stack.Screen name="createnewinventory" options={{ title: 'Create New Inventory' }}></Stack.Screen>
         </Stack>
     );
 };

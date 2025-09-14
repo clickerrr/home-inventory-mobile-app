@@ -8,6 +8,7 @@ import { Product } from '@/types/Product';
 import GlobalStyles from '@/styles/GlobalStyles';
 import RoomPageStyles from '@/styles/RoomPageStyles';
 import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
+import InventorySelector from '@/components/InventorySelector';
 
 const RoomPage = () => {
     const { associatedProduct, quantity } = useLocalSearchParams();
@@ -39,6 +40,7 @@ const RoomPage = () => {
         };
         return newLoggedItem;
     };
+
     return (
         <View style={GlobalStyles.container}>
             <RoomSelector

@@ -46,12 +46,14 @@ const Index = () => {
         });
     };
     return (
-        <View style={GlobalStyles.container}>
-            <View style={[GlobalStyles.container, IndexStyles.content]}>
+        <View style={GlobalStyles.main}>
+            <View style={IndexStyles.header}></View>
+
+            <View style={IndexStyles.content}>
                 <Image style={IndexStyles.icon} source={barcodeLogo} />
                 <Text style={[GlobalStyles.headerText, IndexStyles.titleText]}>Home Inventory Management</Text>
             </View>
-            <View style={GlobalStyles.buttonContainer}>
+            <View style={IndexStyles.footerContent}>
                 <TouchableOpacity
                     onPress={() => {
                         testRequestAxios();

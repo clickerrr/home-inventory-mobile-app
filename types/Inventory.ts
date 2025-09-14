@@ -1,4 +1,7 @@
+import { LoggedItem } from './LoggedItem';
+
 export type Inventory = {
     id: number;
-    loggedItems: number[]; // Assuming `LoggedItem` type exists
+    title: string;
+    loggedItems: LoggedItem[]; // Assuming `LoggedItem` type exists
 };

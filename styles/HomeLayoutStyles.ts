@@ -2,12 +2,12 @@ import { StyleSheet } from 'react-native';
 
 const HomeLayoutStyles = StyleSheet.create({
     header: {
-        height: '15%',
-        width: '80%',
+        height: '10%',
+        width: '100%',
         display: 'flex',
-        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
-        justifyContent: 'space-around',
+        flexDirection: 'column',
     },
     headerVerticalSection: {
         flexDirection: 'row',
@@ -19,7 +19,7 @@ const HomeLayoutStyles = StyleSheet.create({
     content: {
         alignItems: 'center',
         width: '100%',
-        height: '80%',
+        height: '60%',
     },
     dropdown: {
         width: '80%',
@@ -64,6 +64,14 @@ const HomeLayoutStyles = StyleSheet.create({
         fontSize: 18,
         color: 'white',
         width: '100%',
+    },
+    footerContent: {
+        width: '100%',
+        height: '20%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
     },
 });
 export default HomeLayoutStyles;

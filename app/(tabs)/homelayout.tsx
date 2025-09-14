@@ -88,7 +88,7 @@ const HomeLayout = () => {
     };
 
     return (
-        <View style={GlobalStyles.container}>
+        <View style={GlobalStyles.main}>
             <View style={HomeLayoutStyles.header}>
                 <View style={HomeLayoutStyles.headerVerticalSection}>
                     <HouseListDropdown houseList={houseData} setSelectedHouse={selectHouse} />
@@ -166,37 +166,37 @@ const HomeLayout = () => {
                 ) : (
                     <View style={HomeLayoutStyles.list}></View>
                 )}
+            </View>
+            <View style={HomeLayoutStyles.footerContent}>
                 {selectedHouse ? (
                     <>
-                        <View style={GlobalStyles.buttonContainer}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    router.navigate({
-                                        pathname: '/homelayout_screens/newroom',
-                                        params: {
-                                            houseId: selectedHouse.id,
-                                            houseObj: JSON.stringify(selectedHouse),
-                                        },
-                                    });
-                                }}
-                                style={GlobalStyles.buttonMain}
-                            >
-                                <Text style={GlobalStyles.buttonText}>Add New Room</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    router.navigate({
-                                        pathname: '/housemanage',
-                                        params: {
-                                            passedHouse: JSON.stringify(selectedHouse),
-                                        },
-                                    });
-                                }}
-                                style={GlobalStyles.buttonMain}
-                            >
-                                <Text style={GlobalStyles.buttonText}>Manage House</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            onPress={() => {
+                                router.navigate({
+                                    pathname: '/homelayout_screens/newroom',
+                                    params: {
+                                        houseId: selectedHouse.id,
+                                        houseObj: JSON.stringify(selectedHouse),
+                                    },
+                                });
+                            }}
+                            style={GlobalStyles.buttonMain}
+                        >
+                            <Text style={GlobalStyles.buttonText}>Add New Room</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                router.navigate({
+                                    pathname: '/housemanage',
+                                    params: {
+                                        passedHouse: JSON.stringify(selectedHouse),
+                                    },
+                                });
+                            }}
+                            style={GlobalStyles.buttonMain}
+                        >
+                            <Text style={GlobalStyles.buttonText}>Manage House</Text>
+                        </TouchableOpacity>
                     </>
                 ) : (
                     <></>
