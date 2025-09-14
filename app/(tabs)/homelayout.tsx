@@ -167,22 +167,37 @@ const HomeLayout = () => {
                     <View style={HomeLayoutStyles.list}></View>
                 )}
                 {selectedHouse ? (
-                    <View style={GlobalStyles.buttonContainer}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                router.navigate({
-                                    pathname: '/homelayout_screens/newroom',
-                                    params: {
-                                        houseId: selectedHouse.id,
-                                        houseObj: JSON.stringify(selectedHouse),
-                                    },
-                                });
-                            }}
-                            style={GlobalStyles.buttonMain}
-                        >
-                            <Text style={GlobalStyles.buttonText}>Add New Room</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <>
+                        <View style={GlobalStyles.buttonContainer}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    router.navigate({
+                                        pathname: '/homelayout_screens/newroom',
+                                        params: {
+                                            houseId: selectedHouse.id,
+                                            houseObj: JSON.stringify(selectedHouse),
+                                        },
+                                    });
+                                }}
+                                style={GlobalStyles.buttonMain}
+                            >
+                                <Text style={GlobalStyles.buttonText}>Add New Room</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    router.navigate({
+                                        pathname: '/housemanage',
+                                        params: {
+                                            passedHouse: JSON.stringify(selectedHouse),
+                                        },
+                                    });
+                                }}
+                                style={GlobalStyles.buttonMain}
+                            >
+                                <Text style={GlobalStyles.buttonText}>Manage House</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
                 ) : (
                     <></>
                 )}

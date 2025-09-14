@@ -1,3 +1,4 @@
+import LoadingSpinner from '@/components/LoadingSpinner';
 import UserAdder from '@/components/UserAdder';
 import GlobalStyles from '@/styles/GlobalStyles';
 import NewHouseStyles from '@/styles/views/NewHouseStyles';
@@ -6,13 +7,15 @@ import { UserInformation } from '@/types/UserInformation';
 import { postRequest } from '@/utils/RequestHandler';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const NewHouse = () => {
     const [houseTitle, setHouseTitle] = useState<string>('');
     const [houseTitleFocused, setHouseTitleFocused] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const [userList, setUserList] = useState<UserInformation[]>([]);
+
+    const [submitting, setSubmitting] = useState<boolean>(false);
 
     const errorCheck = (fieldToCheck: string, fieldTitle: string): boolean => {
         if (fieldToCheck.trim().length == 0) {
@@ -39,21 +42,33 @@ const NewHouse = () => {
             rooms: [],
         };
 
-        postRequest(`houses`, newHouse).then((response) => {
-            console.log(response);
-            Alert.alert('Success', `Successfully added new house: ${newHouse.title}`, [
-                {
-                    text: 'OK',
-                    onPress: () => {
-                        router.back();
+        setSubmitting(true);
+
+        postRequest(`houses`, newHouse)
+            .then((response) => {
+                console.log(response);
+                setSubmitting(false);
+                Alert.alert('Success', `Successfully added new house: ${newHouse.title}`, [
+                    {
+                        text: 'OK',
+                        onPress: () => {
+                            router.back();
+                        },
                     },
-                },
-            ]);
-        });
+                ]);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     return (
         <View style={GlobalStyles.main}>
+            <Modal visible={submitting} animationType="fade" transparent={true}>
+                <View style={GlobalStyles.modalScreen}>
+                    <LoadingSpinner textToDisplay={'Submitting...'} textSize={null} color={null} />
+                </View>
+            </Modal>
             <View style={GlobalStyles.container}>
                 <View style={NewHouseStyles.headerContent}>
                     <Text style={[GlobalStyles.headerText]}>Create A New House</Text>
@@ -74,7 +89,11 @@ const NewHouse = () => {
                 </View>
                 <View style={NewHouseStyles.footerContent}>
                     <Text style={NewHouseStyles.errorMessage}>{errorMessage}</Text>
-                    <TouchableOpacity onPress={() => handleCreateNewHouse()} style={[GlobalStyles.buttonMain]}>
+                    <TouchableOpacity
+                        disabled={submitting}
+                        onPress={() => handleCreateNewHouse()}
+                        style={[GlobalStyles.buttonMain]}
+                    >
                         <Text style={[GlobalStyles.buttonText]}>Create New House</Text>
                     </TouchableOpacity>
                 </View>

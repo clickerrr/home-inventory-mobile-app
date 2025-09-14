@@ -14,7 +14,6 @@ import UserInformation from '@/types/UserInformation';
 import GlobalStyles from '@/styles/GlobalStyles';
 import UserAdderStyles from '@/styles/components/UserAdderStyles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useFocusEffect } from 'expo-router';
 import { toLog } from '@/utils/ConsoleLog';
 
 interface UserAdderProps {
@@ -125,12 +124,15 @@ const UserAdder = ({ tiedUserData, setTiedUserData }: UserAdderProps) => {
                     data={tiedUserData}
                     renderItem={renderUserList}
                 />
-                <TouchableOpacity
-                    onPress={() => setAddingNewUser((currentState) => !currentState)}
-                    style={GlobalStyles.buttonMain}
-                >
-                    <Text style={GlobalStyles.buttonText}>Add User</Text>
-                </TouchableOpacity>
+
+                <View style={GlobalStyles.buttonContainer}>
+                    <TouchableOpacity
+                        onPress={() => setAddingNewUser((currentState) => !currentState)}
+                        style={GlobalStyles.buttonMain}
+                    >
+                        <Text style={GlobalStyles.buttonText}>Add User</Text>
+                    </TouchableOpacity>
+                </View>
             </>
         );
     };
@@ -209,7 +211,7 @@ const UserAdder = ({ tiedUserData, setTiedUserData }: UserAdderProps) => {
         return (
             <>
                 <View style={UserAdderStyles.addUserContainer}>
-                    <Text style={GlobalStyles.subHeader}>Search For Users To Add...</Text>
+                    <Text style={GlobalStyles.subHeader}>Enter Information For Users To Add...</Text>
                     <TextInput
                         style={[UserAdderStyles.input, usernameInputFocused ? UserAdderStyles.inputFocused : null]}
                         placeholder="Enter Username..."
