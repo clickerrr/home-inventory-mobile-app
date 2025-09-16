@@ -1,6 +1,9 @@
+import { LoggedItem } from './LoggedItem';
+import { Room } from './Room';
+
 export type Location = {
     id: number;
     title: string;
-    room: number; // Assuming `Room` type exists
-    loggedItems: number[]; // Assuming `LoggedItem` type exists
+    room: Room; // Assuming `Room` type exists
+    loggedItems: LoggedItem[]; // Assuming `LoggedItem` type exists
 };
