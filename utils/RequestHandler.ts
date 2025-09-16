@@ -16,10 +16,6 @@ start at index.ts: check to see if refresh token is present
  */
 const baseUrl = process.env.EXPO_PUBLIC_BASE_URL;
 
-const loadAuthToken = () => {
-    readFromKeyStore('himas_authToken');
-};
-
 // function for automatically refreshing the auth token, should be called on 401 from one of the functions below
 const handleRefresh = async () => {
     toLog('Refreshing auth token', 'handleRefresh', fileName);

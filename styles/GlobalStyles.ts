@@ -134,6 +134,17 @@ const GlobalStyles = StyleSheet.create({
         elevation: 2,
     },
     errorMessage: { color: 'red' },
+    icon: {
+        resizeMode: 'contain',
+        width: '100%',
+        height: '50%',
+    },
+    iconSmall: {
+        width: '25%',
+        maxHeight: '15%',
+
+        resizeMode: 'contain',
+    },
 });
 
 export default GlobalStyles;
