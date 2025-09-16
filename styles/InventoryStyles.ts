@@ -5,22 +5,32 @@ const InventoryStyles = StyleSheet.create({
         height: '100%',
         width: '100%',
     },
-    headerContainer: {
-        marginVertical: 12,
+    headerContent: {
+        height: '10%',
+        width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    headerText: {
-        fontWeight: 'bold',
+        flexDirection: 'column',
     },
     content: {
-        height: '80%',
+        height: '60%',
         paddingTop: 32,
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
         alignItems: 'center',
+    },
+    footerContent: {
+        width: '100%',
+        height: '20%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+    },
+    headerText: {
+        fontWeight: 'bold',
     },
     emptyContainer: {
         justifyContent: 'center',
@@ -43,7 +53,7 @@ const InventoryStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         textAlign: 'center',
-        marginVertical: 8,
+        marginVertical: '1%',
         // Shadow for iOS
         shadowColor: 'black',
         shadowOffset: { width: 5, height: 2 },
@@ -81,7 +91,6 @@ const InventoryStyles = StyleSheet.create({
     },
     locationDetailsButtonTitle: {
         display: 'flex',
-        width: '100%',
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 4,
@@ -94,6 +103,18 @@ const InventoryStyles = StyleSheet.create({
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
+    },
+    listItem: {
+        height: 75,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        paddingHorizontal: '10%',
+        borderBottomWidth: 1,
+        borderBottomColor: 'gray',
+        backgroundColor: 'red',
     },
     productIconContainer: {
         //backgroundColor: 'purple',
@@ -114,6 +135,21 @@ const InventoryStyles = StyleSheet.create({
     },
     loggedItemDetailsSection: {
         marginBottom: 4,
+    },
+    textInput: {
+        width: '80%',
+        backgroundColor: '#fff',
+        paddingHorizontal: 15,
+        paddingVertical: 12,
+        borderRadius: 10,
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3, // Android shadow
     },
 });
 export default InventoryStyles;

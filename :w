@@ -1,0 +1,48 @@
+import { StyleSheet } from 'react-native';
+const LoggedItemElementStyles = StyleSheet.create({
+    buttonText: {
+        fontSize: 12,
+    },
+    folderButton: {
+        height: 100,
+        maxHeight: 350,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    buttonTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 4,
+        flexWrap: 'wrap',
+    },
+    buttonSectionLeft: {
+        width: '80%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        backgroundColor: 'red',
+    },
+    buttonSectionRight: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        backgroundColor: 'purple',
+        width: '20%',
+    },
+    locationDetailsButtonInternal: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        //backgroundColor: 'red',
+        alignSelf: 'center',
+        width: '100%',
+        height: '100%',
+        flexDirection: 'row',
+        flexGrow: 2,
+    },
+});
+export default LoggedItemElementStyles;

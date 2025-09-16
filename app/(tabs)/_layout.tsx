@@ -15,17 +15,9 @@ const TabsLayout = () => {
                 name="index"
                 options={{
                     title: 'Scan',
+                    headerShown: false,
                     tabBarIcon: ({ color }: { color: string }) => (
                         <AntDesign size={28} name="plus-circle" color={color} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="inventory"
-                options={{
-                    title: 'Inventory',
-                    tabBarIcon: ({ color }: { color: string }) => (
-                        <MaterialIcons size={28} name="inventory" color={color} />
                     ),
                 }}
             />
@@ -33,13 +25,25 @@ const TabsLayout = () => {
                 name="homelayout"
                 options={{
                     title: 'Home Layout',
+                    headerShown: false,
                     tabBarIcon: ({ color }: { color: string }) => <AntDesign size={28} name="home" color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name="inventory"
+                options={{
+                    title: 'Inventory',
+                    headerShown: false,
+                    tabBarIcon: ({ color }: { color: string }) => (
+                        <MaterialIcons size={28} name="inventory" color={color} />
+                    ),
                 }}
             />
             <Tabs.Screen
                 name="settings"
                 options={{
                     title: 'Settings',
+                    headerShown: false,
                     tabBarIcon: ({ color }: { color: string }) => (
                         <MaterialIcons size={28} name="settings" color={color} />
                     ),

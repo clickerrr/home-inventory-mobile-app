@@ -88,87 +88,89 @@ const HomeLayout = () => {
     };
 
     return (
-        <View style={GlobalStyles.container}>
-            <View style={HomeLayoutStyles.header}>
-                <View style={HomeLayoutStyles.headerVerticalSection}>
-                    <HouseListDropdown houseList={houseData} setSelectedHouse={selectHouse} />
-                    <TouchableOpacity onPress={handleAddNewHouse}>
-                        <MaterialIcons name={'add-circle'} color={'green'} size={30} />
-                    </TouchableOpacity>
+        <View style={GlobalStyles.main}>
+            <View style={GlobalStyles.container}>
+                <View style={GlobalStyles.headerContent}>
+                    <View style={HomeLayoutStyles.headerVerticalSection}>
+                        <HouseListDropdown houseList={houseData} setSelectedHouse={selectHouse} />
+                        <TouchableOpacity onPress={handleAddNewHouse}>
+                            <MaterialIcons name={'add-circle'} color={'green'} size={30} />
+                        </TouchableOpacity>
+                    </View>
+                    <Text style={GlobalStyles.headerText}>{selectedHouse !== null ? selectedHouse.title : ''}</Text>
                 </View>
-                <Text style={GlobalStyles.headerText}>{selectedHouse !== null ? selectedHouse.title : ''}</Text>
-            </View>
-            <View style={HomeLayoutStyles.content}>
-                {availableRooms.length !== 0 ? (
-                    <>
-                        <FlatList
-                            style={HomeLayoutStyles.list}
-                            data={availableRooms}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    onLongPress={({ target }) => {
-                                        ActionSheetIOS.showActionSheetWithOptions(
-                                            {
-                                                options: ['Delete', 'Rename', 'Cancel'],
-                                                destructiveButtonIndex: 0,
-                                                cancelButtonIndex: 2,
-                                                userInterfaceStyle: 'dark',
-                                            },
-                                            (buttonIndex) => {
-                                                if (buttonIndex === 2) {
-                                                    // cancel action
-                                                } else if (buttonIndex === 1) {
-                                                    Alert.prompt('Rename Room', 'Enter new room name', (text) => {
-                                                        remoteUpdateItem(item, text);
-                                                    });
-                                                    // on edit
-                                                } else if (buttonIndex === 0) {
-                                                    Alert.alert(
-                                                        'Confirm Deletion',
-                                                        'Are you sure you want to delete this item?',
+                <View style={GlobalStyles.content}>
+                    {availableRooms.length !== 0 ? (
+                        <>
+                            <FlatList
+                                style={HomeLayoutStyles.list}
+                                data={availableRooms}
+                                keyExtractor={(item) => item.id.toString()}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity
+                                        onLongPress={({ target }) => {
+                                            ActionSheetIOS.showActionSheetWithOptions(
+                                                {
+                                                    options: ['Delete', 'Rename', 'Cancel'],
+                                                    destructiveButtonIndex: 0,
+                                                    cancelButtonIndex: 2,
+                                                    userInterfaceStyle: 'dark',
+                                                },
+                                                (buttonIndex) => {
+                                                    if (buttonIndex === 2) {
+                                                        // cancel action
+                                                    } else if (buttonIndex === 1) {
+                                                        Alert.prompt('Rename Room', 'Enter new room name', (text) => {
+                                                            remoteUpdateItem(item, text);
+                                                        });
+                                                        // on edit
+                                                    } else if (buttonIndex === 0) {
+                                                        Alert.alert(
+                                                            'Confirm Deletion',
+                                                            'Are you sure you want to delete this item?',
 
-                                                        [
-                                                            {
-                                                                text: 'Cancel',
-                                                                onPress: () => {},
-                                                                style: 'cancel',
-                                                            },
-                                                            {
-                                                                text: 'Confirm',
-                                                                onPress: () => {
-                                                                    remoteDeleteItem(item);
+                                                            [
+                                                                {
+                                                                    text: 'Cancel',
+                                                                    onPress: () => {},
+                                                                    style: 'cancel',
                                                                 },
-                                                                style: 'destructive',
-                                                            },
-                                                        ]
-                                                    );
+                                                                {
+                                                                    text: 'Confirm',
+                                                                    onPress: () => {
+                                                                        remoteDeleteItem(item);
+                                                                    },
+                                                                    style: 'destructive',
+                                                                },
+                                                            ]
+                                                        );
+                                                    }
                                                 }
-                                            }
-                                        );
-                                    }}
-                                    onPress={() => {
-                                        router.navigate({
-                                            pathname: `/inventory_screens/${item.id}`,
-                                            params: {
-                                                room: JSON.stringify(item),
-                                            },
-                                        });
-                                    }}
-                                    key={item.id}
-                                    style={HomeLayoutStyles.button}
-                                >
-                                    <Text style={HomeLayoutStyles.buttonText}>{item.title}</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </>
-                ) : (
-                    <View style={HomeLayoutStyles.list}></View>
-                )}
-                {selectedHouse ? (
-                    <>
-                        <View style={GlobalStyles.buttonContainer}>
+                                            );
+                                        }}
+                                        onPress={() => {
+                                            router.navigate({
+                                                pathname: `/inventory_screens/${item.id}`,
+                                                params: {
+                                                    room: JSON.stringify(item),
+                                                },
+                                            });
+                                        }}
+                                        key={item.id}
+                                        style={HomeLayoutStyles.button}
+                                    >
+                                        <Text style={HomeLayoutStyles.buttonText}>{item.title}</Text>
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        </>
+                    ) : (
+                        <View style={HomeLayoutStyles.list}></View>
+                    )}
+                </View>
+                <View style={GlobalStyles.footerContent}>
+                    {selectedHouse ? (
+                        <>
                             <TouchableOpacity
                                 onPress={() => {
                                     router.navigate({
@@ -196,11 +198,11 @@ const HomeLayout = () => {
                             >
                                 <Text style={GlobalStyles.buttonText}>Manage House</Text>
                             </TouchableOpacity>
-                        </View>
-                    </>
-                ) : (
-                    <></>
-                )}
+                        </>
+                    ) : (
+                        <></>
+                    )}
+                </View>
             </View>
         </View>
     );

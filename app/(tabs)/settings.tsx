@@ -29,8 +29,16 @@ const Settings = () => {
     };
     if (devEnvironment) {
         return (
-            <View style={[GlobalStyles.container, { justifyContent: 'space-evenly' }]}>
-                <FlatList data={linkList} renderItem={renderItems} />
+            <View style={[GlobalStyles.main, { justifyContent: 'space-evenly' }]}>
+                <View style={GlobalStyles.container}>
+                    <View style={GlobalStyles.headerContent}>
+                        <Text style={GlobalStyles.headerText}>Settings</Text>
+                    </View>
+                    <View style={GlobalStyles.content}>
+                        <FlatList data={linkList} renderItem={renderItems} />
+                    </View>
+                    <View style={GlobalStyles.footerContent}></View>
+                </View>
             </View>
         );
     }

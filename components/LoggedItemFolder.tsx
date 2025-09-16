@@ -6,6 +6,7 @@ import LoggedItemElement from './LoggedItemElement';
 import { LoggedItem } from '@/types/LoggedItem';
 import InventoryStyles from '@/styles/InventoryStyles';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import LoggedItemElementStyles from '@/styles/components/LoggedItemElementStyles';
 
 interface ProductListFolderProps {
     items: LoggedItem[];
@@ -21,17 +22,12 @@ const LoggedItemFolder = ({ items, itemsCount, onDelete }: ProductListFolderProp
     };
     const renderClosedItem = () => {
         return (
-            <TouchableOpacity
-                onPress={() => setIsOpen(true)}
-                style={[InventoryStyles.button, InventoryStyles.folderButton]}
-            >
-                <Text style={(InventoryStyles.buttonText, InventoryStyles.locationDetailsButtonTitle)}>
-                    {items[0].product.title}
-                </Text>
-                <View>
-                    <Text style={(InventoryStyles.buttonText, InventoryStyles.locationDetailsButtonTitle)}>
-                        {itemsCount}
-                    </Text>
+            <TouchableOpacity onPress={() => setIsOpen(true)} style={LoggedItemElementStyles.folderButton}>
+                <View style={LoggedItemElementStyles.buttonSectionLeft}>
+                    <Text style={LoggedItemElementStyles.buttonTitle}>{items[0].product.title}</Text>
+                </View>
+                <View style={LoggedItemElementStyles.buttonSectionRight}>
+                    <Text style={LoggedItemElementStyles.buttonTitle}>{itemsCount}</Text>
                     <MaterialIcons size={28} name="folder" color={'black'} />
                 </View>
             </TouchableOpacity>
@@ -44,19 +40,17 @@ const LoggedItemFolder = ({ items, itemsCount, onDelete }: ProductListFolderProp
                     onPress={() => {
                         setIsOpen(false);
                     }}
-                    style={[InventoryStyles.button, InventoryStyles.folderButton]}
+                    style={LoggedItemElementStyles.folderButton}
                 >
-                    <Text style={(InventoryStyles.buttonText, InventoryStyles.locationDetailsButtonTitle)}>
-                        {items[0].product.title}
-                    </Text>
-                    <View>
-                        <Text style={(InventoryStyles.buttonText, InventoryStyles.locationDetailsButtonTitle)}>
-                            {itemsCount}
-                        </Text>
+                    <View style={LoggedItemElementStyles.buttonSectionLeft}>
+                        <Text style={LoggedItemElementStyles.buttonTitle}>{items[0].product.title}</Text>
+                    </View>
+                    <View style={LoggedItemElementStyles.buttonSectionRight}>
+                        <Text style={LoggedItemElementStyles.buttonTitle}>{itemsCount}</Text>
                         <MaterialIcons size={28} name="folder-open" color={'black'} />
                     </View>
                 </TouchableOpacity>
-                {renderItems()}
+                <View style={LoggedItemElementStyles.folderSubView}>{renderItems()}</View>
             </View>
         );
     };
