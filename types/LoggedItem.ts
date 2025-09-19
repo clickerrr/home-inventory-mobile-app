@@ -5,8 +5,8 @@ import { Product } from './Product';
 export type LoggedItem = {
     id: number;
     dateLogged: string; // ISO 8601 date string (e.g., "yyyy-MM-dd")
-    expirationDate: string;
-    consumeByDate: string;
+    expirationDate: string | null;
+    consumeByDate: string | null;
     product: Product; // Assuming `Product` type exists
     location: Location; // Assuming `Location` type exists
     inventory: Inventory; // Assuming `Inventory` type exists

@@ -169,6 +169,10 @@ const GlobalStyles = StyleSheet.create({
 
         resizeMode: 'contain',
     },
+    expirationCheckContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+    },
 });
 
 export default GlobalStyles;

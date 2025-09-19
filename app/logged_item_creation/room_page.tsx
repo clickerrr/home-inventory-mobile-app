@@ -1,12 +1,9 @@
-import RoomSelector from '@/components/RoomSelector';
 import { LoggedItem } from '@/types/LoggedItem';
 import { Location } from '@/types/Location';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { Product } from '@/types/Product';
 import GlobalStyles from '@/styles/GlobalStyles';
-import RoomPageStyles from '@/styles/RoomPageStyles';
 import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
 import InventorySelector from '@/components/InventorySelector';
 import { getRequest } from '@/utils/RequestHandler';
@@ -28,7 +25,7 @@ const RoomPage = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [inventoryList, setInventoryList] = useState<Inventory[]>([]);
     const [selectedInventory, setSelectedInventory] = useState<Inventory | null>(null);
-    const { associatedProduct, quantity } = useLocalSearchParams();
+    const { associatedProduct, itemExpirationDate, quantity } = useLocalSearchParams();
 
     useEffect(() => {
         getRequest('houses').then((result) => {
@@ -58,8 +55,8 @@ const RoomPage = () => {
         const newLoggedItem: LoggedItem = {
             id: sampleLoggedItems.length,
             dateLogged: today.toISOString(),
-            expirationDate: addWeeksToDate(today, 1).toISOString(),
-            consumeByDate: addWeeksToDate(today, 1).toISOString(),
+            expirationDate: itemExpirationDate ? itemExpirationDate : null,
+            consumeByDate: itemExpirationDate ? itemExpirationDate : null,
             product: parsedProduct,
             location: location,
             inventory: selectedInventory,
@@ -85,7 +82,7 @@ const RoomPage = () => {
         clearSelections();
 
         setSelectedHouse(houseToSelect);
-        setInventoryList(houseToSelect.inventories);
+        setInventoryList(sortObjectsById(houseToSelect.inventories));
     };
 
     const handleNext = (location: Location) => {

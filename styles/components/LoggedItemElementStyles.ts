@@ -62,5 +62,14 @@ const LoggedItemElementStyles = StyleSheet.create({
         flexDirection: 'row',
         flexGrow: 2,
     },
+    datesContainer: {
+        display: 'flex',
+        width: ' 80%',
+    },
+    warningContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        width: '20%',
+    },
 });
 export default LoggedItemElementStyles;

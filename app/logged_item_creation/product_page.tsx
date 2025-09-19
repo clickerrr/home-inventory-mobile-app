@@ -1,4 +1,5 @@
 import { router, useLocalSearchParams } from 'expo-router';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import ProductPageStyles from '@/styles/ProductPageStyles';
 import GlobalStyles from '@/styles/GlobalStyles';
 import { View, Text } from 'react-native';
@@ -7,14 +8,27 @@ import { Product } from '@/types/Product';
 import InputSpinner from 'react-native-input-spinner';
 import { TouchableOpacity } from 'react-native';
 import productSampleData from '@/sampleData/ProductSampleData';
+import { Checkbox } from 'expo-checkbox';
 
 const ProductPage = () => {
-    const [product, setProduct] = useState<Product>();
+    const addWeeksToDate = (dateObj: Date, numberOfWeeks: number) => {
+        const newDateObj = new Date(dateObj);
+        newDateObj.setDate(dateObj.getDate() + numberOfWeeks * 7);
+        return newDateObj;
+    };
+
+    const [product, setProduct] = useState<Product | null>(null);
+    const [isExpirationCheckboxChecked, setIsExpirationCheckBoxChecked] = useState<boolean>(false);
+    const [currentQuantity, setCurrentQuantity] = useState(1);
+    const [expirationDate, setExpirationDate] = useState<Date>(addWeeksToDate(new Date(), 1));
+    const [isDatePickerOpen, setIsDatePickerOpen] = useState<false>(false);
+
     const { barcodeId, title, description, other } = useLocalSearchParams();
     useEffect(() => {
         if (barcodeId === undefined) {
             return;
         }
+
         let newProduct: Product = {
             upca: barcodeId ? barcodeId : '-1',
             title: title ? title : 'Testing',
@@ -32,11 +46,20 @@ const ProductPage = () => {
 
         console.log('Setting product', newProduct);
     }, [barcodeId]);
-    const [currentQuantity, setCurrentQuantity] = useState(1);
+
+    const handleCheckEvent = (value: boolean) => {
+        setIsExpirationCheckBoxChecked(value);
+    };
+
+    const handleSelectDate = (event, selectedDate) => {
+        setExpirationDate(selectedDate);
+    };
+
     return (
         <View style={GlobalStyles.main}>
             <View style={GlobalStyles.container}>
-                <View style={[ProductPageStyles.content]}>
+                <View style={GlobalStyles.headerContent}></View>
+                <View style={[GlobalStyles.content]}>
                     <Text style={[GlobalStyles.subHeader, ProductPageStyles.subHeader]}>Product Title</Text>
                     <Text style={GlobalStyles.text}>{product ? product.title : ''}</Text>
                     <Text style={[GlobalStyles.subHeader, ProductPageStyles.subHeader]}>Product Description</Text>
@@ -55,8 +78,38 @@ const ProductPage = () => {
                             setCurrentQuantity(num);
                         }}
                     />
+                    <View style={ProductPageStyles.expirationCheckContainer}>
+                        <Checkbox
+                            value={isExpirationCheckboxChecked}
+                            onValueChange={handleCheckEvent}
+                            color={isExpirationCheckboxChecked ? 'green' : undefined}
+                        />
+                        <Text style={ProductPageStyles.expirationCheckText}>Should this product expire?</Text>
+                    </View>
+                    <View style={ProductPageStyles.expirationInputContainer}>
+                        {isExpirationCheckboxChecked ? (
+                            <>
+                                <View style={ProductPageStyles.expirationDatePickerContainer}>
+                                    <Text style={[GlobalStyles.subHeader, ProductPageStyles.subHeader]}>
+                                        Expiration Date
+                                    </Text>
+                                    <DateTimePicker
+                                        themeVariant={'light'}
+                                        value={expirationDate}
+                                        minimumDate={new Date()}
+                                        mode={'date'}
+                                        display={'compact'}
+                                        onChange={handleSelectDate}
+                                    />
+                                </View>
+                            </>
+                        ) : (
+                            <></>
+                        )}
+                    </View>
                 </View>
-                <View style={[ProductPageStyles.container, ProductPageStyles.buttonContainer]}>
+
+                <View style={[GlobalStyles.footerContent, ProductPageStyles.buttonContainer]}>
                     <TouchableOpacity
                         style={GlobalStyles.buttonMain}
                         onPress={() => {
@@ -65,6 +118,9 @@ const ProductPage = () => {
                                 pathname: '/logged_item_creation/room_page',
                                 params: {
                                     associatedProduct: JSON.stringify(product),
+                                    itemExpirationDate: isExpirationCheckboxChecked
+                                        ? expirationDate.toISOString()
+                                        : null,
                                     quantity: currentQuantity,
                                 },
                             });

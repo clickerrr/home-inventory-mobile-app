@@ -26,14 +26,16 @@ const LoggedItemElement = ({ item, onDelete }: ProductListElementProps) => {
     const [warningColor, setWarningColor] = useState('red');
     const productData: Product = item.product;
     useEffect(() => {
-        const today = new Date();
-        const expire = new Date(item.expirationDate);
-        if (today.getTime() > expire.getTime()) {
-            setWarningColor('red');
-            setWarning(true);
-        } else if (today > expire.getTime() - 86400000) {
-            setWarningColor('orange');
-            setWarning(true);
+        if (item.expirationDate !== null) {
+            const today = new Date();
+            const expire = new Date(item.expirationDate);
+            if (today.getTime() > expire.getTime()) {
+                setWarningColor('red');
+                setWarning(true);
+            } else if (today > expire.getTime() - 86400000) {
+                setWarningColor('orange');
+                setWarning(true);
+            }
         }
     }, [item.expirationDate]);
     return (
@@ -87,28 +89,46 @@ const LoggedItemElement = ({ item, onDelete }: ProductListElementProps) => {
                 {productData !== undefined ? (
                     <>
                         <View style={InventoryStyles.loggedItemDetailsContainer}>
-                            <Text style={[InventoryStyles.buttonText, InventoryStyles.locationDetailsButtonTitle]}>
-                                {productData.title}
-                            </Text>
+                            <Text style={[LoggedItemElementStyles.buttonTitle]}>{productData.title}</Text>
                             <View style={InventoryStyles.loggedItemDetailsSection}>
-                                <Text
-                                    style={[InventoryStyles.locationDetailsButtonSubtitle, InventoryStyles.buttonText]}
-                                >
-                                    Date Logged
-                                </Text>
-                                <Text style={InventoryStyles.buttonText}>{formatDate(new Date(item.dateLogged))}</Text>
+                                <View style={LoggedItemElementStyles.datesContainer}>
+                                    <Text
+                                        style={[
+                                            InventoryStyles.locationDetailsButtonSubtitle,
+                                            InventoryStyles.buttonText,
+                                        ]}
+                                    >
+                                        Date Logged
+                                    </Text>
+                                    <Text style={InventoryStyles.buttonText}>
+                                        {formatDate(new Date(item.dateLogged))}
+                                    </Text>
+                                    {item.expirationDate !== null ? (
+                                        <>
+                                            <Text
+                                                style={[
+                                                    InventoryStyles.locationDetailsButtonSubtitle,
+                                                    InventoryStyles.buttonText,
+                                                ]}
+                                            >
+                                                Expiration Date
+                                            </Text>
+                                            <Text style={InventoryStyles.buttonText}>
+                                                {formatDate(new Date(item.expirationDate))}
+                                            </Text>
+                                        </>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </View>
+                                <View style-={LoggedItemElementStyles.warningContainer}>
+                                    {warning ? (
+                                        <MaterialIcons name={'warning'} color={warningColor} size={30} />
+                                    ) : (
+                                        <></>
+                                    )}
+                                </View>
                             </View>
-                            <View style={InventoryStyles.loggedItemDetailsSection}>
-                                <Text
-                                    style={[InventoryStyles.locationDetailsButtonSubtitle, InventoryStyles.buttonText]}
-                                >
-                                    Expiration Date
-                                </Text>
-                                <Text style={InventoryStyles.buttonText}>
-                                    {formatDate(new Date(item.expirationDate))}
-                                </Text>
-                            </View>
-                            {warning ? <MaterialIcons name={'warning'} color={warningColor} size={30} /> : <></>}
                         </View>
                     </>
                 ) : (

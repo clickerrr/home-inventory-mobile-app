@@ -45,6 +45,26 @@ const ProductPageStyles = StyleSheet.create({
         width: '50%',
         height: '25%',
     },
+    expirationCheckContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+    },
+    expirationCheckText: {
+        marginLeft: '2%',
+    },
+    expirationInputContainer: {
+        height: '30%',
+        width: '100%',
+    },
+    expirationDatePickerContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignSelf: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default ProductPageStyles;
