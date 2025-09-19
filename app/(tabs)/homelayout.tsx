@@ -150,7 +150,7 @@ const HomeLayout = () => {
                                         }}
                                         onPress={() => {
                                             router.navigate({
-                                                pathname: `/inventory_screens/${item.id}`,
+                                                pathname: `/homelayout_screens/rooms/${item.id}`,
                                                 params: {
                                                     room: JSON.stringify(item),
                                                 },

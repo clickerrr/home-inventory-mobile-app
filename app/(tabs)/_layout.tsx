@@ -22,14 +22,6 @@ const TabsLayout = () => {
                 }}
             />
             <Tabs.Screen
-                name="homelayout"
-                options={{
-                    title: 'Home Layout',
-                    headerShown: false,
-                    tabBarIcon: ({ color }: { color: string }) => <AntDesign size={28} name="home" color={color} />,
-                }}
-            />
-            <Tabs.Screen
                 name="inventory"
                 options={{
                     title: 'Inventory',
@@ -37,6 +29,14 @@ const TabsLayout = () => {
                     tabBarIcon: ({ color }: { color: string }) => (
                         <MaterialIcons size={28} name="inventory" color={color} />
                     ),
+                }}
+            />
+            <Tabs.Screen
+                name="homelayout"
+                options={{
+                    title: 'Home Layout',
+                    headerShown: false,
+                    tabBarIcon: ({ color }: { color: string }) => <AntDesign size={28} name="home" color={color} />,
                 }}
             />
             <Tabs.Screen
