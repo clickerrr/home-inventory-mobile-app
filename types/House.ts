@@ -1,5 +1,9 @@
+import { Inventory } from './Inventory';
+import { Room } from './Room';
+
 export type House = {
     id: number;
     title: string;
-    rooms: number[]; // Assuming `Room` type exists
+    rooms: Room[]; // Assuming `Room` type exists
+    inventories: Inventory[];
 };
