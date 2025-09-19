@@ -135,6 +135,9 @@ const InventoryStyles = StyleSheet.create({
     },
     loggedItemDetailsSection: {
         marginBottom: 4,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     textInput: {
         width: '80%',

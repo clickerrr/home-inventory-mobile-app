@@ -41,10 +41,16 @@ const ConfirmItemPage = () => {
                 <View style={ConfirmLoggedItemStyles.container}>
                     <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>Logged Date</Text>
                     <Text style={GlobalStyles.text}>{formatDate(new Date(loggedItemObj.dateLogged))}</Text>
-                    <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>Expiration Date</Text>
-                    <Text style={GlobalStyles.text}>{formatDate(new Date(loggedItemObj.expirationDate))}</Text>
-                    <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>Consume By Date</Text>
-                    <Text style={GlobalStyles.text}>{formatDate(new Date(loggedItemObj.consumeByDate))}</Text>
+                    {loggedItemObj.expirationDate !== null ? (
+                        <>
+                            <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>
+                                Expiration Date
+                            </Text>
+                            <Text style={GlobalStyles.text}>{formatDate(new Date(loggedItemObj.expirationDate))}</Text>
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </View>
             </View>
         );
@@ -72,8 +78,14 @@ const ConfirmItemPage = () => {
                             console.log('parsedLoggedItem', parsedLoggedItem);
                             const newLoggedItem: LoggedItem = {
                                 dateLogged: parsedLoggedItem.dateLogged.split('T')[0],
-                                expirationDate: parsedLoggedItem.expirationDate.split('T')[0],
-                                consumeByDate: parsedLoggedItem.consumeByDate.split('T')[0],
+                                expirationDate:
+                                    parsedLoggedItem.expirationDate !== null
+                                        ? parsedLoggedItem.expirationDate.split('T')[0]
+                                        : null,
+                                consumeByDate:
+                                    parsedLoggedItem.expirationDate !== null
+                                        ? parsedLoggedItem.expirationDate.split('T')[0]
+                                        : null,
                                 product: parsedLoggedItem.product,
                                 location: parsedLoggedItem.location,
                                 inventory: { id: 1 },
