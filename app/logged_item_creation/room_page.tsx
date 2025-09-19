@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import GlobalStyles from '@/styles/GlobalStyles';
 import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
+import InventorySelector from '@/components/InventorySelector';
 import { getRequest } from '@/utils/RequestHandler';
 import { toLog } from '@/utils/ConsoleLog';
 import { sortObjectsById } from '@/utils/SortObjects';
@@ -51,7 +52,6 @@ const RoomPage = () => {
         if (selectedInventory === null) {
             throw new Error('Inventory can not be null');
         }
-        const loggedItemExpirationDate = itemExpirationDate ? new Date(itemExpirationDate) : null;
         const newLoggedItem: LoggedItem = {
             id: sampleLoggedItems.length,
             dateLogged: today.toISOString(),

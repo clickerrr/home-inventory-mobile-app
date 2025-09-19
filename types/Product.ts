@@ -1,3 +1,4 @@
+import { Inventory } from './Inventory';
 import { LoggedItem } from './LoggedItem';
 
 export type Product = {
@@ -6,4 +7,5 @@ export type Product = {
     containerType: string;
     nutritionalInformation: number;
     loggedItems: LoggedItem[];
+    inventory: Inventory;
 };

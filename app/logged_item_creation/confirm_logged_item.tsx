@@ -10,9 +10,10 @@ import sampleLoggedItems from '@/sampleData/SampleLoggedItems';
 import { locations } from '@/sampleData/RoomSelectorSampleData';
 import axios from 'axios';
 import { postRequest } from '@/utils/RequestHandler';
+import { toLog } from '@/utils/ConsoleLog';
 
 const ConfirmItemPage = () => {
-    const { loggedItem, associatedProduct, location, quantity } = useLocalSearchParams();
+    const { loggedItem, associatedProduct, houseTitle, roomTitle, location, quantity } = useLocalSearchParams();
     useEffect(() => {
         console.log(loggedItem);
     }, [loggedItem]);
@@ -26,10 +27,21 @@ const ConfirmItemPage = () => {
     const renderLoggedItem = () => {
         const associatedProductObj: Product = JSON.parse(associatedProduct);
         const locationObj: Location = JSON.parse(location);
+        toLog(`locationObj ${JSON.stringify(locationObj)}`, 'renderLoggedItem', 'confirm_logged_item');
         const loggedItemObj: LoggedItem = JSON.parse(loggedItem);
         console.log('logged item obj', loggedItemObj);
         return (
             <View>
+                <View style={ConfirmLoggedItemStyles.container}>
+                    <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>House</Text>
+                    <Text style={GlobalStyles.text}>{houseTitle}</Text>
+                    <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>Room</Text>
+                    <Text style={GlobalStyles.text}>{roomTitle}</Text>
+                    <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>Location</Text>
+                    <Text style={GlobalStyles.text}>{locationObj.title}</Text>
+                    <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>Inventory</Text>
+                    <Text style={GlobalStyles.text}>{loggedItemObj.inventory.title}</Text>
+                </View>
                 <View style={ConfirmLoggedItemStyles.container}>
                     <Text style={[GlobalStyles.subHeader, ConfirmLoggedItemStyles.largeText]}>Product Title</Text>
                     <Text style={GlobalStyles.text}>{associatedProductObj.title}</Text>
@@ -88,7 +100,7 @@ const ConfirmItemPage = () => {
                                         : null,
                                 product: parsedLoggedItem.product,
                                 location: parsedLoggedItem.location,
-                                inventory: { id: 1 },
+                                inventory: parsedLoggedItem.inventory,
                             };
                             for (let i = 0; i < Number(quantity); i++) {
                                 console.log(
@@ -98,7 +110,7 @@ const ConfirmItemPage = () => {
                                     newLoggedItem.location.id
                                 );
                                 postRequest(
-                                    `loggedItem?upca=${newLoggedItem.product.upca}&locationId=${newLoggedItem.location.id}&inventoryId=1`,
+                                    `loggedItem?upca=${newLoggedItem.product.upca}&locationId=${newLoggedItem.location.id}&inventoryId=${newLoggedItem.inventory.id}`,
                                     newLoggedItem
                                 );
                             }
